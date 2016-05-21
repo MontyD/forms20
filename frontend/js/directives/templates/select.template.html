@@ -1,0 +1,6 @@
+<div class="customSelect">
+    <button type="button" ng-click="openSelect()" ng-class="{'active': !open}">{{ activeItem || 'Select an option'}} <span class="lnr lnr-chevron-down"></span></button>
+    <ul ng-class="{'active': open}" class="customSelect">
+        <li ng-repeat="entry in options track by $index" ng-click="selected(entry)" class="customSelect">{{entry.text || entry}}</li>
+    </ul>
+</div>

@@ -1,0 +1,38 @@
+<div ng-if="options.type === 'largeText' && options.type !== 'boolean'" class="field" ng-click="settings(options)">
+    <label field-editable value="options.text" initial="Click here to add a label" ng-class="{required: options.required}"></label>
+    <textarea ng-if="options.type === 'largeText'" ng-required="options.required" disabled="disabled">Big Text Field</textarea>
+    <p class="slight">{{options.help}}</p>
+</div>
+
+<div ng-if="options.type !== 'largeText' && options.type !== 'select' && options.type !== 'dropdown' && options.type !== 'boolean'" class="field" ng-click="settings(options)">
+    <label field-editable value="options.text" initial="Click here to add a label" ng-class="{required: options.required}"></label>
+    <input ng-if="options.type === 'number'" type="number" ng-required="options.required" disabled="disabled" value="986"/>
+    <input ng-if="options.type === 'currency'" type="currency" ng-required="options.required" disabled="disabled" value="£12.50"/>
+    <input ng-if="options.type === 'date'" type="date" ng-required="options.required" disabled="disabled" value="12-02-2016"/>
+    <input ng-if="options.type === 'email'" type="email" ng-required="options.required" disabled="disabled" value="hello@montydawson.co.uk"/>
+    <input ng-if="options.type === 'smallText'" type="text" ng-required="options.required" disabled="disabled" value="Small Text Field"/>
+    <p field-editable value="options.help" initial="" class="slight"></p>
+</div>
+
+<div ng-if="options.type === 'boolean'" class="field" ng-click="settings(options)">
+    <label field-editable value="options.text" initial="Click here to add a label" ng-class="{required: options.required}"></label>
+    <input type="radio" value="options.yes" name="{{options.text}}" id="{{options.text}}Yes"/><label class="checkbox" for="{{options.text}}Yes">{{options.yes}}</label>
+    <input type="radio" value="options.yes" name="{{options.text}}" id="{{options.text}}No"/><label class="checkbox" for="{{options.text}}No">{{options.no}}</label>
+    <p field-editable value="options.help" initial="" class="slight"></p>
+</div>
+
+<div ng-if="options.type === 'select'" class="field" ng-click="settings(options)">
+    <label field-editable value="options.text" initial="Click here to add a label" ng-class="{required: options.required}"></label>
+    <div ng-repeat="option in options.options track by $index">
+      <input ng-if="options.allowMultiple && option !=='' && String(option)!='undefined'" type="checkbox" id="{{option + $index}}" />
+      <input ng-if="!options.allowMultiple && option !=='' && String(option)!='undefined'" type="radio" id="{{option + $index}}" name="{{options.text}}" />
+      <label class="checkbox" for="{{option + $index}}">{{ option }}</label>
+    </div>
+    <p field-editable value="options.help" initial="" class="slight"></p>
+</div>
+
+<div ng-if="options.type === 'dropdown'" class="field" ng-click="settings(options)">
+    <label field-editable value="options.text" initial="Click here to add a label" ng-class="{required: options.required}"></label>
+    <custom-select target="" options="options.options"></custom-select>
+    <p field-editable value="options.help" initial="" class="slight"></p>
+</div>
