@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+
 var limiter = new rateLimit({
     windowMs: 10 * 60 * 1000,
     max: 20,
@@ -48,7 +49,6 @@ app.use(function(req, res, next) {
 
 
 // development error handler
-// will print stacktrace
 if (config.env === 'development') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
@@ -65,7 +65,6 @@ if (config.env === 'development') {
 }
 
 // production error handler
-// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     if (req.accepts('html')) {

@@ -10,5 +10,4 @@ function respondsToJSON(req, res, next) {
   }
 }
 
-
 module.exports = respondsToJSON;
