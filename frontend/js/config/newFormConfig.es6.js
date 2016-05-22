@@ -9,6 +9,12 @@ function config($stateProvider, $urlRouterProvider, $locationProvider) {
             template: require('../templates/newForm.page.html'),
             controller: 'NewFormCtrl',
             controllerAs: 'newForm'
+        })
+        .state('style', {
+            url: '/style',
+            template: require('../templates/styleForm.page.html'),
+            controller: 'StyleFormCtrl',
+            controllerAs: 'styleForm'
         });
 }
 

@@ -175,6 +175,12 @@ input[type="submit"] {
         margin-left : auto;
         margin-right: auto;
     }
+    &:disabled {
+      opacity: 0.8;
+      &:hover {
+        box-shadow: none;
+      }
+    }
 }
 //** Drag and drop element styling **//
 ul[dnd-list],

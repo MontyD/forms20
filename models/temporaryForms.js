@@ -7,7 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     user_agent: DataTypes.STRING,
     description: DataTypes.TEXT,
     email: DataTypes.STRING,
-    fields: DataTypes.JSON
+    fields: DataTypes.JSON,
+    style: DataTypes.STRING
   });
   return temporaryForm;
 };

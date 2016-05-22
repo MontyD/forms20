@@ -1,5 +1,9 @@
+<nav class="top light"><ol>
+  <li><button class="active secondary" disabled="disabled">Add fields</button></li>
+  <li><button ng-click="newForm.go('style')" ng-disabled="newForm.form.fields.length === 0">Style</button></li>
+  <li><button ng-click="newForm.go('configure')" ng-disabled="newForm.form.fields.length === 0">Configure</button></li>
+</ol></nav>
 <aside class="dark settings">
-    <h3 class="shadow">Settings</h3>
     <field-settings field="newForm.settingsField"></field-settings>
 </aside>
 <main class="createForm">
