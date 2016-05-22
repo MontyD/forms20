@@ -1,0 +1,9 @@
+extends layouts/base
+block content
+  body
+    header
+      h1.shadow Oops! #{error.status}
+      p.white= message
+
+    main.container.center
+      pre #{error.stack}

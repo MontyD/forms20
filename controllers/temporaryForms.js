@@ -8,7 +8,7 @@ var express = require('express'),
     respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON'));
 
 
-// Get -- create new record, and echo back
+// Get -- create new record (with random hash, and user agent), and echo back
 router.get('/', respondsToJSON, function(req, res) {
     var randomHash = crypto.randomBytes(20).toString('hex');
     var temporaryForm = models.temporaryForms.create({

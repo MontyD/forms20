@@ -1,11 +1,12 @@
 'use strict';
 
 function respondsToJSON(req, res, next) {
-  if (req.accepts('json') && req.headers['user-agent']) {
+  if (req.accepts('json') && req.headers['user-agent'] && req.headers['request-from'] === 'angular') {
     next();
   } else {
-    //TODO Error handling
-    res.sendStatus(500);
+    var err = new Error('Go away please');
+    err.status = '403';
+    next(err);
   }
 }
 

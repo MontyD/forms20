@@ -23,23 +23,63 @@ app.use(bodyParser.urlencoded({
 }));
 
 var limiter = new rateLimit({
-  windowMs: 10*60*1000,
-  max: 100,
-  delayMs: 0
+    windowMs: 10 * 60 * 1000,
+    max: 20,
+    delayMs: 0
 });
 
-app.use(limiter);
+app.use('/temporaryForms', limiter);
 
-if (config.environment === 'development') {
-  app.use(morgan('dev'));
+if (config.env === 'development') {
+    app.use(morgan('dev'));
 } else {
-  app.use(morgan('combined'));
+    app.use(morgan('combined'));
 }
 
 app.use(controllers);
 
-models.sequelize.sync().then(function () {
-  app.listen(port, function() {
-      console.log('Listening on port ' + port);
-  });
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+
+// development error handler
+// will print stacktrace
+if (config.env === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        console.error(err);
+        if (req.accepts('html')) {
+            res.render('error', {
+                message: err.message,
+                error: err
+            });
+        } else {
+          res.json(err.message);
+        }
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    if (req.accepts('html')) {
+        res.render('error', {
+            message: err.message,
+            error: {}
+        });
+    } else {
+      res.json(err.message);
+    }
+});
+
+models.sequelize.sync().then(function() {
+    app.listen(port, function() {
+        console.log('Listening on port ' + port);
+    });
 });
