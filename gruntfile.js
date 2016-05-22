@@ -126,5 +126,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-notify');
 
-    grunt.registerTask('default', ['webpack', 'sass', 'postcss', 'cssmin', 'concurrent']);
+    grunt.registerTask('default', ['concurrent']);
 };

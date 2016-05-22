@@ -3,5 +3,8 @@
 npm-debug.log
 
 public/assets
-node_modules
+node_modules/
 stats.json
+
+config.js
+config/
