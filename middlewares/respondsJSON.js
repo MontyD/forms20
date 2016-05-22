@@ -1,7 +1,7 @@
 'use strict';
 
 function respondsToJSON(req, res, next) {
-  if (req.accepts('json') && req.headers['user-agent'] && req.headers['request-from'] === 'angular') {
+  if (req.accepts('json') && req.headers['user-agent'] && req.headers.requestfrom === 'angular') {
     next();
   } else {
     var err = new Error('Go away please');
