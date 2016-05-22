@@ -1,11 +1,11 @@
 function config($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 
-    $urlRouterProvider.otherwise("/new");
+    $urlRouterProvider.otherwise("/create");
 
     $stateProvider
-        .state('new', {
-            url: '/new',
+        .state('create', {
+            url: '/create',
             template: require('../templates/newForm.page.html'),
             controller: 'NewFormCtrl',
             controllerAs: 'newForm'

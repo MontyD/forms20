@@ -13,7 +13,7 @@ import customSelect from './directives/select.es6.js';
 import dndLists from 'angular-drag-and-drop-lists';
 
 //Services
-import TemporaryFormsService from './services/tempForms'
+import TemporaryFormsService from './services/tempForms';
 
 //Config
 import appConfig from './config/newFormConfig.es6.js';

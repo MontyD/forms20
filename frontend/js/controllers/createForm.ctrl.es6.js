@@ -1,6 +1,8 @@
 class NewFormCtrl {
 
-    constructor() {
+    constructor(tempFormsService) {
+
+        this.tempFormsService = tempFormsService;
 
         this.form = {
             name: 'New Form',
@@ -19,13 +21,11 @@ class NewFormCtrl {
             fullWidth: false,
         };
 
-        this.fieldCounter = this.form.fields.length;
-
         this.addingField = false;
 
-        this.selected;
+        this.selected = undefined;
 
-        this.settingsField;
+        this.settingsField = undefined;
 
     }
 
@@ -51,10 +51,14 @@ class NewFormCtrl {
 
     newField() {
         let question = this.newQuestion;
-        if (question.text && (question.type !== 'select' || (question.options.length > 1))) {
-            question.id = this.fieldCounter + 1;
+        if (question.text) {
+            question.id = this.form.fields.length + 1;
             this.form.fields.push(question);
             this.resetNewField();
+            if (this.form.fields.length === 1) {
+                this.tempFormsService.create()
+                    .then(result => console.log(result.data), result => console.log(result));
+            }
         }
     }
 

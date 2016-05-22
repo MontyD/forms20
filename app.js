@@ -53,13 +53,13 @@ if (config.env === 'development') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         console.error(err);
-        if (req.accepts('html')) {
+        if (/json/gi.test(req.get('accept'))) {
+            res.json(err.message);
+        } else {
             res.render('error', {
                 message: err.message,
                 error: err
             });
-        } else {
-          res.json(err.message);
         }
     });
 }
@@ -67,13 +67,14 @@ if (config.env === 'development') {
 // production error handler
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    if (req.accepts('html')) {
+    console.error(err);
+    if (/json/gi.test(req.get('accept'))) {
+        res.json(err.message);
+    } else {
         res.render('error', {
             message: err.message,
             error: {}
         });
-    } else {
-      res.json(err.message);
     }
 });
 

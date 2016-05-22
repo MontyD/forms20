@@ -84,11 +84,19 @@
 
 	var _angularDragAndDropLists2 = _interopRequireDefault(_angularDragAndDropLists);
 
-	var _configNewFormConfigEs6Js = __webpack_require__(13);
+	//Services
+
+	var _servicesTempForms = __webpack_require__(13);
+
+	var _servicesTempForms2 = _interopRequireDefault(_servicesTempForms);
+
+	//Config
+
+	var _configNewFormConfigEs6Js = __webpack_require__(14);
 
 	var _configNewFormConfigEs6Js2 = _interopRequireDefault(_configNewFormConfigEs6Js);
 
-	_angular2['default'].module('app', [_angularUiRouter2['default'], 'dndLists']).controller('NewFormCtrl', _controllersCreateFormCtrlEs6Js2['default']).directive('fieldEditable', _directivesFieldEditableEs6Js2['default']).directive('field', _directivesFieldEs6Js2['default']).directive('fieldSettings', _directivesFieldSettingsEs6Js2['default']).directive('customSelect', _directivesSelectEs6Js2['default']).config(_configNewFormConfigEs6Js2['default']);
+	_angular2['default'].module('app', [_angularUiRouter2['default'], 'dndLists']).service('tempFormsService', _servicesTempForms2['default']).controller('NewFormCtrl', _controllersCreateFormCtrlEs6Js2['default']).directive('fieldEditable', _directivesFieldEditableEs6Js2['default']).directive('field', _directivesFieldEs6Js2['default']).directive('fieldSettings', _directivesFieldSettingsEs6Js2['default']).directive('customSelect', _directivesSelectEs6Js2['default']).config(_configNewFormConfigEs6Js2['default']);
 
 /***/ },
 /* 1 */
@@ -35530,8 +35538,10 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 	var NewFormCtrl = (function () {
-	    function NewFormCtrl() {
+	    function NewFormCtrl(tempFormsService) {
 	        _classCallCheck(this, NewFormCtrl);
+
+	        this.tempFormsService = tempFormsService;
 
 	        this.form = {
 	            name: 'New Form',
@@ -35550,13 +35560,11 @@
 	            fullWidth: false
 	        };
 
-	        this.fieldCounter = this.form.fields.length;
-
 	        this.addingField = false;
 
-	        this.selected;
+	        this.selected = undefined;
 
-	        this.settingsField;
+	        this.settingsField = undefined;
 	    }
 
 	    _createClass(NewFormCtrl, [{
@@ -35585,10 +35593,17 @@
 	        key: 'newField',
 	        value: function newField() {
 	            var question = this.newQuestion;
-	            if (question.text && (question.type !== 'select' || question.options.length > 1)) {
-	                question.id = this.fieldCounter + 1;
+	            if (question.text) {
+	                question.id = this.form.fields.length + 1;
 	                this.form.fields.push(question);
 	                this.resetNewField();
+	                if (this.form.fields.length === 1) {
+	                    this.tempFormsService.create().then(function (result) {
+	                        return console.log(result.data);
+	                    }, function (result) {
+	                        return console.log(result);
+	                    });
+	                }
 	            }
 	        }
 	    }, {
@@ -36376,6 +36391,32 @@
 
 /***/ },
 /* 13 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	class TemporaryFormsService {
+	    constructor($http) {
+	        this.$http = $http;
+	        this.urlBase = '/temporaryForms';
+	        this.config = {
+	            headers: {
+	                requestfrom: 'angular'
+	            }
+	        };
+	    }
+
+	    create() {
+	        return this.$http.get(this.urlBase, this.config);
+	    }
+
+	}
+
+	module.exports = TemporaryFormsService;
+
+
+/***/ },
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36386,11 +36427,11 @@
 	function config($stateProvider, $urlRouterProvider, $locationProvider) {
 	    $locationProvider.html5Mode(true);
 
-	    $urlRouterProvider.otherwise("/new");
+	    $urlRouterProvider.otherwise("/create");
 
-	    $stateProvider.state('new', {
-	        url: '/new',
-	        template: __webpack_require__(14),
+	    $stateProvider.state('create', {
+	        url: '/create',
+	        template: __webpack_require__(15),
 	        controller: 'NewFormCtrl',
 	        controllerAs: 'newForm'
 	    });
@@ -36400,7 +36441,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = "<aside class=\"dark settings\">\n    <h3 class=\"shadow\">Settings</h3>\n    <field-settings field=\"newForm.settingsField\"></field-settings>\n</aside>\n<main class=\"createForm\">\n\n    <section class=\"form light\">\n        <header class=\"add\">\n            <h2 field-editable value=\"newForm.form.title\" initial=\"New Form\"></h2>\n            <p class=\"slight\" field-editable value=\"form.description\" initial=\"Form description, click here to edit\"></p>\n        </header>\n        <ul dnd-list=\"newForm.form.fields\">\n            <li ng-repeat=\"field in newForm.form.fields\" dnd-draggable=\"field\" dnd-moved=\"newForm.form.fields.splice($index, 1)\" dnd-effect-allowed=\"move\" dnd-selected=\"newForm.selected = item\" ng-class=\"{'fullWidth': field.fullWidth, 'halfWidth': !field.fullWidth}\">\n                <field options=\"field\" settings=\"newForm.feildSettings(field)\"></field>\n            </li>\n        </ul>\n\n        <article class=\"modalOpen\" ng-class=\"{active: newForm.addingField}\">\n            <button ng-click=\"newForm.startAddingField()\" class=\"trigger newField\">New question!</button>\n            <form class=\"hide outline\" name=\"newfield\" ng-submit=\"newForm.newField()\">\n                <h3>New Question</h3>\n                <input type=\"text\" name=\"questiontext\" ng-model=\"newForm.newQuestion.text\" class=\"outline\" ng-class=\"{'error': newForm.newQuestion.submitted && newForm.newQuestion.text === ''}\" autofocus=\"autofocus\" placeholder=\"Ask a question\" />\n                <label for=\"type\">What type of answer do you want?</label>\n                <custom-select target=\"newForm.newQuestion.type\" options=\"[{value: 'smallText', text:'Small text'}, {value: 'largeText', text:'Large text'}, {value:'number', text: 'Number'}, {value:'currency', text: 'Currency'},{value: 'date', text:'Date'},{value: 'boolean', text:'Yes / No'},{value: 'select', text: 'Multiple choice'}, {value: 'dropdown', text: 'Dropdown'},{value:'email', text: 'Email Address'}]\"></custom-select>\n                <div ng-if=\"newForm.newQuestion.type === 'select' || newForm.newQuestion.type === 'dropdown'\" class=\"options\">\n                    <label>Options:</label>\n                    <input ng-repeat=\"option in newForm.newQuestion.options track by $index\" type=\"text\" placeholder=\"Answer...\" ng-model=\"newForm.newQuestion.options[$index]\" ng-keydown=\"newForm.continueArray()\" class=\"outline\" />\n                    <input name=\"multi\" type=\"checkbox\" id=\"multi\" ng-model=\"newForm.newQuestion.allowMultiple\" ng-if=\"newForm.newQuestion.type !== 'dropdown'\">\n                    <label for=\"multi\" class=\"checkbox\" ng-if=\"newForm.newQuestion.type !== 'dropdown'\">Allow the user to select multiple</label>\n                </div>\n                <textarea name=\"help\" ng-model=\"newForm.newQuestion.help\" placeholder=\"Add instructions\" class=\"outline\"></textarea>\n                <div>\n                    <input type=\"checkbox\" name=\"fullWidth\" id=\"fullWidth\" ng-model=\"newForm.newQuestion.fullWidth\" />\n                    <label for=\"fullWidth\" class=\"checkbox\">Big field</label>\n                </div>\n                <div>\n                    <input type=\"checkbox\" name=\"required\" id=\"required\" ng-model=\"newForm.newQuestion.required\" />\n                    <label for=\"required\" class=\"checkbox\">Required?</label>\n                </div>\n                <div>\n                    <button type=\"submit\" ng-click=\"newForm.newQuestion.submitted=true\">Create</button>\n                    <button class=\"secondary\" ng-click=\"newForm.cancelAddingField()\">Cancel</button>\n                </div>\n            </form>\n        </article>\n\n\n    </section>\n\n\n</main>\n";
