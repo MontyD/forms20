@@ -9,8 +9,8 @@ $colorError: #E64A19;
 $colorBlack: #212121;
 $colorWhite: #FFFFFF;
 $colorGrey: #757575;
-$sans-serif: 'Open Sans', sans-serif;
-$serif: 'butlerbold', serif; //** functions **//
+$sans-serif: 'Droid Sans', sans-serif;
+$serif: 'Droid Sans', sans-serif; //** functions **//
 @function top-shadow($depth) {
     $primary-offset: nth(1.5 3 10 14 19, $depth) * 1px;
     $blur          : nth(1.5 3 10 14 19, $depth) * 4px;
@@ -72,8 +72,6 @@ ui-view {
     background            : $colorSubtle;
     color                 : $colorBlack;
     -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing   : antialiased;
-    -o-font-smoothing     : antialiased;
 }
 .halfWidth {
     display     : inline-block;
@@ -92,6 +90,7 @@ ui-view {
 h1 {
     font-family: $serif;
     font-size  : 6em;
+    font-style : italic;
     &.shadow {
         text-shadow: 5px 5px 0 $colorDark;
     }
@@ -99,6 +98,7 @@ h1 {
 h2 {
     font-family: $serif;
     font-size  : 4em;
+    font-style : italic;
     &.shadow {
         text-shadow: 5px 5px 0 $colorDark;
     }
@@ -106,6 +106,7 @@ h2 {
 h3 {
     font-family: $serif;
     font-size  : 2.5em;
+    font-style : italic;
     &.shadow {
         text-shadow: 5px 5px 0 $colorDark;
     }
@@ -113,6 +114,7 @@ h3 {
 h4,
 h5 {
     font-family: $serif;
+    font-style : italic;
     &.shadow {
         text-shadow: 5px 5px 0 $colorDark;
     }
@@ -129,15 +131,15 @@ p.slight {
     padding-bottom: 1em;
 }
 .container {
-  display: block;
-  margin: 0 auto;
-  box-sizing: border-box;
-  padding: 1em;
-  width: 100%;
-  max-width: 1000px;
+    display   : block;
+    margin    : 0 auto;
+    box-sizing: border-box;
+    padding   : 1em;
+    width     : 100%;
+    max-width : 1000px;
 }
 .center {
-  text-align: center;
+    text-align: center;
 }
 .fakeButton,
 button,
@@ -176,10 +178,10 @@ input[type="submit"] {
         margin-right: auto;
     }
     &:disabled {
-      opacity: 0.8;
-      &:hover {
-        box-shadow: none;
-      }
+        opacity: 0.8;
+        &:hover {
+            box-shadow: none;
+        }
     }
 }
 //** Drag and drop element styling **//
@@ -210,9 +212,6 @@ ul[dnd-list] li {
     padding       : 0;
     transition    : border-color 0.2s ease;
     vertical-align: top;
-    &:hover {
-        border-color: #ddd;
-    }
 }
 //** Components **//
 .modalOpen {
@@ -251,6 +250,7 @@ ul[dnd-list] li {
         transition: opacity 0.2s ease-out;
         background: $colorWhite;
         color     : $colorBlack;
+        border: 1px solid $colorSubtle;
         @include shadow(1);
     }
     &.active {

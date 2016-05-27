@@ -60,47 +60,43 @@
 
 	var _controllersCreateFormCtrlEs6Js2 = _interopRequireDefault(_controllersCreateFormCtrlEs6Js);
 
-	var _controllersStyleFormCtrlEs6Js = __webpack_require__(5);
-
-	var _controllersStyleFormCtrlEs6Js2 = _interopRequireDefault(_controllersStyleFormCtrlEs6Js);
-
 	//Custom directives
 
-	var _directivesFieldEditableEs6Js = __webpack_require__(6);
+	var _directivesFieldEditableEs6Js = __webpack_require__(5);
 
 	var _directivesFieldEditableEs6Js2 = _interopRequireDefault(_directivesFieldEditableEs6Js);
 
-	var _directivesFieldEs6Js = __webpack_require__(7);
+	var _directivesFieldEs6Js = __webpack_require__(6);
 
 	var _directivesFieldEs6Js2 = _interopRequireDefault(_directivesFieldEs6Js);
 
-	var _directivesFieldSettingsEs6Js = __webpack_require__(9);
+	var _directivesFieldSettingsEs6Js = __webpack_require__(8);
 
 	var _directivesFieldSettingsEs6Js2 = _interopRequireDefault(_directivesFieldSettingsEs6Js);
 
-	var _directivesSelectEs6Js = __webpack_require__(11);
+	var _directivesSelectEs6Js = __webpack_require__(10);
 
 	var _directivesSelectEs6Js2 = _interopRequireDefault(_directivesSelectEs6Js);
 
 	//Vendor directives
 
-	var _angularDragAndDropLists = __webpack_require__(13);
+	var _angularDragAndDropLists = __webpack_require__(12);
 
 	var _angularDragAndDropLists2 = _interopRequireDefault(_angularDragAndDropLists);
 
 	//Services
 
-	var _servicesTempForms = __webpack_require__(14);
+	var _servicesTempForms = __webpack_require__(13);
 
 	var _servicesTempForms2 = _interopRequireDefault(_servicesTempForms);
 
 	//Config
 
-	var _configNewFormConfigEs6Js = __webpack_require__(15);
+	var _configNewFormConfigEs6Js = __webpack_require__(14);
 
 	var _configNewFormConfigEs6Js2 = _interopRequireDefault(_configNewFormConfigEs6Js);
 
-	_angular2['default'].module('app', [_angularUiRouter2['default'], 'dndLists']).service('tempFormsService', _servicesTempForms2['default']).controller('NewFormCtrl', _controllersCreateFormCtrlEs6Js2['default']).controller('StyleFormCtrl', _controllersStyleFormCtrlEs6Js2['default']).directive('fieldEditable', _directivesFieldEditableEs6Js2['default']).directive('field', _directivesFieldEs6Js2['default']).directive('fieldSettings', _directivesFieldSettingsEs6Js2['default']).directive('customSelect', _directivesSelectEs6Js2['default']).config(_configNewFormConfigEs6Js2['default']);
+	_angular2['default'].module('app', [_angularUiRouter2['default'], 'dndLists']).service('tempFormsService', _servicesTempForms2['default']).controller('NewFormCtrl', _controllersCreateFormCtrlEs6Js2['default']).directive('fieldEditable', _directivesFieldEditableEs6Js2['default']).directive('field', _directivesFieldEs6Js2['default']).directive('fieldSettings', _directivesFieldSettingsEs6Js2['default']).directive('customSelect', _directivesSelectEs6Js2['default']).config(_configNewFormConfigEs6Js2['default']);
 
 /***/ },
 /* 1 */
@@ -35542,16 +35538,8 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 	var NewFormCtrl = (function () {
-	    function NewFormCtrl(tempFormsService, $rootScope, $state, $scope) {
-	        var _this = this;
-
+	    function NewFormCtrl(tempFormsService) {
 	        _classCallCheck(this, NewFormCtrl);
-
-	        this.$rootScope = $rootScope;
-
-	        this.$state = $state;
-
-	        this.$scope = $scope;
 
 	        this.tempFormsService = tempFormsService;
 
@@ -35578,19 +35566,6 @@
 	        this.selected = undefined;
 
 	        this.settingsField = undefined;
-
-	        if (this.$rootScope.id && this.$rootScope.hash) {
-	            (function () {
-	                var self = _this;
-	                _this.tempFormsService.findPartial($rootScope.id, $rootScope.hash).then(function (result) {
-	                    self.form.description = result.data.description;
-	                    self.form.name = result.data.name;
-	                    self.form.fields = result.data.fields;
-	                }, function (err) {
-	                    console.error(err);
-	                });
-	            })();
-	        }
 	    }
 
 	    _createClass(NewFormCtrl, [{
@@ -35623,19 +35598,27 @@
 	                question.id = this.form.fields.length + 1;
 	                this.form.fields.push(question);
 	                this.resetNewField();
-	                if (this.form.fields.length === 1 && !this.$rootScope.id) {
+	                if (this.form.fields.length === 1 && !this.id) {
 	                    this.registerForm();
 	                }
 	            }
 	        }
 	    }, {
+	        key: 'removeField',
+	        value: function removeField() {
+	            var index = this.form.fields.indexOf(this.settingsField);
+	            if (index > -1) {
+	                this.form.fields.splice(index, 1);
+	            }
+	        }
+	    }, {
 	        key: 'registerForm',
 	        value: function registerForm() {
-	            var _this2 = this;
+	            var _this = this;
 
 	            this.tempFormsService.create().then(function (result) {
-	                _this2.$rootScope.hash = result.data.hash;
-	                _this2.$rootScope.id = result.data.id;
+	                _this.hash = result.data.hash;
+	                _this.id = result.data.id;
 	            },
 	            //TODO error trap;
 	            function (result) {
@@ -35657,20 +35640,6 @@
 	        value: function feildSettings(field) {
 	            this.settingsField = field;
 	        }
-	    }, {
-	        key: 'go',
-	        value: function go(location) {
-	            var _this3 = this;
-
-	            this.tempFormsService.update(this.$rootScope.id, this.$rootScope.hash, this.form).then(function (result) {
-	                console.log(result);
-	                _this3.$state.go(location);
-	            },
-	            //TODO error trap;
-	            function (result) {
-	                return console.error(result);
-	            });
-	        }
 	    }]);
 
 	    return NewFormCtrl;
@@ -35681,51 +35650,6 @@
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var StyleFormCtrl = (function () {
-	  function StyleFormCtrl(tempFormsService, $rootScope, $state) {
-	    _classCallCheck(this, StyleFormCtrl);
-
-	    this.tempFormsService = tempFormsService;
-
-	    this.$rootScope = $rootScope;
-
-	    this.$state = $state;
-	  }
-
-	  _createClass(StyleFormCtrl, [{
-	    key: "go",
-	    value: function go(location) {
-	      // this.tempFormsService.update(this.$rootScope.id, this.$rootScope.hash, this.form)
-	      //     .then(result => {
-	      //             console.log(result);
-	      this.$state.go(location);
-	      //             },
-	      //             //TODO error trap;
-	      //             result => console.error(result)
-	      //         );
-	    }
-	  }]);
-
-	  return StyleFormCtrl;
-	})();
-
-	exports["default"] = StyleFormCtrl;
-	module.exports = exports["default"];
-
-/***/ },
-/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -35766,7 +35690,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35781,7 +35705,7 @@
 	            options: '=',
 	            settings: '&settings'
 	        },
-	        template: __webpack_require__(8),
+	        template: __webpack_require__(7),
 
 	        link: function link(scope, element, attrs) {}
 	    };
@@ -35791,13 +35715,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 	module.exports = "<div ng-if=\"options.type === 'largeText' && options.type !== 'boolean'\" class=\"field\" ng-click=\"settings(options)\">\n    <label field-editable value=\"options.text\" initial=\"Click here to add a label\" ng-class=\"{required: options.required}\"></label>\n    <textarea ng-if=\"options.type === 'largeText'\" ng-required=\"options.required\" disabled=\"disabled\">Big Text Field</textarea>\n    <p class=\"slight\">{{options.help}}</p>\n</div>\n\n<div ng-if=\"options.type !== 'largeText' && options.type !== 'select' && options.type !== 'dropdown' && options.type !== 'boolean'\" class=\"field\" ng-click=\"settings(options)\">\n    <label field-editable value=\"options.text\" initial=\"Click here to add a label\" ng-class=\"{required: options.required}\"></label>\n    <input ng-if=\"options.type === 'number'\" type=\"number\" ng-required=\"options.required\" disabled=\"disabled\" value=\"986\"/>\n    <input ng-if=\"options.type === 'currency'\" type=\"currency\" ng-required=\"options.required\" disabled=\"disabled\" value=\"£12.50\"/>\n    <input ng-if=\"options.type === 'date'\" type=\"date\" ng-required=\"options.required\" disabled=\"disabled\" value=\"12-02-2016\"/>\n    <input ng-if=\"options.type === 'email'\" type=\"email\" ng-required=\"options.required\" disabled=\"disabled\" value=\"hello@montydawson.co.uk\"/>\n    <input ng-if=\"options.type === 'smallText'\" type=\"text\" ng-required=\"options.required\" disabled=\"disabled\" value=\"Small Text Field\"/>\n    <p field-editable value=\"options.help\" initial=\"\" class=\"slight\"></p>\n</div>\n\n<div ng-if=\"options.type === 'boolean'\" class=\"field\" ng-click=\"settings(options)\">\n    <label field-editable value=\"options.text\" initial=\"Click here to add a label\" ng-class=\"{required: options.required}\"></label>\n    <input type=\"radio\" value=\"options.yes\" name=\"{{options.text}}\" id=\"{{options.text}}Yes\"/><label class=\"checkbox\" for=\"{{options.text}}Yes\">{{options.yes}}</label>\n    <input type=\"radio\" value=\"options.yes\" name=\"{{options.text}}\" id=\"{{options.text}}No\"/><label class=\"checkbox\" for=\"{{options.text}}No\">{{options.no}}</label>\n    <p field-editable value=\"options.help\" initial=\"\" class=\"slight\"></p>\n</div>\n\n<div ng-if=\"options.type === 'select'\" class=\"field\" ng-click=\"settings(options)\">\n    <label field-editable value=\"options.text\" initial=\"Click here to add a label\" ng-class=\"{required: options.required}\"></label>\n    <div ng-repeat=\"option in options.options track by $index\">\n      <input ng-if=\"options.allowMultiple && option !=='' && String(option)!='undefined'\" type=\"checkbox\" id=\"{{option + $index}}\" />\n      <input ng-if=\"!options.allowMultiple && option !=='' && String(option)!='undefined'\" type=\"radio\" id=\"{{option + $index}}\" name=\"{{options.text}}\" />\n      <label class=\"checkbox\" for=\"{{option + $index}}\">{{ option }}</label>\n    </div>\n    <p field-editable value=\"options.help\" initial=\"\" class=\"slight\"></p>\n</div>\n\n<div ng-if=\"options.type === 'dropdown'\" class=\"field\" ng-click=\"settings(options)\">\n    <label field-editable value=\"options.text\" initial=\"Click here to add a label\" ng-class=\"{required: options.required}\"></label>\n    <custom-select target=\"\" options=\"options.options\"></custom-select>\n    <p field-editable value=\"options.help\" initial=\"\" class=\"slight\"></p>\n</div>\n";
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35809,10 +35733,11 @@
 	  return {
 	    restrict: 'E',
 	    scope: {
-	      field: '='
+	      field: '=',
+	      'delete': '&'
 	    },
 
-	    template: __webpack_require__(10),
+	    template: __webpack_require__(9),
 
 	    link: function link(scope, element, attrs) {
 
@@ -35831,13 +35756,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"fieldSettings\">\n    <article>\n        <p ng-if=\"!field\">Click on a field to edit its settings</p>\n        <div ng-if=\"field\">\n            <label for=\"question\">Question:</label>\n            <input type=\"text\" name=\"question\" ng-model=\"field.text\" class=\"outline white\" />\n            <label for=\"type\">Answer type:</label>\n            <custom-select target=\"field.type\" options=\"[{value: 'smallText', text:'Small text'}, {value: 'largeText', text:'Large text'}, {value:'number', text: 'Number'}, {value:'currency', text: 'Currency'},{value: 'date', text:'Date'},{value: 'boolean', text:'Yes / No'},{value: 'select', text: 'Multiple choice'}, {value: 'dropdown', text: 'Dropdown'},{value:'email', text: 'Email Address'}]\"></custom-select>\n            <div ng-if=\"field.type === 'select' || field.type === 'dropdown'\">\n                <label>Options:</label>\n                <div class=\"options\">\n                    <span ng-repeat=\"option in field.options track by $index\">\n                      <input type=\"text\" placeholder=\"Answer...\" ng-model=\"field.options[$index]\" class=\"outline white\" class=\"outline white\" />\n                      <a href=\"#\" ng-click=\"removeOption($index)\" class=\"lnr lnr-cross white\" title=\"Remove option\"></a>\n                    </span>\n                    <button class=\"secondary block\" ng-click=\"continueArray()\">Add option</button>\n                </div>\n                <input id=\"settingsMulti\" name=\"settingsMulti\" type=\"checkbox\" ng-if=\"field.type !== 'dropdown'\" ng-model=\"field.allowMultiple\" class=\"light\">\n                <label for=\"settingsMulti\" class=\"checkbox\" for=\"settingsMulti\" ng-if=\"field.type !== 'dropdown'\">Allow the user to select multiple</label>\n            </div>\n            <label for=\"helpText\">Instructions:</label>\n            <textarea ng-model=\"field.help\" name=\"helpText\" class=\"outline white\"></textarea>\n            <div>\n                <input type=\"checkbox\" id=\"settingsFullWidth\" name=\"settingsFullWidth\" ng-model=\"field.fullWidth\" class=\"light\" />\n                <label for=\"settingsFullWidth\">Full width?</label>\n            </div>\n            <div>\n                <input type=\"checkbox\" id=\"settingsRequired\" name=\"settingsRequired\" ng-model=\"field.required\" class=\"light\" />\n                <label for=\"settingsRequired\">Required?</label>\n            </div>\n        </div>\n    </article>\n</section>\n";
+	module.exports = "<section class=\"fieldSettings\">\n    <article>\n        <p ng-if=\"!field\">Click on a field to edit its settings</p>\n        <div ng-if=\"field\">\n            <label for=\"question\">Question:</label>\n            <input type=\"text\" name=\"question\" ng-model=\"field.text\" class=\"outline white\" />\n            <label for=\"type\">Answer type:</label>\n            <custom-select target=\"field.type\" options=\"[{value: 'smallText', text:'Small text'}, {value: 'largeText', text:'Large text'}, {value:'number', text: 'Number'}, {value:'currency', text: 'Currency'},{value: 'date', text:'Date'},{value: 'boolean', text:'Yes / No'},{value: 'select', text: 'Multiple choice'}, {value: 'dropdown', text: 'Dropdown'},{value:'email', text: 'Email Address'}]\"></custom-select>\n            <div ng-if=\"field.type === 'select' || field.type === 'dropdown'\">\n                <label>Options:</label>\n                <div class=\"options\">\n                    <span ng-repeat=\"option in field.options track by $index\">\n                      <input type=\"text\" placeholder=\"Answer...\" ng-model=\"field.options[$index]\" class=\"outline white\" class=\"outline white\" />\n                      <a href=\"#\" ng-click=\"removeOption($index)\" class=\"lnr lnr-cross white\" title=\"Remove option\"></a>\n                    </span>\n                    <button class=\"secondary block\" ng-click=\"continueArray()\">Add option</button>\n                </div>\n                <input id=\"settingsMulti\" name=\"settingsMulti\" type=\"checkbox\" ng-if=\"field.type !== 'dropdown'\" ng-model=\"field.allowMultiple\" class=\"light\">\n                <label for=\"settingsMulti\" class=\"checkbox\" for=\"settingsMulti\" ng-if=\"field.type !== 'dropdown'\">Allow the user to select multiple</label>\n            </div>\n            <label for=\"helpText\">Instructions:</label>\n            <textarea ng-model=\"field.help\" name=\"helpText\" class=\"outline white\"></textarea>\n            <div>\n                <input type=\"checkbox\" id=\"settingsFullWidth\" name=\"settingsFullWidth\" ng-model=\"field.fullWidth\" class=\"light\" />\n                <label for=\"settingsFullWidth\">Full width?</label>\n            </div>\n            <div>\n                <input type=\"checkbox\" id=\"settingsRequired\" name=\"settingsRequired\" ng-model=\"field.required\" class=\"light\" />\n                <label for=\"settingsRequired\">Required?</label>\n            </div>\n            <button class=\"white\" ng-click=\"delete()\">Delete this field</button>\n        </div>\n    </article>\n</section>\n";
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35853,7 +35778,7 @@
 	      options: '='
 	    },
 
-	    template: __webpack_require__(12),
+	    template: __webpack_require__(11),
 
 	    link: function link(scope, element, attrs) {
 
@@ -35883,13 +35808,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"customSelect\">\n    <button type=\"button\" ng-click=\"openSelect()\" ng-class=\"{'active': !open}\">{{ activeItem || 'Select an option'}} <span class=\"lnr lnr-chevron-down\"></span></button>\n    <ul ng-class=\"{'active': open}\" class=\"customSelect\">\n        <li ng-repeat=\"entry in options track by $index\" ng-click=\"selected(entry)\" class=\"customSelect\">{{entry.text || entry}}</li>\n    </ul>\n</div>\n";
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports) {
 
 	/**
@@ -36485,7 +36410,7 @@
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -36526,7 +36451,7 @@
 
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36537,18 +36462,13 @@
 	function config($stateProvider, $urlRouterProvider, $locationProvider) {
 	    $locationProvider.html5Mode(true);
 
-	    $urlRouterProvider.otherwise("/create");
+	    $urlRouterProvider.otherwise('/create');
 
 	    $stateProvider.state('create', {
 	        url: '/create',
-	        template: __webpack_require__(16),
+	        template: __webpack_require__(15),
 	        controller: 'NewFormCtrl',
 	        controllerAs: 'newForm'
-	    }).state('style', {
-	        url: '/style',
-	        template: __webpack_require__(17),
-	        controller: 'StyleFormCtrl',
-	        controllerAs: 'styleForm'
 	    });
 	}
 
@@ -36556,16 +36476,10 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports) {
 
-	module.exports = "<nav class=\"top light\"><ol>\n  <li><button class=\"active secondary\" disabled=\"disabled\">Add fields</button></li>\n  <li><button ng-click=\"newForm.go('style')\" ng-disabled=\"newForm.form.fields.length === 0\">Style</button></li>\n  <li><button ng-click=\"newForm.go('configure')\" ng-disabled=\"newForm.form.fields.length === 0\">Configure</button></li>\n</ol></nav>\n<aside class=\"dark settings\">\n    <field-settings field=\"newForm.settingsField\"></field-settings>\n</aside>\n<main class=\"createForm\">\n\n    <section class=\"form light\">\n        <header class=\"add\">\n            <h2 field-editable value=\"newForm.form.title\" initial=\"New Form\"></h2>\n            <p class=\"slight\" field-editable value=\"form.description\" initial=\"Form description, click here to edit\"></p>\n        </header>\n        <ul dnd-list=\"newForm.form.fields\">\n            <li ng-repeat=\"field in newForm.form.fields\" dnd-draggable=\"field\" dnd-moved=\"newForm.form.fields.splice($index, 1)\" dnd-effect-allowed=\"move\" dnd-selected=\"newForm.selected = item\" ng-class=\"{'fullWidth': field.fullWidth, 'halfWidth': !field.fullWidth}\">\n                <field options=\"field\" settings=\"newForm.feildSettings(field)\"></field>\n            </li>\n        </ul>\n\n        <article class=\"modalOpen\" ng-class=\"{active: newForm.addingField}\">\n            <button ng-click=\"newForm.startAddingField()\" class=\"trigger newField\">New question!</button>\n            <form class=\"hide outline\" name=\"newfield\" ng-submit=\"newForm.newField()\">\n                <h3>New Question</h3>\n                <input type=\"text\" name=\"questiontext\" ng-model=\"newForm.newQuestion.text\" class=\"outline\" ng-class=\"{'error': newForm.newQuestion.submitted && newForm.newQuestion.text === ''}\" autofocus=\"autofocus\" placeholder=\"Ask a question\" />\n                <label for=\"type\">What type of answer do you want?</label>\n                <custom-select target=\"newForm.newQuestion.type\" options=\"[{value: 'smallText', text:'Small text'}, {value: 'largeText', text:'Large text'}, {value:'number', text: 'Number'}, {value:'currency', text: 'Currency'},{value: 'date', text:'Date'},{value: 'boolean', text:'Yes / No'},{value: 'select', text: 'Multiple choice'}, {value: 'dropdown', text: 'Dropdown'},{value:'email', text: 'Email Address'}]\"></custom-select>\n                <div ng-if=\"newForm.newQuestion.type === 'select' || newForm.newQuestion.type === 'dropdown'\" class=\"options\">\n                    <label>Options:</label>\n                    <input ng-repeat=\"option in newForm.newQuestion.options track by $index\" type=\"text\" placeholder=\"Answer...\" ng-model=\"newForm.newQuestion.options[$index]\" ng-keydown=\"newForm.continueArray()\" class=\"outline\" />\n                    <input name=\"multi\" type=\"checkbox\" id=\"multi\" ng-model=\"newForm.newQuestion.allowMultiple\" ng-if=\"newForm.newQuestion.type !== 'dropdown'\">\n                    <label for=\"multi\" class=\"checkbox\" ng-if=\"newForm.newQuestion.type !== 'dropdown'\">Allow the user to select multiple</label>\n                </div>\n                <textarea name=\"help\" ng-model=\"newForm.newQuestion.help\" placeholder=\"Add instructions\" class=\"outline\"></textarea>\n                <div>\n                    <input type=\"checkbox\" name=\"fullWidth\" id=\"fullWidth\" ng-model=\"newForm.newQuestion.fullWidth\" />\n                    <label for=\"fullWidth\" class=\"checkbox\">Big field</label>\n                </div>\n                <div>\n                    <input type=\"checkbox\" name=\"required\" id=\"required\" ng-model=\"newForm.newQuestion.required\" />\n                    <label for=\"required\" class=\"checkbox\">Required?</label>\n                </div>\n                <div>\n                    <button type=\"submit\" ng-click=\"newForm.newQuestion.submitted=true\">Create</button>\n                    <button class=\"secondary\" ng-click=\"newForm.cancelAddingField()\">Cancel</button>\n                </div>\n            </form>\n        </article>\n\n\n    </section>\n\n\n</main>\n";
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	module.exports = "<nav class=\"top light\">\n    <ol>\n        <li>\n            <button ng-click=\"styleForm.go('create')\">Add fields</button>\n        </li>\n        <li>\n            <button disabled=\"disabled\">Style</button>\n        </li>\n        <li>\n            <button>Configure</button>\n        </li>\n    </ol>\n</nav>\n<main class=\"createForm\">\n  <section class=\"form light\">\n      <header class=\"add\">\n          <h2>Style Form</h2>\n      </header>\n    </section>\n</main>\n";
+	module.exports = "<aside class=\"dark settings\">\n    <field-settings field=\"newForm.settingsField\" delete=\"newForm.removeField\"></field-settings>\n</aside>\n<main class=\"createForm\">\n\n    <section class=\"form light\">\n        <header class=\"add\">\n            <h2 field-editable value=\"newForm.form.title\" initial=\"New Form\"></h2>\n            <p class=\"slight\" field-editable value=\"form.description\" initial=\"Form description, click here to edit\"></p>\n        </header>\n        <ul dnd-list=\"newForm.form.fields\">\n            <li ng-repeat=\"field in newForm.form.fields\" dnd-draggable=\"field\" dnd-moved=\"newForm.form.fields.splice($index, 1)\" dnd-effect-allowed=\"move\" dnd-selected=\"newForm.selected = item\" ng-class=\"{'fullWidth': field.fullWidth, 'halfWidth': !field.fullWidth}\">\n                <field options=\"field\" settings=\"newForm.feildSettings(field)\"></field>\n            </li>\n        </ul>\n\n        <article class=\"modalOpen\" ng-class=\"{active: newForm.addingField}\">\n            <button ng-click=\"newForm.startAddingField()\" class=\"trigger newField\">New question!</button>\n            <form class=\"hide outline\" name=\"newfield\" ng-submit=\"newForm.newField()\">\n                <input type=\"text\" name=\"questiontext\" ng-model=\"newForm.newQuestion.text\" class=\"outline\" ng-class=\"{'error': newForm.newQuestion.submitted && newForm.newQuestion.text === ''}\" autofocus=\"autofocus\" placeholder=\"Ask a question\" />\n                <label for=\"type\">What type of answer do you want?</label>\n                <custom-select target=\"newForm.newQuestion.type\" options=\"[{value: 'smallText', text:'Small text'}, {value: 'largeText', text:'Large text'}, {value:'number', text: 'Number'}, {value:'currency', text: 'Currency'},{value: 'date', text:'Date'},{value: 'boolean', text:'Yes / No'},{value: 'select', text: 'Multiple choice'}, {value: 'dropdown', text: 'Dropdown'},{value:'email', text: 'Email Address'}]\"></custom-select>\n                <div ng-if=\"newForm.newQuestion.type === 'select' || newForm.newQuestion.type === 'dropdown'\" class=\"options\">\n                    <label>Options:</label>\n                    <input ng-repeat=\"option in newForm.newQuestion.options track by $index\" type=\"text\" placeholder=\"Answer...\" ng-model=\"newForm.newQuestion.options[$index]\" ng-keydown=\"newForm.continueArray()\" class=\"outline\" />\n                    <input name=\"multi\" type=\"checkbox\" id=\"multi\" ng-model=\"newForm.newQuestion.allowMultiple\" ng-if=\"newForm.newQuestion.type !== 'dropdown'\">\n                    <label for=\"multi\" class=\"checkbox\" ng-if=\"newForm.newQuestion.type !== 'dropdown'\">Allow the user to select multiple</label>\n                </div>\n                <textarea name=\"help\" ng-model=\"newForm.newQuestion.help\" placeholder=\"Add instructions\" class=\"outline\"></textarea>\n                <div>\n                    <input type=\"checkbox\" name=\"fullWidth\" id=\"fullWidth\" ng-model=\"newForm.newQuestion.fullWidth\" />\n                    <label for=\"fullWidth\" class=\"checkbox\">Big field</label>\n                </div>\n                <div>\n                    <input type=\"checkbox\" name=\"required\" id=\"required\" ng-model=\"newForm.newQuestion.required\" />\n                    <label for=\"required\" class=\"checkbox\">Required?</label>\n                </div>\n                <div>\n                    <button type=\"submit\" ng-click=\"newForm.newQuestion.submitted=true\">Create</button>\n                    <button class=\"secondary\" ng-click=\"newForm.cancelAddingField()\">Cancel</button>\n                </div>\n            </form>\n        </article>\n\n\n    </section>\n\n\n</main>\n";
 
 /***/ }
 /******/ ]);

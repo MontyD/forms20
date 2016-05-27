@@ -163,7 +163,7 @@ input[type="checkbox"] {
         cursor       : pointer;
     }
     &:checked + label {
-        font-weight: bold;
+        color: $colorDark;
         &:before {
             height            : 0.5em;
             width             : 1.2em;
@@ -204,7 +204,7 @@ input[type="radio"] {
         cursor       : pointer;
     }
     &:checked + label {
-        font-weight: bold;
+        color: $colorDark;
         &:before {
             background   : $colorDark;
             height       : 0.9em;

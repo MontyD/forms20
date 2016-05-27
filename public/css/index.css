@@ -373,12 +373,10 @@ ui-view {
   display: block;
   height: 100%;
   width: 100%;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Droid Sans", sans-serif;
   background: #E0E0E0;
   color: #212121;
-  -webkit-font-smoothing: antialiased;
-  -moz-font-smoothing: antialiased;
-  -o-font-smoothing: antialiased; }
+  -webkit-font-smoothing: antialiased; }
 
 .halfWidth {
   display: inline-block;
@@ -395,26 +393,30 @@ ui-view {
   margin-right: 0; }
 
 h1 {
-  font-family: "butlerbold", serif;
-  font-size: 6em; }
+  font-family: "Droid Sans", sans-serif;
+  font-size: 6em;
+  font-style: italic; }
   h1.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h2 {
-  font-family: "butlerbold", serif;
-  font-size: 4em; }
+  font-family: "Droid Sans", sans-serif;
+  font-size: 4em;
+  font-style: italic; }
   h2.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h3 {
-  font-family: "butlerbold", serif;
-  font-size: 2.5em; }
+  font-family: "Droid Sans", sans-serif;
+  font-size: 2.5em;
+  font-style: italic; }
   h3.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h4,
 h5 {
-  font-family: "butlerbold", serif; }
+  font-family: "Droid Sans", sans-serif;
+  font-style: italic; }
   h4.shadow,
   h5.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
@@ -529,8 +531,6 @@ ul[dnd-list] li {
   -webkit-transition: border-color 0.2s ease;
   transition: border-color 0.2s ease;
   vertical-align: top; }
-  ul[dnd-list] li:hover {
-    border-color: #ddd; }
 
 .modalOpen {
   position: relative;
@@ -568,6 +568,7 @@ ul[dnd-list] li {
     transition: opacity 0.2s ease-out;
     background: #FFFFFF;
     color: #212121;
+    border: 1px solid #E0E0E0;
     box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
   .modalOpen.active button.trigger {
     opacity: 0; }

@@ -373,12 +373,10 @@ ui-view {
   display: block;
   height: 100%;
   width: 100%;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Droid Sans", sans-serif;
   background: #E0E0E0;
   color: #212121;
-  -webkit-font-smoothing: antialiased;
-  -moz-font-smoothing: antialiased;
-  -o-font-smoothing: antialiased; }
+  -webkit-font-smoothing: antialiased; }
 
 .halfWidth {
   display: inline-block;
@@ -395,26 +393,30 @@ ui-view {
   margin-right: 0; }
 
 h1 {
-  font-family: "butlerbold", serif;
-  font-size: 6em; }
+  font-family: "Droid Sans", sans-serif;
+  font-size: 6em;
+  font-style: italic; }
   h1.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h2 {
-  font-family: "butlerbold", serif;
-  font-size: 4em; }
+  font-family: "Droid Sans", sans-serif;
+  font-size: 4em;
+  font-style: italic; }
   h2.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h3 {
-  font-family: "butlerbold", serif;
-  font-size: 2.5em; }
+  font-family: "Droid Sans", sans-serif;
+  font-size: 2.5em;
+  font-style: italic; }
   h3.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h4,
 h5 {
-  font-family: "butlerbold", serif; }
+  font-family: "Droid Sans", sans-serif;
+  font-style: italic; }
   h4.shadow,
   h5.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
@@ -529,8 +531,6 @@ ul[dnd-list] li {
   -webkit-transition: border-color 0.2s ease;
   transition: border-color 0.2s ease;
   vertical-align: top; }
-  ul[dnd-list] li:hover {
-    border-color: #ddd; }
 
 .modalOpen {
   position: relative;
@@ -568,6 +568,7 @@ ul[dnd-list] li {
     transition: opacity 0.2s ease-out;
     background: #FFFFFF;
     color: #212121;
+    border: 1px solid #E0E0E0;
     box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
   .modalOpen.active button.trigger {
     opacity: 0; }
@@ -621,7 +622,7 @@ form {
     background: #FFFFFF;
     font-size: 1.8em;
     font-weight: normal;
-    font-family: "Open Sans", sans-serif; }
+    font-family: "Droid Sans", sans-serif; }
 
 label {
   -webkit-user-select: none;
@@ -809,7 +810,7 @@ input[type="checkbox"] {
     transition: all 0.2s ease-out;
     cursor: pointer; }
   input[type="checkbox"]:checked + label {
-    font-weight: bold; }
+    color: #303F9F; }
     input[type="checkbox"]:checked + label:before {
       height: 0.5em;
       width: 1.2em;
@@ -844,7 +845,7 @@ input[type="radio"] {
     transition: all 0.2s ease-out;
     cursor: pointer; }
   input[type="radio"]:checked + label {
-    font-weight: bold; }
+    color: #303F9F; }
     input[type="radio"]:checked + label:before {
       background: #303F9F;
       height: 0.9em;
@@ -910,35 +911,13 @@ input[type="text"] {
   margin: 0 auto 0.2em;
   width: 90%; }
 
-nav.top {
-  position: fixed;
-  height: 3em;
-  margin: 0 auto;
-  top: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  z-index: 9999;
-  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
-  nav.top ol {
-    display: inline-block;
-    margin: 0.3em;
-    padding: 0; }
-  nav.top li {
-    display: inline-block;
-    margin: 0 2em; }
-  nav.top button {
-    padding: .4em .8em;
-    margin: 0; }
-
 aside.settings {
   position: fixed;
-  margin-top: 3em;
   left: 0;
   top: 0;
   box-sizing: border-box;
   padding: 1em;
-  height: calc(100% - 3em);
+  height: 100%;
   width: 300px;
   overflow-y: auto; }
   aside.settings article {
@@ -948,7 +927,6 @@ aside.settings {
 
 main.createForm {
   display: block;
-  margin-top: 3em;
   margin-left: 320px;
   box-sizing: border-box;
   padding-top: 1em;
@@ -965,11 +943,15 @@ main.createForm {
     min-height: 100%;
     padding: 2em 2em 10em;
     text-align: center; }
+    main.createForm .form:hover ul[dnd-list] li {
+      border-color: #E0E0E0; }
     main.createForm .form header h2 {
       margin-bottom: 0; }
     main.createForm .form article {
       margin: 0 auto;
       text-align: center; }
+      main.createForm .form article form {
+        padding-top: 1em; }
       main.createForm .form article textarea {
         margin-top: 2em; }
 

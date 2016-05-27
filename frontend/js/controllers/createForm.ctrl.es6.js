@@ -1,12 +1,6 @@
 class NewFormCtrl {
 
-    constructor(tempFormsService, $rootScope, $state, $scope) {
-
-        this.$rootScope = $rootScope;
-
-        this.$state = $state;
-
-        this.$scope = $scope;
+    constructor(tempFormsService) {
 
         this.tempFormsService = tempFormsService;
 
@@ -33,18 +27,6 @@ class NewFormCtrl {
         this.selected = undefined;
 
         this.settingsField = undefined;
-
-        if (this.$rootScope.id && this.$rootScope.hash) {
-          let self = this;
-            this.tempFormsService.findPartial($rootScope.id, $rootScope.hash)
-                .then(function(result) {
-                    self.form.description = result.data.description;
-                    self.form.name = result.data.name;
-                    self.form.fields = result.data.fields;
-                }, function(err) {
-                    console.error(err);
-                });
-        }
 
     }
 
@@ -74,18 +56,25 @@ class NewFormCtrl {
             question.id = this.form.fields.length + 1;
             this.form.fields.push(question);
             this.resetNewField();
-            if (this.form.fields.length === 1 && !this.$rootScope.id) {
+            if (this.form.fields.length === 1 && !this.id) {
                 this.registerForm();
             }
         }
+    }
+
+    removeField() {
+      var index = this.form.fields.indexOf(this.settingsField);
+      if (index > -1) {
+        this.form.fields.splice(index, 1);
+      }
     }
 
     registerForm() {
         this.tempFormsService.create()
             .then(
                 result => {
-                    this.$rootScope.hash = result.data.hash;
-                    this.$rootScope.id = result.data.id;
+                    this.hash = result.data.hash;
+                    this.id = result.data.id;
                 },
                 //TODO error trap;
                 result => console.error(result)
@@ -102,17 +91,6 @@ class NewFormCtrl {
 
     feildSettings(field) {
         this.settingsField = field;
-    }
-
-    go(location) {
-        this.tempFormsService.update(this.$rootScope.id, this.$rootScope.hash, this.form)
-            .then(result => {
-                    console.log(result);
-                    this.$state.go(location);
-                },
-                //TODO error trap;
-                result => console.error(result)
-            );
     }
 
 }

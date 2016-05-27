@@ -1,8 +1,11 @@
+'use strict';
+
 function fieldSettings() {
     return {
         restrict: 'E',
         scope: {
           field: '=',
+          delete: '&',
         },
 
         template: require('./templates/fieldSettings.template.html'),
@@ -11,13 +14,13 @@ function fieldSettings() {
 
            scope.continueArray = () => {
              scope.field.options.push('');
-           }
+           };
            scope.removeOption = (index) => {
              scope.field.options.splice(index, 1);
-           }
+           };
        },
 
-    }
+    };
 }
 
 export default fieldSettings;
