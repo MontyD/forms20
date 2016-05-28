@@ -7,9 +7,10 @@ import NewFormCtrl from './controllers/createForm.ctrl.es6.js';
 import fieldEditable from './directives/fieldEditable.es6.js';
 import field from './directives/field.es6.js';
 import fieldSettings from './directives/fieldSettings.es6.js';
+import settingsStyle from './directives/settingsStyle.es6.js';
 import customSelect from './directives/select.es6.js';
 
-//Vendor directives
+//Vendor imports
 import dndLists from 'angular-drag-and-drop-lists';
 
 //Services
@@ -22,6 +23,7 @@ angular.module('app', [uiRouter, 'dndLists'])
   .service('tempFormsService', TemporaryFormsService)
   .controller('NewFormCtrl', NewFormCtrl)
   .directive('fieldEditable', fieldEditable)
+  .directive('settingsStyle', settingsStyle)
   .directive('field', field)
   .directive('fieldSettings', fieldSettings)
   .directive('customSelect', customSelect)

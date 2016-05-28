@@ -549,11 +549,15 @@ ul[dnd-list] li {
     margin: 0 auto;
     width: 10em;
     z-index: 10;
-    -webkit-transition: opacity 0.2s ease, box-shadow 0.3s;
-    transition: opacity 0.2s ease, box-shadow 0.3s;
+    -webkit-transition: opacity 0.2s ease, box-shadow 0.3s, -webkit-transform 0.2s ease;
+    transition: opacity 0.2s ease, box-shadow 0.3s, -webkit-transform 0.2s ease;
+    transition: opacity 0.2s ease, box-shadow 0.3s, transform 0.2s ease;
+    transition: opacity 0.2s ease, box-shadow 0.3s, transform 0.2s ease, -webkit-transform 0.2s ease;
     background: #3F51B5;
     color: #FFFFFF;
-    opacity: 1; }
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1); }
   .modalOpen .hide {
     position: relative;
     margin: 0 auto;
@@ -571,7 +575,9 @@ ul[dnd-list] li {
     border: 1px solid #E0E0E0;
     box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
   .modalOpen.active button.trigger {
-    opacity: 0; }
+    opacity: 0;
+    -webkit-transform: scale(0);
+            transform: scale(0); }
   .modalOpen.active .hide {
     opacity: 1; }
   .modalOpen.primary button.trigger {
@@ -915,15 +921,38 @@ aside.settings {
   position: fixed;
   left: 0;
   top: 0;
-  box-sizing: border-box;
-  padding: 1em;
+  width: 98%;
   height: 100%;
   width: 300px;
-  overflow-y: auto; }
-  aside.settings article {
-    width: 98%;
-    margin: 1em auto;
-    padding-bottom: 1em; }
+  text-align: center;
+  overflow-y: auto;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+  aside.settings nav ul {
+    width: 100%;
+    margin: 0;
+    padding: 0; }
+  aside.settings nav li {
+    list-style: none;
+    display: inline-block;
+    padding: 1em 0;
+    margin: 0;
+    width: 32%;
+    background: #303F9F;
+    cursor: pointer; }
+    aside.settings nav li.active {
+      background: #3F51B5; }
+  aside.settings section {
+    padding: 1em;
+    box-sizing: border-box; }
+  aside.settings button.delete {
+    display: block;
+    margin: 2em auto; }
+  aside.settings input[type="checkbox"]:checked + label,
+  aside.settings input[type="radio"]:checked + label {
+    color: #FFFFFF; }
 
 main.createForm {
   display: block;

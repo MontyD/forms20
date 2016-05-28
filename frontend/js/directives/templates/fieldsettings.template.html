@@ -1,34 +1,32 @@
 <section class="fieldSettings">
-    <article>
-        <p ng-if="!field">Click on a field to edit its settings</p>
-        <div ng-if="field">
-            <label for="question">Question:</label>
-            <input type="text" name="question" ng-model="field.text" class="outline white" />
-            <label for="type">Answer type:</label>
-            <custom-select target="field.type" options="[{value: 'smallText', text:'Small text'}, {value: 'largeText', text:'Large text'}, {value:'number', text: 'Number'}, {value:'currency', text: 'Currency'},{value: 'date', text:'Date'},{value: 'boolean', text:'Yes / No'},{value: 'select', text: 'Multiple choice'}, {value: 'dropdown', text: 'Dropdown'},{value:'email', text: 'Email Address'}]"></custom-select>
-            <div ng-if="field.type === 'select' || field.type === 'dropdown'">
-                <label>Options:</label>
-                <div class="options">
-                    <span ng-repeat="option in field.options track by $index">
+    <p ng-if="!field">Click on a field to edit its settings</p>
+    <div ng-if="field">
+        <label for="question">Question:</label>
+        <input type="text" name="question" ng-model="field.text" class="outline white" />
+        <label for="type">Answer type:</label>
+        <custom-select target="field.type" options="[{value: 'smallText', text:'Small text'}, {value: 'largeText', text:'Large text'}, {value:'number', text: 'Number'}, {value:'currency', text: 'Currency'},{value: 'date', text:'Date'},{value: 'boolean', text:'Yes / No'},{value: 'select', text: 'Multiple choice'}, {value: 'dropdown', text: 'Dropdown'},{value:'email', text: 'Email Address'}]"></custom-select>
+        <div ng-if="field.type === 'select' || field.type === 'dropdown'">
+            <label>Options:</label>
+            <div class="options">
+                <span ng-repeat="option in field.options track by $index">
                       <input type="text" placeholder="Answer..." ng-model="field.options[$index]" class="outline white" class="outline white" />
                       <a href="#" ng-click="removeOption($index)" class="lnr lnr-cross white" title="Remove option"></a>
                     </span>
-                    <button class="secondary block" ng-click="continueArray()">Add option</button>
-                </div>
-                <input id="settingsMulti" name="settingsMulti" type="checkbox" ng-if="field.type !== 'dropdown'" ng-model="field.allowMultiple" class="light">
-                <label for="settingsMulti" class="checkbox" for="settingsMulti" ng-if="field.type !== 'dropdown'">Allow the user to select multiple</label>
+                <button class="secondary block" ng-click="continueArray()">Add option</button>
             </div>
-            <label for="helpText">Instructions:</label>
-            <textarea ng-model="field.help" name="helpText" class="outline white"></textarea>
-            <div>
-                <input type="checkbox" id="settingsFullWidth" name="settingsFullWidth" ng-model="field.fullWidth" class="light" />
-                <label for="settingsFullWidth">Full width?</label>
-            </div>
-            <div>
-                <input type="checkbox" id="settingsRequired" name="settingsRequired" ng-model="field.required" class="light" />
-                <label for="settingsRequired">Required?</label>
-            </div>
-            <button class="white" ng-click="delete()">Delete this field</button>
+            <input id="settingsMulti" name="settingsMulti" type="checkbox" ng-if="field.type !== 'dropdown'" ng-model="field.allowMultiple" class="light">
+            <label for="settingsMulti" class="checkbox" for="settingsMulti" ng-if="field.type !== 'dropdown'">Allow the user to select multiple</label>
         </div>
-    </article>
+        <label for="helpText">Instructions:</label>
+        <textarea ng-model="field.help" name="helpText" class="outline white"></textarea>
+        <div>
+            <input type="checkbox" id="settingsFullWidth" name="settingsFullWidth" ng-model="field.fullWidth" class="light" />
+            <label for="settingsFullWidth">Full width?</label>
+        </div>
+        <div>
+            <input type="checkbox" id="settingsRequired" name="settingsRequired" ng-model="field.required" class="light" />
+            <label for="settingsRequired">Required?</label>
+        </div>
+        <button class="white delete" ng-click="delete()">Delete this field</button>
+    </div>
 </section>

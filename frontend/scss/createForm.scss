@@ -22,15 +22,42 @@ aside.settings {
     position  : fixed;
     left      : 0;
     top       : 0;
-    box-sizing: border-box;
-    padding   : 1em;
+    width     : 98%;
     height    : 100%;
     width     : 300px;
+    text-align: center;
     overflow-y: auto;
-    article {
-        width         : 98%;
-        margin        : 1em auto;
-        padding-bottom: 1em;
+    user-select: none;
+    nav ul {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    nav li {
+      list-style: none;
+      display: inline-block;
+      padding: 1em 0;
+      margin: 0;
+      width: 32%;
+      background: $colorDark;
+      cursor: pointer;
+      &.active {
+        background: $colorMain;
+      }
+    }
+    section {
+          padding   : 1em;
+          box-sizing: border-box;
+    }
+    button.delete {
+        display: block;
+        margin : 2em auto;
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+        &:checked + label {
+            color: $colorWhite;
+        }
     }
 }
 main.createForm {
@@ -53,9 +80,9 @@ main.createForm {
         padding   : 2em 2em 10em;
         text-align: center;
         &:hover {
-          ul[dnd-list] li {
-            border-color: $colorSubtle;
-          }
+            ul[dnd-list] li {
+                border-color: $colorSubtle;
+            }
         }
         header {
             h2 {

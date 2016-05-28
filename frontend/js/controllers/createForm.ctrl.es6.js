@@ -26,6 +26,8 @@ class NewFormCtrl {
 
         this.selected = undefined;
 
+        this.settings = 'field';
+
         this.settingsField = undefined;
 
     }
@@ -67,6 +69,7 @@ class NewFormCtrl {
       if (index > -1) {
         this.form.fields.splice(index, 1);
       }
+      this.settingsField = undefined;
     }
 
     registerForm() {
@@ -90,7 +93,14 @@ class NewFormCtrl {
     }
 
     feildSettings(field) {
+        this.settings = 'field';
         this.settingsField = field;
+    }
+
+    setSettings(section) {
+      if (section) {
+        this.settings = section;
+      }
     }
 
 }

@@ -232,10 +232,11 @@ ul[dnd-list] li {
         margin    : 0 auto;
         width     : 10em;
         z-index   : 10;
-        transition: opacity 0.2s ease, box-shadow 0.3s;
+        transition: opacity 0.2s ease, box-shadow 0.3s, transform 0.2s ease;
         background: $colorMain;
         color     : $colorWhite;
         opacity   : 1;
+        transform: scale(1);
     }
     .hide {
         position  : relative;
@@ -256,6 +257,7 @@ ul[dnd-list] li {
     &.active {
         button.trigger {
             opacity: 0;
+              transform: scale(0);
         }
         .hide {
             opacity: 1;
