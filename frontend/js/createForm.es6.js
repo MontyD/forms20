@@ -15,12 +15,14 @@ import dndLists from 'angular-drag-and-drop-lists';
 
 //Services
 import TemporaryFormsService from './services/tempForms';
+import GlobalConfigService from './services/globalConfig';
 
 //Config
 import appConfig from './config/newFormConfig.es6.js';
 
 angular.module('app', [uiRouter, 'dndLists'])
   .service('tempFormsService', TemporaryFormsService)
+  .service('globalConfigService', GlobalConfigService)
   .controller('NewFormCtrl', NewFormCtrl)
   .directive('fieldEditable', fieldEditable)
   .directive('settingsStyle', settingsStyle)

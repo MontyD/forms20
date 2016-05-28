@@ -1,13 +1,15 @@
 class NewFormCtrl {
 
-    constructor(tempFormsService) {
+    constructor(tempFormsService, globalConfigService) {
 
         this.tempFormsService = tempFormsService;
+        this.globalConfigService = globalConfigService;
 
         this.form = {
             name: 'New Form',
             fields: [],
             description: '',
+            style: {},
         };
 
         this.newQuestion = {
@@ -29,6 +31,18 @@ class NewFormCtrl {
         this.settings = 'field';
 
         this.settingsField = undefined;
+
+        this.availableThemes = [];
+
+        if(this.availableThemes.length === 0) {
+          this.globalConfigService.getThemes()
+            .then(
+              result => this.availableThemes = result.data,
+              // TODO error handling
+              result => console.error(result)
+            );
+
+        }
 
     }
 
@@ -58,7 +72,7 @@ class NewFormCtrl {
             question.id = this.form.fields.length + 1;
             this.form.fields.push(question);
             this.resetNewField();
-            if (this.form.fields.length === 1 && !this.id) {
+            if (this.form.fields.length > 0 && !this.id) {
                 this.registerForm();
             }
         }
