@@ -5,18 +5,11 @@ var express = require('express'),
     path = require('path'),
     crypto = require('crypto'),
     models = require(path.join(__dirname, '..', 'models')),
-    respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON'));
-
-function handleError(err, next) {
-    console.error(err);
-    var error = new Error(err.message);
-    error.status = err.status || 500;
-    next(error);
-}
-
+    respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON')),
+    handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError'));
 
 // Get -- create new record (with random hash, and user agent), and echo back
-router.get('/', respondsToJSON, function(req, res, next) {
+router.post('/', respondsToJSON, function(req, res, next) {
 
     var randomHash = crypto.randomBytes(20).toString('hex');
 
@@ -57,7 +50,7 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
 
 
 // Post - to update form
-router.post('/:form', respondsToJSON, function(req, res, next) {
+router.put('/:form', respondsToJSON, function(req, res, next) {
 
     if (!req.params.form || !req.body.hash || isNaN(req.params.form)) {
         return handleError({

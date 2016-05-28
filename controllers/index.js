@@ -5,9 +5,8 @@ var express = require('express'),
 
 router.use('/temporaryForms', require('./temporaryForms'));
 
-router.get('/', function(req, res) {
-    res.render('index');
-});
+router.use('/config', require('./globalConfig'));
+
 
 // render index
 router.get('/', function(req, res) {

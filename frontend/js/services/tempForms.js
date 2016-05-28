@@ -10,7 +10,7 @@ class TemporaryFormsService {
     }
 
     create() {
-        return this.$http.get(this.urlBase, {
+        return this.$http.post(this.urlBase, {
             headers: this.headers
         });
     }
@@ -22,7 +22,7 @@ class TemporaryFormsService {
     }
 
     update(id, reqhash, data) {
-      return this.$http.post(this.urlBase + id, {
+      return this.$http.put(this.urlBase + id, {
         hash: reqhash,
         payload: data
       }, {
