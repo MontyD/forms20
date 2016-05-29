@@ -7,6 +7,8 @@ router.use('/temporaryForms', require('./temporaryForms'));
 
 router.use('/config', require('./globalConfig'));
 
+router.use('/users', require('./users'));
+
 
 // render index
 router.get('/', function(req, res) {

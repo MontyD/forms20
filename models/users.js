@@ -1,69 +1,62 @@
 'use strict';
 
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt');
 
 
 module.exports = function(sequelize, DataTypes) {
-    var user = sequelize.define('user', {
+    var user = sequelize.define('users', {
         username: {
             type: DataTypes.STRING,
             unique: true,
             validate: {
-                notNull: true,
-                notEmpty: true
+                len: {
+                    args: [5, 20],
+                    msg: 'Please enter a username between five and twenty characters long'
+                }
             }
         },
         email: {
             type: DataTypes.STRING,
             unique: true,
+            allowNull: false,
             validate: {
-                notNull: true,
-                notEmpty: true
+                isEmail: {
+                    msg: 'Please enter a valid email address'
+                }
             }
         },
-        admin: DataTypes.BOOLEAN,
+        admin: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         password: {
             type: DataTypes.STRING,
+            allowNull: false,
             validate: {
-                notNull: true,
-                notEmpty: true
-            }
-        },
-        salt: {
-            type: DataTypes.STRING,
-            validate: {
-                notNull: true,
-                notEmpty: true
+                len: {
+                    args: [5, 40],
+                    msg: 'Please enter a password between five and 40 characters long'
+                }
             }
         }
     }, {
-        classMethods: {
-            validPassword: function(password, passwd, done, user) {
-                bcrypt.compare(password, passwd, function(err, isMatch) {
+        hooks: {
+            beforeCreate: function(user, options, cb) {
+                bcrypt.genSalt(12, function(err, salt) {
                     if (err) {
-                        console.error(err);
+                        cb(err, options);
                     }
-                    if (isMatch) {
-                        return done(null, user);
-                    } else {
-                        return done(null, false);
-                    }
+                    bcrypt.hash(user.password, salt, function(err, hash) {
+                        if (err) {
+                            cb(err, options);
+                        }
+                        user.password = hash;
+                        user.salt = salt;
+                        return cb(null, options);
+                    });
                 });
             }
         }
-    });
-
-    user.hook('beforeCreate', function(user, fn) {
-        var salt = bcrypt.genSalt(12, function(err, salt) {
-            return salt;
-        });
-        bcrypt.hash(user.password, salt, null, function(err, hash) {
-            if (err) {
-                return next(err);
-            }
-            user.password = hash;
-            return fn(null, user);
-        });
     });
 
     return user;

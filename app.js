@@ -6,7 +6,7 @@ var express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
     bodyParser = require('body-parser'),
-    bcrypt = require('bcrypt-nodejs'),
+    bcrypt = require('bcrypt'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     morgan = require('morgan'),
@@ -136,7 +136,22 @@ app.use(function(err, req, res, next) {
 });
 
 models.sequelize.sync().then(function() {
-    app.listen(port, function() {
-        console.log('Listening on port ' + port);
+    models.users.count().then(function(count) {
+        if (count === 0) {
+            models.users.create({
+                username: config.defaultUser.username,
+                password: config.defaultUser.password,
+                email: config.defaultUser.email,
+            }).then(function(user) {
+                console.log(user.username + ' created!');
+            }).catch(function(err) {
+                console.error(err);
+            });
+        }
+        app.listen(port, function() {
+            console.log('Listening on port ' + port);
+        });
+    }).catch(function(err) {
+      console.error(err);
     });
 });
