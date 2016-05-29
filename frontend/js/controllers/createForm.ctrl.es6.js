@@ -9,7 +9,10 @@ class NewFormCtrl {
             name: 'New Form',
             fields: [],
             description: '',
-            style: {},
+            style: {
+              font: 'sans-serif',
+              class: 'basic'
+            },
         };
 
         this.newQuestion = {

@@ -49,12 +49,12 @@ textarea {
         border-radius: 0;
         border       : none;
         border-bottom: 1px solid $colorGrey;
-        background   : rgba(0,0,0, 0.05);
+        background   : rgba(0,0,0, 0.1);
         transition   : background 0.2s;
         &:active,
         &:focus {
             outline   : none;
-            background: rgba(0,0,0, 0.08);
+            background: rgba(0,0,0, 0.18);
         }
         &.editable {
             padding  : 0.2em 0.5em;
@@ -186,7 +186,7 @@ input[type="checkbox"] {
     }
 }
 input[type="radio"] {
-    transform: scale(0);
+    display: none;
     & + label {
         cursor: pointer;
     }

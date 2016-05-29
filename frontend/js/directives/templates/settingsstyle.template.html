@@ -1,6 +1,10 @@
 <section class="settingsStyle">
-  <p>Choose a theme:</p>
-  <div ng-repeat="theme in themes track by $index" class="themeSelector">
-    <div class={{theme.class}} data-name="{{theme.name}}"></div>
-  </div>
+    <p>Choose a theme:</p>
+    <div class="themeSelector">
+        <div ng-repeat="theme in themes track by $index" class={{theme.class}} data-name="{{theme.name}}" ng-click="setTheme(theme)">
+        </div>
+    </div>
+    <p>Choose a font type:</p>
+
+    <input type="text" id="fontTypeSansSerif" name="fontType" ng-model="styleObject.font" class="light" />
 </section>
