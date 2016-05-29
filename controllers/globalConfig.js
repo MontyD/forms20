@@ -11,7 +11,7 @@ var express = require('express'),
 // Get JSON of themes
 router.get('/themes', respondsToJSON, function(req, res, next) {
 
-    models.formTheme.findAll().then(function(themes) {
+    models.formTheme.findAll({attributes: ['name', 'description', 'primaryColor', 'secondaryColor', 'class']}).then(function(themes) {
 
         res.json(themes);
 

@@ -7,7 +7,7 @@
         </ul>
     </nav>
     <field-settings ng-if="newForm.settings==='field'" field="newForm.settingsField" delete="newForm.removeField()"></field-settings>
-    <settings-style ng-if="newForm.settings==='style'" styleObject=""></settings-style>
+    <settings-style ng-if="newForm.settings==='style'" styleObject="newForm.form.style" themes="newForm.availableThemes"></settings-style>
     <settings-config ng-if="newForm.settings==='config'" formConfig=""></settings-config>
 </aside>
 <main class="createForm">

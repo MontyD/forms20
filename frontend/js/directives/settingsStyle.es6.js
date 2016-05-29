@@ -4,7 +4,8 @@ function fieldSettings() {
     return {
         restrict: 'E',
         scope: {
-          styleObject: '='
+          styleObject: '=',
+          themes: '='
         },
 
         template: require('./templates/settingsstyle.template.html'),

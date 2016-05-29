@@ -1,3 +1,6 @@
 <section class="settingsStyle">
-  <h1>Style</h1>
+  <p>Choose a theme:</p>
+  <div ng-repeat="theme in themes track by $index" class="themeSelector">
+    <div class={{theme.class}} data-name="{{theme.name}}"></div>
+  </div>
 </section>

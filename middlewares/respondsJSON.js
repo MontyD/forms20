@@ -5,7 +5,7 @@ var path = require('path'),
 
 function respondsToJSON(req, res, next) {
 
-    if (req.accepts('json') && req.headers['user-agent'] && (config.host.test(req.get('host')) || (config.host.test(req.get('origin'))))) {
+    if (req.accepts('json') && req.headers['user-agent']) {
         next();
     } else {
         var err = new Error('Go away please');

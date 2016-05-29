@@ -71,10 +71,10 @@ class NewFormCtrl {
         if (question.text) {
             question.id = this.form.fields.length + 1;
             this.form.fields.push(question);
-            this.resetNewField();
             if (this.form.fields.length > 0 && !this.id) {
                 this.registerForm();
             }
+            this.resetNewField();
         }
     }
 
