@@ -76,6 +76,11 @@
     }
     &.orange {
         background: #FFA000;
+        color: #612907;
+
+        input, textarea {
+          border-color: #612907;
+        }
     }
     &.blue {
         background: #303F9F;

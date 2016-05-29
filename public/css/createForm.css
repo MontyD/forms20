@@ -524,8 +524,6 @@ ul[dnd-list] .dndDraggingSource {
   display: none; }
 
 ul[dnd-list] li {
-  background: #FFFFFF;
-  border: 1px solid #FFFFFF;
   display: inline-block;
   padding: 0;
   -webkit-transition: border-color 0.2s ease;
@@ -1424,8 +1422,6 @@ ul[dnd-list] .dndDraggingSource {
   display: none; }
 
 ul[dnd-list] li {
-  background: #FFFFFF;
-  border: 1px solid #FFFFFF;
   display: inline-block;
   padding: 0;
   -webkit-transition: border-color 0.2s ease;
@@ -1582,7 +1578,10 @@ ul[dnd-list] li {
 .form.basic {
   background: #FFFFFF; }
 .form.orange {
-  background: #FFA000; }
+  background: #FFA000;
+  color: #612907; }
+  .form.orange input, .form.orange textarea {
+    border-color: #612907; }
 .form.blue {
   background: #303F9F; }
 .form.beige {

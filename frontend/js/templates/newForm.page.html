@@ -26,7 +26,7 @@
         <article class="modalOpen" ng-class="{active: newForm.addingField}">
             <button ng-click="newForm.startAddingField()" class="trigger newField">New question!</button>
             <form class="hide outline" name="newfield" ng-submit="newForm.newField()">
-                <input type="Text" id="questiontext" name="questiontext" ng-model="newForm.newQuestion.text" class="outline" ng-class="{'error': newForm.newQuestion.submitted && newForm.newQuestion.text === ''}" autofocus="autofocus" placeholder="Ask a question">
+                <input type="text" name="questiontext" ng-model="newForm.newQuestion.text" class="outline" ng-class="{'error': newForm.newQuestion.submitted && newForm.newQuestion.text === ''}" autofocus="autofocus" placeholder="Ask a question">
                 <label for="type">What type of answer do you want?</label>
                 <custom-select target="newForm.newQuestion.type" options="[{value: 'smallText', text:'Small text'}, {value: 'largeText', text:'Large text'}, {value:'number', text: 'Number'}, {value:'currency', text: 'Currency'},{value: 'date', text:'Date'},{value: 'boolean', text:'Yes / No'},{value: 'select', text: 'Multiple choice'}, {value: 'dropdown', text: 'Dropdown'},{value:'email', text: 'Email Address'}]"></custom-select>
                 <div ng-if="newForm.newQuestion.type === 'select' || newForm.newQuestion.type === 'dropdown'" class="options">

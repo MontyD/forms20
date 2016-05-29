@@ -524,8 +524,6 @@ ul[dnd-list] .dndDraggingSource {
   display: none; }
 
 ul[dnd-list] li {
-  background: #FFFFFF;
-  border: 1px solid #FFFFFF;
   display: inline-block;
   padding: 0;
   -webkit-transition: border-color 0.2s ease;

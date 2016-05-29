@@ -1,9 +1,6 @@
 <div ng-switch="options.type" ng-click="settings(options)" class="field">
 
     <label ng-class="{required: options.required}">{{options.text}}</label>
-
-
-
     <textarea ng-switch-when="largeText" ng-required="options.required" disabled="disabled">Big Text Field</textarea>
     <input ng-switch-when="number" type="number" ng-required="options.required" disabled="disabled" value="986" />
     <input ng-switch-when="currency" type="currency" ng-required="options.required" disabled="disabled" value="£12.50" />
@@ -18,7 +15,7 @@
         <input ng-if="!options.allowMultiple && option !=='' && String(option)!='undefined'" type="radio" id="{{option + $index}}" name="{{options.text}}" />
         <label class="checkbox" for="{{option + $index}}">{{ option }}</label>
     </div>
-    <div ng-switch-when="dropdown" class="field" ng-click="settings(options)">
+    <div ng-switch-when="dropdown" ng-click="settings(options)">
         <custom-select target="" options="options.options"></custom-select>
     </div>
     <input ng-switch-default type="text" ng-required="options.required" disabled="disabled" value="Small Text Field" />
