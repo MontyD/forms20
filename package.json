@@ -15,12 +15,16 @@
   "dependencies": {
     "angular": "^1.4.1",
     "angular-ui-router": "^0.2.15",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.12.3",
+    "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
     "express-rate-limit": "^2.3.1",
     "jade": "^1.9.2",
     "morgan": "^1.7.0",
     "nodemon": "^1.9.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "pg": "^4.5.5",
     "pug": "^2.0.0-alpha7",
     "sequelize": "^3.23.2"

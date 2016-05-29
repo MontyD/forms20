@@ -3,8 +3,14 @@
 var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local'),
+    bodyParser = require('body-parser'),
+    bcrypt = require('bcrypt-nodejs'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
     morgan = require('morgan'),
-    rateLimit = require('express-rate-limit'),
+    RateLimit = require('express-rate-limit'),
     port = process.env.PORT || 3000,
     path = require('path'),
     controllers = require(path.join(__dirname, 'controllers')),
@@ -22,8 +28,59 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+app.use(cookieParser());
+app.use(session({
+    secret: config.sessionSecret,
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 3200000
+    }
+}));
 
-var limiter = new rateLimit({
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+        models.user.findOne({
+            where: {
+                'username': username
+            }
+        }).then(function(user) {
+            if (!user) {
+                return done(null, false, {
+                    message: 'Incorrect credentials.'
+                });
+            }
+
+            var hashedPassword = bcrypt.hashSync(password, user.salt);
+
+            if (user.password === hashedPassword) {
+                return done(null, user);
+            }
+
+            return done(null, false, {
+                message: 'Incorrect credentials.'
+            });
+        });
+    }
+));
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+    models.user.findById(user.id)
+        .success(function(user) {
+            done(null, user);
+        }).error(function(err) {
+            done(err, null);
+        });
+});
+
+var limiter = new RateLimit({
     windowMs: 10 * 60 * 1000,
     max: 20,
     delayMs: 0
