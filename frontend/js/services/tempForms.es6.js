@@ -32,4 +32,6 @@ class TemporaryFormsService {
 
 }
 
+TemporaryFormsService.$inject = ['$http'];
+
 module.exports = TemporaryFormsService;

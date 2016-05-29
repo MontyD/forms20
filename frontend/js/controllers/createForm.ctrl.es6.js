@@ -1,3 +1,5 @@
+'use strict';
+
 class NewFormCtrl {
 
     constructor(tempFormsService, globalConfigService) {
@@ -121,5 +123,7 @@ class NewFormCtrl {
     }
 
 }
+
+NewFormCtrl.$inject = ['tempFormsService', 'globalConfigService'];
 
 export default NewFormCtrl;

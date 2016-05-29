@@ -4,15 +4,23 @@ function fieldSettings() {
     return {
         restrict: 'E',
         scope: {
-          styleObject: '=',
-          themes: '='
+            objectstyle: '=',
+            themes: '='
         },
 
         template: require('./templates/settingsstyle.template.html'),
 
         link: (scope, element, attrs) => {
 
-       },
+            scope.setTheme = theme => {
+              console.log('called');
+                if (!theme) {
+                    return false;
+                }
+                scope.objectstyle.class = theme.class;
+            };
+
+        },
 
     };
 }

@@ -17,4 +17,6 @@ class GlobalConfigService {
 
 }
 
+GlobalConfigService.$inject = ['$http'];
+
 module.exports = GlobalConfigService;

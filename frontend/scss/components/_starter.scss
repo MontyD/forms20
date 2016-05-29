@@ -10,7 +10,7 @@ $colorBlack: #212121;
 $colorWhite: #FFFFFF;
 $colorGrey: #757575;
 $sans-serif: 'Droid Sans', sans-serif;
-$serif: 'Droid Sans', sans-serif; //** functions **//
+$serif: 'butlerbold', serif; //** functions **//
 @function top-shadow($depth) {
     $primary-offset: nth(1.5 3 10 14 19, $depth) * 1px;
     $blur          : nth(1.5 3 10 14 19, $depth) * 4px;
@@ -88,7 +88,7 @@ ui-view {
     margin-right: 0;
 }
 h1 {
-    font-family: $serif;
+    font-family: $sans-serif;
     font-size  : 6em;
     font-style : italic;
     &.shadow {
@@ -96,7 +96,7 @@ h1 {
     }
 }
 h2 {
-    font-family: $serif;
+    font-family: $sans-serif;
     font-size  : 4em;
     font-style : italic;
     &.shadow {
@@ -104,7 +104,7 @@ h2 {
     }
 }
 h3 {
-    font-family: $serif;
+    font-family: $sans-serif;
     font-size  : 2.5em;
     font-style : italic;
     &.shadow {
@@ -113,7 +113,7 @@ h3 {
 }
 h4,
 h5 {
-    font-family: $serif;
+    font-family: $sans-serif;
     font-style : italic;
     &.shadow {
         text-shadow: 5px 5px 0 $colorDark;

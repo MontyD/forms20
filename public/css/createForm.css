@@ -1570,8 +1570,27 @@ ul[dnd-list] li {
   .themeSelector .yellow {
     background: #F9ED69; }
 
-.form.serif {
+.form.serif h1,
+.form.serif h2,
+.form.serif h3,
+.form.serif h4,
+.form.serif h5 {
+  font-family: "butlerbold", serif;
+  font-style: normal; }
+.form.sans-serif {
   font-family: "Droid Sans", sans-serif; }
+.form.basic {
+  background: #FFFFFF; }
+.form.orange {
+  background: #FFA000; }
+.form.blue {
+  background: #303F9F; }
+.form.beige {
+  background: #E1DFBA; }
+.form.red {
+  background: #E14242; }
+.form.yellow {
+  background: #F9ED69; }
 
 select,
 textarea {

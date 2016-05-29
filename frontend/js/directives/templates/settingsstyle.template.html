@@ -5,6 +5,8 @@
         </div>
     </div>
     <p>Choose a font type:</p>
-
-    <input type="text" id="fontTypeSansSerif" name="fontType" ng-model="styleObject.font" class="light" />
+    <input type="radio" id="fontTypeSerif" name="fontType" ng-model="objectstyle.font" value="serif" class="light" />
+    <label for="fontTypeSerif">Serif</label>
+    <input type="radio" id="fontTypeSansSerif" name="fontType" ng-model="objectstyle.font" value="sans-serif" class="light" />
+    <label for="fontTypeSansSerif">Sans Serif</label>
 </section>
