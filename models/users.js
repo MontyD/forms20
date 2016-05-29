@@ -38,7 +38,8 @@ module.exports = function(sequelize, DataTypes) {
                     msg: 'Please enter a password between five and 40 characters long'
                 }
             }
-        }
+        },
+        salt: DataTypes.STRING
     }, {
         hooks: {
             beforeCreate: function(user, options, cb) {
@@ -46,6 +47,7 @@ module.exports = function(sequelize, DataTypes) {
                     if (err) {
                         cb(err, options);
                     }
+                    user.salt = salt;
                     bcrypt.hash(user.password, salt, function(err, hash) {
                         if (err) {
                             cb(err, options);

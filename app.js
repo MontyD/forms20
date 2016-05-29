@@ -4,7 +4,7 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     passport = require('passport'),
-    LocalStrategy = require('passport-local'),
+    LocalStrategy = require('passport-local').Strategy,
     bodyParser = require('body-parser'),
     bcrypt = require('bcrypt'),
     cookieParser = require('cookie-parser'),
@@ -41,44 +41,41 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
 passport.use(new LocalStrategy(
     function(username, password, done) {
-        models.user.findOne({
+        models.users.findOne({
             where: {
                 'username': username
-            }
+            },
+            attributes: ['salt', 'password']
         }).then(function(user) {
             if (!user) {
                 return done(null, false, {
                     message: 'Incorrect credentials.'
                 });
             }
-
-            var hashedPassword = bcrypt.hashSync(password, user.salt);
-
-            if (user.password === hashedPassword) {
-                return done(null, user);
-            }
-
-            return done(null, false, {
-                message: 'Incorrect credentials.'
+            bcrypt.hash(password, user.salt, function(err, hash) {
+                if (err) {
+                    done(null, false, err);
+                }
+                if (hash === user.password) {
+                    return done(null, user);
+                }
+                return done(null, false, {
+                    message: 'Incorrect credentials.'
+                });
             });
         });
     }
 ));
-
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-    models.user.findById(user.id)
-        .success(function(user) {
-            done(null, user);
-        }).error(function(err) {
-            done(err, null);
-        });
-});
 
 var limiter = new RateLimit({
     windowMs: 10 * 60 * 1000,
@@ -152,6 +149,6 @@ models.sequelize.sync().then(function() {
             console.log('Listening on port ' + port);
         });
     }).catch(function(err) {
-      console.error(err);
+        console.error(err);
     });
 });

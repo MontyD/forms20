@@ -3,8 +3,12 @@
 function handleError(err, next) {
     console.error(err);
     var error;
-    error = new Error(err.message);
-    if (error.name = 'SequelizeValidationError') {
+    if (err.message === 'Validation error' && typeof err.errors[0].message === 'string') {
+        error = new Error('Validation error: ' + err.errors[0].message);
+    } else {
+        error = new Error(err.message);
+    }
+    if (err.name === 'SequelizeValidationError') {
         error.status = 400;
     } else {
         error.status = err.status || 500;
