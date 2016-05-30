@@ -62,8 +62,8 @@ $containerWidth: 1000px; //** functions **//
 //** Base styling **//
 html {
     min-height: 100%;
-    width : 100%;
-    position: relative;
+    width     : 100%;
+    position  : relative;
 }
 body,
 ui-view {
@@ -130,7 +130,7 @@ p.slight {
 }
 .lnr.feature {
     display      : block;
-    margin       : 0.1em auto;
+    margin       : 0.4em auto;
     font-size    : 5em;
     width        : 1.5em;
     height       : 1.5em;
@@ -232,14 +232,13 @@ ul[dnd-list] li {
 }
 //** Components **//
 .modal {
-    position     : relative;
-    display      : block;
-    margin       : 0 auto;
-    max-width    : 600px;
-    border-radius: 0.2em;
-    padding      : 0.2em 1em;
-    box-sizing   : border-box;
-    text-align   : center;
+    position  : relative;
+    display   : block;
+    margin    : 0 auto;
+    max-width : 600px;
+    padding   : 0.6em 1em;
+    box-sizing: border-box;
+    text-align: center;
     @include shadow(1);
     h1,
     h2,
@@ -331,12 +330,16 @@ ul[dnd-list] li {
     background: $colorAccent;
     color     : $colorWhite;
 }
+.black {
+  color: $colorWhite;
+  background: $colorBlack;
+}
 .white {
     color       : $colorWhite;
     border-color: $colorWhite;
 }
 .slightGradient {
-  background: radial-gradient(#394bbd, #2b398f);;
+    background: radial-gradient(#394bbd, #2b398f);
 }
 //** editable field styles **//
 *[field-editable] {

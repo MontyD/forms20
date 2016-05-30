@@ -431,7 +431,7 @@ p.slight {
 
 .lnr.feature {
   display: block;
-  margin: 0.1em auto;
+  margin: 0.4em auto;
   font-size: 5em;
   width: 1.5em;
   height: 1.5em;
@@ -551,8 +551,7 @@ ul[dnd-list] li {
   display: block;
   margin: 0 auto;
   max-width: 600px;
-  border-radius: 0.2em;
-  padding: 0.2em 1em;
+  padding: 0.6em 1em;
   box-sizing: border-box;
   text-align: center;
   box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
@@ -634,6 +633,10 @@ ul[dnd-list] li {
 .accent {
   background: #FFA000;
   color: #FFFFFF; }
+
+.black {
+  color: #FFFFFF;
+  background: #212121; }
 
 .white {
   color: #FFFFFF;
@@ -1380,7 +1383,7 @@ p.slight {
 
 .lnr.feature {
   display: block;
-  margin: 0.1em auto;
+  margin: 0.4em auto;
   font-size: 5em;
   width: 1.5em;
   height: 1.5em;
@@ -1500,8 +1503,7 @@ ul[dnd-list] li {
   display: block;
   margin: 0 auto;
   max-width: 600px;
-  border-radius: 0.2em;
-  padding: 0.2em 1em;
+  padding: 0.6em 1em;
   box-sizing: border-box;
   text-align: center;
   box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
@@ -1583,6 +1585,10 @@ ul[dnd-list] li {
 .accent {
   background: #FFA000;
   color: #FFFFFF; }
+
+.black {
+  color: #FFFFFF;
+  background: #212121; }
 
 .white {
   color: #FFFFFF;

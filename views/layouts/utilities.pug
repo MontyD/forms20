@@ -1,15 +1,10 @@
 extends base
 block content
-  body
-    nav.top
+  body.slightGradient
+    nav.top.absolute
       .container
         a(href="/", title="Home").homeLink FormsTwenty
         include ../includes/_headerLinks.pug
     block content
 
-    footer.dark
-      .container
-        h3 FormsTwenty
-        p Created by
-          a(href="https://www.montydawson.co.uk", title="MontyDawson")  Monty Dawson
-          |  for a bit of fun.
+    include ../includes/_footer.pug
