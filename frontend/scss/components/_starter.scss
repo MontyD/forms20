@@ -61,13 +61,14 @@ $containerWidth: 1000px; //** functions **//
 }
 //** Base styling **//
 html {
-    height: 100%;
+    min-height: 100%;
     width : 100%;
+    position: relative;
 }
 body,
 ui-view {
     display               : block;
-    height                : 100%;
+    min-height            : 100%;
     width                 : 100%;
     font-family           : $sans-serif;
     background            : $colorSubtle;
@@ -128,23 +129,23 @@ p.slight {
     padding-bottom: 1em;
 }
 .lnr.feature {
-    display       : block;
-    margin        : 0.1em auto;
-    font-size     : 5em;
-    width         : 1.5em;
-    height        : 1.5em;
-    line-height   : 1.1em;
-    border-radius : 50%;
-    color: $colorGrey;
-    background    : $colorSubtle;
+    display      : block;
+    margin       : 0.1em auto;
+    font-size    : 5em;
+    width        : 1.5em;
+    height       : 1.5em;
+    line-height  : 1.1em;
+    border-radius: 50%;
+    color        : $colorGrey;
+    background   : $colorSubtle;
     &::before {
         display       : inline-block;
         vertical-align: middle;
-        padding-left: 5px
+        padding-left  : 5px;
     }
     &.dark {
-      color: $colorDark;
-      background    : $colorSubtle;
+        color     : $colorDark;
+        background: $colorSubtle;
     }
 }
 .container {
@@ -246,7 +247,7 @@ ul[dnd-list] li {
         font-size: 1.4em;
     }
     &.main {
-      margin       : 5% auto;
+        margin: 5% auto;
     }
 }
 .modalOpen {
@@ -333,6 +334,9 @@ ul[dnd-list] li {
 .white {
     color       : $colorWhite;
     border-color: $colorWhite;
+}
+.slightGradient {
+  background: radial-gradient(#394bbd, #2b398f);;
 }
 //** editable field styles **//
 *[field-editable] {

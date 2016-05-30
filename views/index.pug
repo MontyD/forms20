@@ -1,9 +1,9 @@
 extends layouts/base
 block content
   body
-    nav.top
+    nav.top.absolute
       .container
         include ./includes/_headerLinks.pug
-    header
+    header.slightGradient
       h1.shadow Forms Twenty
       a(href="create", title="Create Form").fakeButton.accent Create Form
