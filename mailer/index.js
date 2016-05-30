@@ -6,16 +6,16 @@ var app = require('express')(),
     config = require(path.join(__dirname, '..', 'config.js'));
 
 app.set('views', __dirname + '/views');
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 
 mailer.extend(app, config.email);
 
-module.exports.verificationEmail = function(email, name, hash) {
-    app.mailer.send('email', {
+module.exports.verificationEmail = function(email, name, link) {
+    app.mailer.send('verifyEmail', {
         to: email,
         subject: 'Verify your email address',
         firstName: name,
-        
+        verificationLink: link
     }, function(err) {
         if (err) {
             console.error(err);

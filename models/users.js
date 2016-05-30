@@ -1,6 +1,7 @@
 'use strict';
 
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt'),
+    crypto = require('crypto');
 
 
 module.exports = function(sequelize, DataTypes) {
@@ -25,6 +26,11 @@ module.exports = function(sequelize, DataTypes) {
                 }
             }
         },
+        emailVerified: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        emailVerificationHash: DataTypes.STRING,
         fullName: {
             type: DataTypes.STRING,
             allowNull: false
@@ -49,8 +55,11 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         hooks: {
             beforeCreate: function(user, options, cb) {
-              user.firstName = user.fullName.split(' ')[0] || '';
-              user.lastName = user.fullName.split(' ')[1] || '';
+                user.firstName = user.fullName.split(' ')[0] || '';
+                user.lastName = user.fullName.split(' ')[1] || '';
+                if (!user.emailVerified) {
+                  user.emailVerificationHash = crypto.randomBytes(20).toString('hex');
+                }
                 bcrypt.genSalt(12, function(err, salt) {
                     if (err) {
                         cb(err, options);

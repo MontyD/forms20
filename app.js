@@ -152,6 +152,7 @@ models.sequelize.sync().then(function() {
                 password: config.defaultUser.password,
                 email: config.defaultUser.email,
                 fullName: config.defaultUser.actualName,
+                emailVerified: true,
                 admin: true
             }).then(function(user) {
                 console.log(user.username + ' created!');
