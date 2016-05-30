@@ -22,11 +22,11 @@ router.post('/login', passport.authenticate('local', {
 });
 
 
-// Get -- return json of single temp form, and echo back
-router.get('/', respondsToJSON, function(req, res, next) {
+router.get('/register', function(req, res, next) {
+
+  res.render('register');
 
 });
-
 
 // Post - creates new user
 router.post('/register', function(req, res, next) {

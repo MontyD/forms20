@@ -434,6 +434,7 @@ p.slight {
 
 .container {
   display: block;
+  position: relative;
   margin: 0 auto;
   box-sizing: border-box;
   padding: 1em;
@@ -618,9 +619,70 @@ ul[dnd-list] li {
   *[field-editable].active input {
     display: inline-block !important; }
 
+body {
+  margin: 0 0 100px; }
+
+nav.top {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.6em 0.2em;
+  background: #3F51B5; }
+  nav.top .container {
+    margin: 0 auto;
+    padding: 0; }
+  nav.top .homeLink {
+    display: inline-block;
+    vertical-align: middle;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.6em;
+    font-style: italic;
+    font-weight: bold;
+    text-shadow: 2px 2px 0 #303F9F;
+    padding: 0.2em 0.4em; }
+  nav.top ul {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.6em 0;
+    display: inline-block;
+    margin: auto;
+    height: 100%; }
+  nav.top li {
+    list-style: none;
+    display: inline-block;
+    padding: 0;
+    margin: 0; }
+  nav.top a {
+    color: #FFFFFF;
+    padding: 0.6em 0.8em;
+    background: transparent;
+    -webkit-transition: background-color 0.2s;
+    transition: background-color 0.2s;
+    border-radius: 0.2em;
+    margin: 0 0.5em; }
+    nav.top a:hover {
+      background-color: rgba(0, 0, 0, 0.3); }
+
+footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 0.8em; }
+  footer .container {
+    padding: 0; }
+  footer h3 {
+    margin: 0.3em 0 0; }
+
 header {
   margin: 0 auto 2em 0;
-  padding: 8em 0;
+  padding: 4em 0 8em;
   background: #3F51B5;
   text-align: center; }
   header h1 {

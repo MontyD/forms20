@@ -1,0 +1,20 @@
+extends base
+block content
+  body
+    nav.top
+      .container
+        a(href="/", title="Home").homeLink FormsTwenty
+        ul
+          li
+            a(href="/users/register", title="Register") Register
+          li
+            a(href="/users/login", title="Login") Login
+
+    block content
+
+    footer.dark
+      .container
+        h3 FormsTwenty
+        p Created by
+          a(href="https://www.montydawson.co.uk", title="MontyDawson")  Monty Dawson
+          |  for a bit of fun.

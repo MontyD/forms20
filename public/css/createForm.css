@@ -434,6 +434,7 @@ p.slight {
 
 .container {
   display: block;
+  position: relative;
   margin: 0 auto;
   box-sizing: border-box;
   padding: 1em;
@@ -1332,6 +1333,7 @@ p.slight {
 
 .container {
   display: block;
+  position: relative;
   margin: 0 auto;
   box-sizing: border-box;
   padding: 1em;

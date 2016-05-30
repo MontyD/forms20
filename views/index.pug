@@ -1,6 +1,13 @@
 extends layouts/base
 block content
   body
+    nav.top
+      .container
+        ul
+          li
+            a(href="/users/register", title="Register") Register
+          li
+            a(href="/users/login", title="Login") Login
     header
       h1.shadow Forms Twenty
       a(href="create", title="Create Form").fakeButton.accent Create Form

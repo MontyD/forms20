@@ -10,7 +10,8 @@ $colorBlack: #212121;
 $colorWhite: #FFFFFF;
 $colorGrey: #757575;
 $sans-serif: 'Droid Sans', sans-serif;
-$serif: 'butlerbold', serif; //** functions **//
+$serif: 'butlerbold', serif;
+$containerWidth: 1000px; //** functions **//
 @function top-shadow($depth) {
     $primary-offset: nth(1.5 3 10 14 19, $depth) * 1px;
     $blur          : nth(1.5 3 10 14 19, $depth) * 4px;
@@ -132,11 +133,12 @@ p.slight {
 }
 .container {
     display   : block;
+    position: relative;
     margin    : 0 auto;
     box-sizing: border-box;
     padding   : 1em;
     width     : 100%;
-    max-width : 1000px;
+    max-width : $containerWidth;
 }
 .center {
     text-align: center;
@@ -234,7 +236,7 @@ ul[dnd-list] li {
         background: $colorMain;
         color     : $colorWhite;
         opacity   : 1;
-        transform: scale(1);
+        transform : scale(1);
     }
     .hide {
         position  : relative;
@@ -249,13 +251,13 @@ ul[dnd-list] li {
         transition: opacity 0.2s ease-out;
         background: $colorWhite;
         color     : $colorBlack;
-        border: 1px solid $colorSubtle;
+        border    : 1px solid $colorSubtle;
         @include shadow(1);
     }
     &.active {
         button.trigger {
-            opacity: 0;
-              transform: scale(0);
+            opacity  : 0;
+            transform: scale(0);
         }
         .hide {
             opacity: 1;

@@ -1,8 +1,8 @@
-@import 'components/_starter';
+@import 'components/_navigation';
 
 header {
     margin    : 0 auto 2em 0;
-    padding   : 8em 0;
+    padding   : 4em 0 8em;
     background: $colorMain;
     text-align: center;
     h1 {
