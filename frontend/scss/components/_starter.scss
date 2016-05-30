@@ -90,24 +90,21 @@ ui-view {
 }
 h1 {
     font-family: $sans-serif;
-    font-size  : 6em;
-    font-style : italic;
+    font-size  : 3em;
     &.shadow {
         text-shadow: 5px 5px 0 $colorDark;
     }
 }
 h2 {
     font-family: $sans-serif;
-    font-size  : 4em;
-    font-style : italic;
+    font-size  : 2em;
     &.shadow {
         text-shadow: 5px 5px 0 $colorDark;
     }
 }
 h3 {
     font-family: $sans-serif;
-    font-size  : 2.5em;
-    font-style : italic;
+    font-size  : 1.6em;
     &.shadow {
         text-shadow: 5px 5px 0 $colorDark;
     }
@@ -115,7 +112,6 @@ h3 {
 h4,
 h5 {
     font-family: $sans-serif;
-    font-style : italic;
     &.shadow {
         text-shadow: 5px 5px 0 $colorDark;
     }
@@ -131,9 +127,30 @@ p.slight {
     font-weight   : normal;
     padding-bottom: 1em;
 }
+.lnr.feature {
+    display       : block;
+    margin        : 0.1em auto;
+    font-size     : 5em;
+    width         : 1.5em;
+    height        : 1.5em;
+    line-height   : 1.1em;
+    border-radius : 50%;
+    color: $colorGrey;
+    background    : $colorSubtle;
+    &::before {
+        display       : inline-block;
+        vertical-align: middle;
+        padding-left: 4px
+    }
+    &.dark {
+      color: $colorDark;
+      background: transparent;
+      border:1px solid $colorDark;
+    }
+}
 .container {
     display   : block;
-    position: relative;
+    position  : relative;
     margin    : 0 auto;
     box-sizing: border-box;
     padding   : 1em;
@@ -214,6 +231,22 @@ ul[dnd-list] li {
     vertical-align: top;
 }
 //** Components **//
+.modal {
+    position     : relative;
+    display      : block;
+    margin       : 0 auto;
+    max-width    : 600px;
+    border-radius: 0.2em;
+    padding      : 0.2em 1em;
+    box-sizing   : border-box;
+    text-align   : center;
+    @include shadow(1);
+    h1,
+    h2,
+    h3 {
+        font-size: 1.4em;
+    }
+}
 .modalOpen {
     position: relative;
     display : inline-block;
@@ -280,12 +313,16 @@ ul[dnd-list] li {
 }
 //** Color styles **//
 .dark {
-    background: $colorMain;
+    background: $colorDark;
     color     : $colorWhite;
 }
 .light {
     background: $colorWhite;
     color     : $colorBlack;
+}
+.grey {
+    background: $colorGrey;
+    color     : $colorWhite;
 }
 .accent {
     background: $colorAccent;

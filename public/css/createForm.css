@@ -394,29 +394,25 @@ ui-view {
 
 h1 {
   font-family: "Droid Sans", sans-serif;
-  font-size: 6em;
-  font-style: italic; }
+  font-size: 3em; }
   h1.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h2 {
   font-family: "Droid Sans", sans-serif;
-  font-size: 4em;
-  font-style: italic; }
+  font-size: 2em; }
   h2.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h3 {
   font-family: "Droid Sans", sans-serif;
-  font-size: 2.5em;
-  font-style: italic; }
+  font-size: 1.6em; }
   h3.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h4,
 h5 {
-  font-family: "Droid Sans", sans-serif;
-  font-style: italic; }
+  font-family: "Droid Sans", sans-serif; }
   h4.shadow,
   h5.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
@@ -431,6 +427,25 @@ p.slight {
   color: #757575;
   font-weight: normal;
   padding-bottom: 1em; }
+
+.lnr.feature {
+  display: block;
+  margin: 0.1em auto;
+  font-size: 5em;
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 1.1em;
+  border-radius: 50%;
+  color: #757575;
+  background: #E0E0E0; }
+  .lnr.feature::before {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 4px; }
+  .lnr.feature.dark {
+    color: #303F9F;
+    background: transparent;
+    border: 1px solid #303F9F; }
 
 .container {
   display: block;
@@ -531,6 +546,21 @@ ul[dnd-list] li {
   transition: border-color 0.2s ease;
   vertical-align: top; }
 
+.modal {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  max-width: 600px;
+  border-radius: 0.2em;
+  padding: 0.2em 1em;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
+  .modal h1,
+  .modal h2,
+  .modal h3 {
+    font-size: 1.4em; }
+
 .modalOpen {
   position: relative;
   display: inline-block;
@@ -588,12 +618,16 @@ ul[dnd-list] li {
     color: #FFA000; }
 
 .dark {
-  background: #3F51B5;
+  background: #303F9F;
   color: #FFFFFF; }
 
 .light {
   background: #FFFFFF;
   color: #212121; }
+
+.grey {
+  background: #757575;
+  color: #FFFFFF; }
 
 .accent {
   background: #FFA000;
@@ -652,14 +686,16 @@ input[type="date"],
 input[type="email"],
 input[type="number"],
 input[type="text"],
+input[type="password"],
 textarea {
   display: block;
   padding: 0.6em;
-  margin: 0 auto 0.3em;
+  margin: 0.2em auto 1.4em;
   border-radius: 0.3em;
   border: 1px solid #7986CB;
   box-sizing: border-box;
-  resize: none; }
+  resize: none;
+  width: 90%; }
   input[type="currency"]:active, input[type="currency"]:focus,
   input[type="date"]:active,
   input[type="date"]:focus,
@@ -669,6 +705,8 @@ textarea {
   input[type="number"]:focus,
   input[type="text"]:active,
   input[type="text"]:focus,
+  input[type="password"]:active,
+  input[type="password"]:focus,
   textarea:active,
   textarea:focus {
     outline: none;
@@ -678,6 +716,7 @@ textarea {
   input[type="email"].outline,
   input[type="number"].outline,
   input[type="text"].outline,
+  input[type="password"].outline,
   textarea.outline {
     border-radius: 0;
     border: none;
@@ -694,6 +733,8 @@ textarea {
     input[type="number"].outline:focus,
     input[type="text"].outline:active,
     input[type="text"].outline:focus,
+    input[type="password"].outline:active,
+    input[type="password"].outline:focus,
     textarea.outline:active,
     textarea.outline:focus {
       outline: none;
@@ -703,6 +744,7 @@ textarea {
     input[type="email"].outline.editable,
     input[type="number"].outline.editable,
     input[type="text"].outline.editable,
+    input[type="password"].outline.editable,
     textarea.outline.editable {
       padding: 0.2em 0.5em;
       font-size: 90%; }
@@ -711,6 +753,7 @@ textarea {
   input[type="email"].error,
   input[type="number"].error,
   input[type="text"].error,
+  input[type="password"].error,
   textarea.error {
     border-color: #F44336;
     -webkit-animation-name: bounce;
@@ -724,6 +767,7 @@ textarea {
   input[type="email"][disabled="disabled"],
   input[type="number"][disabled="disabled"],
   input[type="text"][disabled="disabled"],
+  input[type="password"][disabled="disabled"],
   textarea[disabled="disabled"] {
     background: rgba(0, 0, 0, 0.1); }
 
@@ -1293,29 +1337,25 @@ ui-view {
 
 h1 {
   font-family: "Droid Sans", sans-serif;
-  font-size: 6em;
-  font-style: italic; }
+  font-size: 3em; }
   h1.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h2 {
   font-family: "Droid Sans", sans-serif;
-  font-size: 4em;
-  font-style: italic; }
+  font-size: 2em; }
   h2.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h3 {
   font-family: "Droid Sans", sans-serif;
-  font-size: 2.5em;
-  font-style: italic; }
+  font-size: 1.6em; }
   h3.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
 
 h4,
 h5 {
-  font-family: "Droid Sans", sans-serif;
-  font-style: italic; }
+  font-family: "Droid Sans", sans-serif; }
   h4.shadow,
   h5.shadow {
     text-shadow: 5px 5px 0 #303F9F; }
@@ -1330,6 +1370,25 @@ p.slight {
   color: #757575;
   font-weight: normal;
   padding-bottom: 1em; }
+
+.lnr.feature {
+  display: block;
+  margin: 0.1em auto;
+  font-size: 5em;
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 1.1em;
+  border-radius: 50%;
+  color: #757575;
+  background: #E0E0E0; }
+  .lnr.feature::before {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 4px; }
+  .lnr.feature.dark {
+    color: #303F9F;
+    background: transparent;
+    border: 1px solid #303F9F; }
 
 .container {
   display: block;
@@ -1430,6 +1489,21 @@ ul[dnd-list] li {
   transition: border-color 0.2s ease;
   vertical-align: top; }
 
+.modal {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  max-width: 600px;
+  border-radius: 0.2em;
+  padding: 0.2em 1em;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12); }
+  .modal h1,
+  .modal h2,
+  .modal h3 {
+    font-size: 1.4em; }
+
 .modalOpen {
   position: relative;
   display: inline-block;
@@ -1487,12 +1561,16 @@ ul[dnd-list] li {
     color: #FFA000; }
 
 .dark {
-  background: #3F51B5;
+  background: #303F9F;
   color: #FFFFFF; }
 
 .light {
   background: #FFFFFF;
   color: #212121; }
+
+.grey {
+  background: #757575;
+  color: #FFFFFF; }
 
 .accent {
   background: #FFA000;

@@ -2,11 +2,9 @@ extends layouts/utilities
 block content
   .container
     .modal.light
-      .lnr.lnr-user.feature
-      h2.slight Register
+      .lnr.lnr-user.feature.dark
+      h2.slight Login
       form(name="register", method="post")
         input(type="text", name="username", id="username", placeholder="Username", required="required", autofocus="autofocus")
-        input(type="email", name="email", id="email", placeholder="Email address", required="required")
         input(type="password", name="password", id="password", placeholder="Password", required="required")
-        input(type="password", name="passwordConfirmation", id="passwordConfirmation", placeholder="Confirm password", required="required")
         input(type="submit")

@@ -8,10 +8,10 @@ var express = require('express'),
     respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON')),
     handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError'));
 
-// Get -- create new record (with random hash, and user agent), and echo back
-router.get('/login', respondsToJSON, function(req, res, next) {
+// Get - login
+router.get('/login', function(req, res, next) {
 
-    res.send('login');
+    res.render('login');
 
 });
 
@@ -30,7 +30,7 @@ router.get('/register', function(req, res, next) {
 
 // Post - creates new user
 router.post('/register', function(req, res, next) {
-    if (req.body.password !== req.body.passwordConfirmation) {
+    if (req.body.password !== req.body.passwordConfirmation || !req.body.password || !req.body.passwordConfirmation) {
         return handleError({
             status: 400,
             message: 'Password not successfully confirmed'

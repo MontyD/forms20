@@ -8,7 +8,7 @@ function handleError(err, next) {
     } else {
         error = new Error(err.message);
     }
-    if (err.name === 'SequelizeValidationError') {
+    if (/Sequelize/gi.test(err.name) && /Validation/gi.test(err.message)) {
         error.status = 400;
     } else {
         error.status = err.status || 500;
