@@ -13,3 +13,5 @@ block content
           input(type="text", name="username", id="username", placeholder="Username", required="required", autofocus="autofocus", value=temporaryUserName)
         input(type="password", name="password", id="password", placeholder="Password", required="required")
         input(type="submit")
+        if originalURL
+          input(type="text", value=originalURL, disabled="disabled").hidden

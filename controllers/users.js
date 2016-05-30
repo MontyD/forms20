@@ -7,6 +7,7 @@ var express = require('express'),
     mailer = require(path.join(__dirname, '..', 'mailer')),
     models = require(path.join(__dirname, '..', 'models')),
     respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON')),
+    checkUser = require(path.join(__dirname, '..', 'middlewares', 'checkUser')),
     handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError')),
     passUser = require(path.join(__dirname, '..', 'middlewares', 'passUser'));
 
@@ -29,13 +30,17 @@ router.get('/login', function(req, res, next) {
 
 });
 
+// Post login - authenticate
 router.post('/login', passport.authenticate('local', {
     failureRedirect: '/users/login'
 }), function(req, res, next) {
-    res.redirect('/');
+  var redirect = req.body.originalURL || '/users/home';
+  console.log('yes!');
+    res.redirect(redirect);
 });
 
 
+// Get - register page
 router.get('/register', function(req, res, next) {
 
     req.logout();
@@ -43,7 +48,7 @@ router.get('/register', function(req, res, next) {
 
 });
 
-// Post - creates new user
+// Post register - creates new user sends to login page with query string containing name and newAccount true, sets mailer to send verification email
 router.post('/register', function(req, res, next) {
     if (req.body.password !== req.body.passwordConfirmation || !req.body.password || !req.body.passwordConfirmation) {
         return handleError({
@@ -62,6 +67,13 @@ router.post('/register', function(req, res, next) {
     }).catch(function(error) {
         handleError(error, next);
     });
+});
+
+// Get home - render user home admin
+router.get('/home', checkUser, passUser, function(req, res){
+
+  res.render('userHome');
+
 });
 
 // Get - logout

@@ -44,11 +44,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+    done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
-  done(null, user);
+    done(null, user);
 });
 
 passport.use(new LocalStrategy(
@@ -69,7 +69,12 @@ passport.use(new LocalStrategy(
                     done(null, false, err);
                 }
                 if (hash === user.password) {
-                    return done(null, {id: user.id, username: reqUsername, firstName: user.firstName, admin: user.admin});
+                    return done(null, {
+                        id: user.id,
+                        username: reqUsername,
+                        firstName: user.firstName,
+                        admin: user.admin
+                    });
                 }
                 return done(null, false, {
                     message: 'Incorrect credentials.'
@@ -115,8 +120,14 @@ app.use(function(req, res, next) {
 // development error handler
 if (config.env === 'development') {
     app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
+        if (err.status === 401) {
+            return res.render('login', {
+                originalURL: req.originalUrl
+            });
+        }
+
         console.error(err);
+        res.status(err.status || 500);
         if (/json/gi.test(req.get('accept'))) {
             res.json(err.message);
         } else {
@@ -130,8 +141,14 @@ if (config.env === 'development') {
 
 // production error handler
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
+    if (err.status === 401) {
+        return res.render('login', {
+            originalURL: req.originalUrl
+        });
+    }
+
     console.error(err);
+    res.status(err.status || 500);
     if (/json/gi.test(req.get('accept'))) {
         res.json(err.message);
     } else {

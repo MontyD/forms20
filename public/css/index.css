@@ -422,6 +422,9 @@ a {
   color: inherit;
   text-decoration: none; }
 
+.hidden {
+  display: none !important; }
+
 label.slight,
 p.slight {
   font-style: italic;
@@ -1336,6 +1339,9 @@ h5 {
 a {
   color: inherit;
   text-decoration: none; }
+
+.hidden {
+  display: none !important; }
 
 label.slight,
 p.slight {

@@ -9,7 +9,7 @@ function respondsToJSON(req, res, next) {
         next();
     } else {
         var err = new Error('Go away please');
-        err.status = '403';
+        err.status = 403;
         next(err);
     }
 }
