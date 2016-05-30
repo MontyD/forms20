@@ -4,12 +4,7 @@ block content
     nav.top
       .container
         a(href="/", title="Home").homeLink FormsTwenty
-        ul
-          li
-            a(href="/users/register", title="Register") Register
-          li
-            a(href="/users/login", title="Login") Login
-
+        include ../includes/_headerLinks.pug
     block content
 
     footer.dark

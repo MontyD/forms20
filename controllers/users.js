@@ -6,25 +6,28 @@ var express = require('express'),
     passport = require('passport'),
     models = require(path.join(__dirname, '..', 'models')),
     respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON')),
-    handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError'));
+    handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError')),
+    passUser = require(path.join(__dirname, '..', 'middlewares', 'passUser'));
 
 // Get - login
 router.get('/login', function(req, res, next) {
 
+    req.logout();
     res.render('login');
 
 });
 
 router.post('/login', passport.authenticate('local', {
-    failureRedirect: '/login'
+    failureRedirect: '/users/login'
 }), function(req, res, next) {
-  res.send(req.user);
+    res.redirect('/');
 });
 
 
 router.get('/register', function(req, res, next) {
 
-  res.render('register');
+    req.logout();
+    res.render('register');
 
 });
 
@@ -47,6 +50,14 @@ router.post('/register', function(req, res, next) {
     });
 });
 
+// Get - logout
+router.get('/logout', function(req, res, next) {
+
+    req.logout();
+
+    res.redirect('/');
+
+});
 
 
 module.exports = router;

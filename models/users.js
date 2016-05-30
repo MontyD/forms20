@@ -25,6 +25,12 @@ module.exports = function(sequelize, DataTypes) {
                 }
             }
         },
+        fullName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        firstName: DataTypes.STRING,
+        lastName: DataTypes.STRING,
         admin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
@@ -43,6 +49,8 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         hooks: {
             beforeCreate: function(user, options, cb) {
+              user.firstName = user.fullName.split(' ')[0] || '';
+              user.lastName = user.fullName.split(' ')[1] || '';
                 bcrypt.genSalt(12, function(err, salt) {
                     if (err) {
                         cb(err, options);

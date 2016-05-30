@@ -38,6 +38,8 @@ app.use(session({
     }
 }));
 
+
+// Passport setup
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -50,12 +52,12 @@ passport.deserializeUser(function(user, done) {
 });
 
 passport.use(new LocalStrategy(
-    function(username, password, done) {
+    function(reqUsername, password, done) {
         models.users.findOne({
             where: {
-                'username': username
+                'username': reqUsername
             },
-            attributes: ['salt', 'password']
+            attributes: ['salt', 'password', 'id', 'firstName', 'admin']
         }).then(function(user) {
             if (!user) {
                 return done(null, false, {
@@ -67,7 +69,7 @@ passport.use(new LocalStrategy(
                     done(null, false, err);
                 }
                 if (hash === user.password) {
-                    return done(null, user);
+                    return done(null, {id: user.id, username: reqUsername, firstName: user.firstName, admin: user.admin});
                 }
                 return done(null, false, {
                     message: 'Incorrect credentials.'
@@ -77,6 +79,8 @@ passport.use(new LocalStrategy(
     }
 ));
 
+
+// Rate limit setup
 var limiter = new RateLimit({
     windowMs: 10 * 60 * 1000,
     max: 20,
@@ -85,14 +89,20 @@ var limiter = new RateLimit({
 
 app.use('/temporaryForms', limiter);
 
+
+// Logging
 if (config.env === 'development') {
     app.use(morgan('dev'));
 } else {
     app.use(morgan('combined'));
 }
 
+
+// Routing - in controllers
 app.use(controllers);
 
+
+// Error handling
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -132,6 +142,8 @@ app.use(function(err, req, res, next) {
     }
 });
 
+
+// Init - sync database and create default user if none exists
 models.sequelize.sync().then(function() {
     models.users.count().then(function(count) {
         if (count === 0) {
@@ -139,6 +151,8 @@ models.sequelize.sync().then(function() {
                 username: config.defaultUser.username,
                 password: config.defaultUser.password,
                 email: config.defaultUser.email,
+                fullName: config.defaultUser.actualName,
+                admin: true
             }).then(function(user) {
                 console.log(user.username + ' created!');
             }).catch(function(err) {

@@ -441,11 +441,10 @@ p.slight {
   .lnr.feature::before {
     display: inline-block;
     vertical-align: middle;
-    padding-left: 4px; }
+    padding-left: 5px; }
   .lnr.feature.dark {
     color: #303F9F;
-    background: transparent;
-    border: 1px solid #303F9F; }
+    background: #E0E0E0; }
 
 .container {
   display: block;
@@ -560,6 +559,8 @@ ul[dnd-list] li {
   .modal h2,
   .modal h3 {
     font-size: 1.4em; }
+  .modal.main {
+    margin: 5% auto; }
 
 .modalOpen {
   position: relative;
@@ -1384,11 +1385,10 @@ p.slight {
   .lnr.feature::before {
     display: inline-block;
     vertical-align: middle;
-    padding-left: 4px; }
+    padding-left: 5px; }
   .lnr.feature.dark {
     color: #303F9F;
-    background: transparent;
-    border: 1px solid #303F9F; }
+    background: #E0E0E0; }
 
 .container {
   display: block;
@@ -1503,6 +1503,8 @@ ul[dnd-list] li {
   .modal h2,
   .modal h3 {
     font-size: 1.4em; }
+  .modal.main {
+    margin: 5% auto; }
 
 .modalOpen {
   position: relative;

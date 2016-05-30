@@ -3,11 +3,7 @@ block content
   body
     nav.top
       .container
-        ul
-          li
-            a(href="/users/register", title="Register") Register
-          li
-            a(href="/users/login", title="Login") Login
+        include ./includes/_headerLinks.pug
     header
       h1.shadow Forms Twenty
       a(href="create", title="Create Form").fakeButton.accent Create Form
