@@ -5,7 +5,8 @@ block content
       .lnr.lnr-user.feature
       h2.slight Register
       form(name="register", method="post")
-        input(type="text", name="username", id="username", placeholder="Username", required="required", autofocus="autofocus")
+        input(type="text", name="fullName", id="fullName", placeholder="Full Name", required="required", autofocus="autofocus")
+        input(type="text", name="username", id="username", placeholder="Username", required="required")
         input(type="email", name="email", id="email", placeholder="Email address", required="required")
         input(type="password", name="password", id="password", placeholder="Password", required="required")
         input(type="password", name="passwordConfirmation", id="passwordConfirmation", placeholder="Confirm password", required="required")

@@ -4,7 +4,12 @@ block content
     .modal.light.main
       .lnr.lnr-user.feature.dark
       h2.slight Login
+      if (newAccount)
+        p Thanks for signing up! Please sign in below:
       form(name="register", method="post")
-        input(type="text", name="username", id="username", placeholder="Username", required="required", autofocus="autofocus")
+        if (!temporaryUserName)
+          input(type="text", name="username", id="username", placeholder="Username", required="required", autofocus="autofocus")
+        else
+          input(type="text", name="username", id="username", placeholder="Username", required="required", autofocus="autofocus", value=temporaryUserName)
         input(type="password", name="password", id="password", placeholder="Password", required="required")
         input(type="submit")

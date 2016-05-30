@@ -13,7 +13,18 @@ var express = require('express'),
 router.get('/login', function(req, res, next) {
 
     req.logout();
-    res.render('login');
+
+    var locals = {};
+
+    if (req.query.newAccount) {
+      locals.newAccount = true;
+    }
+
+    if (req.query.username) {
+      locals.temporaryUserName = req.query.username;
+    }
+
+    res.render('login', locals);
 
 });
 
@@ -41,10 +52,11 @@ router.post('/register', function(req, res, next) {
     }
     models.users.create({
         username: req.body.username,
+        fullName: req.body.fullName,
         password: req.body.password,
         email: req.body.email,
     }).then(function(user) {
-        res.redirect('/users/login');
+        res.redirect('/users/login?newAccount=true&username=' + user.username);
     }).catch(function(error) {
         handleError(error, next);
     });
