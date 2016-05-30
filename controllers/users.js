@@ -4,6 +4,7 @@ var express = require('express'),
     router = express.Router(),
     path = require('path'),
     passport = require('passport'),
+    mailer = require(path.join(__dirname, '..', 'mailer')),
     models = require(path.join(__dirname, '..', 'models')),
     respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON')),
     handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError')),
@@ -56,6 +57,7 @@ router.post('/register', function(req, res, next) {
         password: req.body.password,
         email: req.body.email,
     }).then(function(user) {
+        mailer.verificationEmail(user.email, user.firstName, user.username + '/verifyemail?hash=' + user.emailVerificationHash);
         res.redirect('/users/login?newAccount=true&username=' + user.username);
     }).catch(function(error) {
         handleError(error, next);
