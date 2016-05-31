@@ -660,8 +660,8 @@ ul[dnd-list] li {
   border-color: #FFFFFF; }
 
 .slightGradient {
-  background: -webkit-radial-gradient(#394bbd, #2b398f);
-  background: radial-gradient(#394bbd, #2b398f); }
+  background: -webkit-radial-gradient(#394bbd, #25317b);
+  background: radial-gradient(#394bbd, #25317b); }
 
 *[field-editable] {
   cursor: pointer; }
@@ -1592,8 +1592,8 @@ ul[dnd-list] li {
   border-color: #FFFFFF; }
 
 .slightGradient {
-  background: -webkit-radial-gradient(#394bbd, #2b398f);
-  background: radial-gradient(#394bbd, #2b398f); }
+  background: -webkit-radial-gradient(#394bbd, #25317b);
+  background: radial-gradient(#394bbd, #25317b); }
 
 *[field-editable] {
   cursor: pointer; }
@@ -1636,7 +1636,6 @@ nav.top {
     vertical-align: middle;
     color: rgba(255, 255, 255, 0.8);
     font-size: 1.6em;
-    font-style: italic;
     font-weight: bold;
     text-shadow: 2px 2px 0 #303F9F;
     padding: 0.2em 0.4em; }

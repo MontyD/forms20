@@ -78,33 +78,37 @@
 
 	var _directivesSettingsStyleEs6Js2 = _interopRequireDefault(_directivesSettingsStyleEs6Js);
 
-	var _directivesSelectEs6Js = __webpack_require__(12);
+	var _directivesSettingsConfigEs6Js = __webpack_require__(12);
+
+	var _directivesSettingsConfigEs6Js2 = _interopRequireDefault(_directivesSettingsConfigEs6Js);
+
+	var _directivesSelectEs6Js = __webpack_require__(14);
 
 	var _directivesSelectEs6Js2 = _interopRequireDefault(_directivesSelectEs6Js);
 
 	//Vendor imports
 
-	var _angularDragAndDropLists = __webpack_require__(14);
+	var _angularDragAndDropLists = __webpack_require__(16);
 
 	var _angularDragAndDropLists2 = _interopRequireDefault(_angularDragAndDropLists);
 
 	//Services
 
-	var _servicesTempFormsEs6Js = __webpack_require__(15);
+	var _servicesTempFormsEs6Js = __webpack_require__(17);
 
 	var _servicesTempFormsEs6Js2 = _interopRequireDefault(_servicesTempFormsEs6Js);
 
-	var _servicesGlobalConfigEs6Js = __webpack_require__(16);
+	var _servicesGlobalConfigEs6Js = __webpack_require__(18);
 
 	var _servicesGlobalConfigEs6Js2 = _interopRequireDefault(_servicesGlobalConfigEs6Js);
 
 	//Config
 
-	var _configNewFormConfigEs6Js = __webpack_require__(17);
+	var _configNewFormConfigEs6Js = __webpack_require__(19);
 
 	var _configNewFormConfigEs6Js2 = _interopRequireDefault(_configNewFormConfigEs6Js);
 
-	_angular2['default'].module('app', [_angularUiRouter2['default'], 'dndLists']).directive('fieldEditable', _directivesFieldEditableEs6Js2['default']).directive('settingsStyle', _directivesSettingsStyleEs6Js2['default']).directive('field', _directivesFieldEs6Js2['default']).directive('fieldSettings', _directivesFieldSettingsEs6Js2['default']).directive('customSelect', _directivesSelectEs6Js2['default']).service('tempFormsService', _servicesTempFormsEs6Js2['default']).service('globalConfigService', _servicesGlobalConfigEs6Js2['default']).controller('NewFormCtrl', _controllersCreateFormCtrlEs6Js2['default']).config(_configNewFormConfigEs6Js2['default']);
+	_angular2['default'].module('app', [_angularUiRouter2['default'], 'dndLists']).directive('fieldEditable', _directivesFieldEditableEs6Js2['default']).directive('fieldSettings', _directivesFieldSettingsEs6Js2['default']).directive('settingsStyle', _directivesSettingsStyleEs6Js2['default']).directive('settingsConfig', _directivesSettingsConfigEs6Js2['default']).directive('field', _directivesFieldEs6Js2['default']).directive('customSelect', _directivesSelectEs6Js2['default']).service('tempFormsService', _servicesTempFormsEs6Js2['default']).service('globalConfigService', _servicesGlobalConfigEs6Js2['default']).controller('NewFormCtrl', _controllersCreateFormCtrlEs6Js2['default']).config(_configNewFormConfigEs6Js2['default']);
 
 /***/ },
 /* 1 */
@@ -35823,7 +35827,6 @@
 	        link: function link(scope, element, attrs) {
 
 	            scope.setTheme = function (theme) {
-	                console.log('called');
 	                if (!theme) {
 	                    return false;
 	                }
@@ -35850,6 +35853,36 @@
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	function fieldSettings() {
+	    return {
+	        restrict: 'E',
+	        scope: {},
+
+	        template: __webpack_require__(13),
+
+	        link: function link(scope, element, attrs) {}
+
+	    };
+	}
+
+	exports['default'] = fieldSettings;
+	module.exports = exports['default'];
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	module.exports = "<section class=\"settingsConfig\">\n    <h1>Config</h1>\n</section>\n";
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
 	function customSelect() {
@@ -35860,7 +35893,7 @@
 	      options: '='
 	    },
 
-	    template: __webpack_require__(13),
+	    template: __webpack_require__(15),
 
 	    link: function link(scope, element, attrs) {
 
@@ -35890,13 +35923,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"customSelect\">\n    <button type=\"button\" ng-click=\"openSelect()\" ng-class=\"{'active': !open}\">{{ activeItem || 'Select an option'}} <span class=\"lnr lnr-chevron-down\"></span></button>\n    <ul ng-class=\"{'active': open}\" class=\"customSelect\">\n        <li ng-repeat=\"entry in options track by $index\" ng-click=\"selected(entry)\" class=\"customSelect\">{{entry.text || entry}}</li>\n    </ul>\n</div>\n";
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports) {
 
 	/**
@@ -36492,7 +36525,7 @@
 
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -36546,7 +36579,7 @@
 	module.exports = TemporaryFormsService;
 
 /***/ },
-/* 16 */
+/* 18 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -36583,7 +36616,7 @@
 	module.exports = GlobalConfigService;
 
 /***/ },
-/* 17 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36598,7 +36631,7 @@
 
 	    $stateProvider.state('create', {
 	        url: '/create',
-	        template: __webpack_require__(18),
+	        template: __webpack_require__(20),
 	        controller: 'NewFormCtrl',
 	        controllerAs: 'newForm'
 	    });
@@ -36608,7 +36641,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports) {
 
 	module.exports = "<aside class=\"dark settings\">\n    <nav>\n        <ul>\n            <li ng-class=\"{active: newForm.settings==='field'}\" ng-click=\"newForm.setSettings('field')\">Field</li>\n            <li ng-class=\"{active: newForm.settings==='style'}\" ng-click=\"newForm.setSettings('style')\">Style</li>\n            <li ng-class=\"{active: newForm.settings==='config'}\" ng-click=\"newForm.setSettings('config')\">Config</li>\n        </ul>\n    </nav>\n    <field-settings ng-if=\"newForm.settings==='field'\" field=\"newForm.settingsField\" delete=\"newForm.removeField()\"></field-settings>\n    <settings-style ng-if=\"newForm.settings==='style'\" objectstyle=\"newForm.form.style\" themes=\"newForm.availableThemes\"></settings-style>\n    <settings-config ng-if=\"newForm.settings==='config'\" formConfig=\"\"></settings-config>\n</aside>\n<main class=\"createForm\">\n\n    <section class=\"form\" ng-class=\"newForm.form.style.font + ' ' + newForm.form.style.class\">\n        <header class=\"add\">\n            <h2 field-editable value=\"newForm.form.title\" initial=\"New Form\"></h2>\n            <p class=\"slight\" field-editable value=\"form.description\" initial=\"Form description, click here to edit\"></p>\n        </header>\n        <ul dnd-list=\"newForm.form.fields\">\n            <li ng-repeat=\"field in newForm.form.fields\" dnd-draggable=\"field\" dnd-moved=\"newForm.form.fields.splice($index, 1)\" dnd-effect-allowed=\"move\" dnd-selected=\"newForm.selected = item\" ng-class=\"{'fullWidth': field.fullWidth, 'halfWidth': !field.fullWidth}\">\n                <field options=\"field\" settings=\"newForm.feildSettings(field)\"></field>\n            </li>\n        </ul>\n\n        <article class=\"modalOpen\" ng-class=\"{active: newForm.addingField}\">\n            <button ng-click=\"newForm.startAddingField()\" class=\"trigger newField\">New question!</button>\n            <form class=\"hide outline\" name=\"newfield\" ng-submit=\"newForm.newField()\">\n                <input type=\"text\" name=\"questiontext\" ng-model=\"newForm.newQuestion.text\" class=\"outline\" ng-class=\"{'error': newForm.newQuestion.submitted && newForm.newQuestion.text === ''}\" autofocus=\"autofocus\" placeholder=\"Ask a question\">\n                <label for=\"type\">What type of answer do you want?</label>\n                <custom-select target=\"newForm.newQuestion.type\" options=\"[{value: 'smallText', text:'Small text'}, {value: 'largeText', text:'Large text'}, {value:'number', text: 'Number'}, {value:'currency', text: 'Currency'},{value: 'date', text:'Date'},{value: 'boolean', text:'Yes / No'},{value: 'select', text: 'Multiple choice'}, {value: 'dropdown', text: 'Dropdown'},{value:'email', text: 'Email Address'}]\"></custom-select>\n                <div ng-if=\"newForm.newQuestion.type === 'select' || newForm.newQuestion.type === 'dropdown'\" class=\"options\">\n                    <label>Options:</label>\n                    <input ng-repeat=\"option in newForm.newQuestion.options track by $index\" type=\"text\" placeholder=\"Answer...\" ng-model=\"newForm.newQuestion.options[$index]\" ng-keydown=\"newForm.continueArray()\" class=\"outline\" />\n                    <input name=\"multi\" type=\"checkbox\" id=\"multi\" ng-model=\"newForm.newQuestion.allowMultiple\" ng-if=\"newForm.newQuestion.type !== 'dropdown'\">\n                    <label for=\"multi\" class=\"checkbox\" ng-if=\"newForm.newQuestion.type !== 'dropdown'\">Allow the user to select multiple</label>\n                </div>\n                <textarea name=\"help\" ng-model=\"newForm.newQuestion.help\" placeholder=\"Add instructions\" class=\"outline\"></textarea>\n                <div>\n                    <input type=\"checkbox\" name=\"fullWidth\" id=\"fullWidth\" ng-model=\"newForm.newQuestion.fullWidth\" />\n                    <label for=\"fullWidth\" class=\"checkbox\">Big field</label>\n                </div>\n                <div>\n                    <input type=\"checkbox\" name=\"required\" id=\"required\" ng-model=\"newForm.newQuestion.required\" />\n                    <label for=\"required\" class=\"checkbox\">Required?</label>\n                </div>\n                <div>\n                    <button type=\"submit\" ng-click=\"newForm.newQuestion.submitted=true\">Create</button>\n                    <button class=\"secondary\" ng-click=\"newForm.cancelAddingField()\">Cancel</button>\n                </div>\n            </form>\n        </article>\n\n\n    </section>\n\n\n</main>\n";

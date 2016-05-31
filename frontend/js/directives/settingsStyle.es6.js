@@ -13,7 +13,6 @@ function fieldSettings() {
         link: (scope, element, attrs) => {
 
             scope.setTheme = theme => {
-              console.log('called');
                 if (!theme) {
                     return false;
                 }

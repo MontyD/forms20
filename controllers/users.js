@@ -19,11 +19,11 @@ router.get('/login', function(req, res, next) {
     var locals = {};
 
     if (req.query.newAccount) {
-      locals.newAccount = true;
+        locals.newAccount = true;
     }
 
     if (req.query.username) {
-      locals.temporaryUserName = req.query.username;
+        locals.temporaryUserName = req.query.username;
     }
 
     res.render('login', locals);
@@ -34,8 +34,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local', {
     failureRedirect: '/users/login'
 }), function(req, res, next) {
-  var redirect = req.body.originalURL || '/users/home';
-  console.log('yes!');
+    var redirect = req.body.originalURL || '/users/home';
     res.redirect(redirect);
 });
 
@@ -70,9 +69,9 @@ router.post('/register', function(req, res, next) {
 });
 
 // Get home - render user home admin
-router.get('/home', checkUser, passUser, function(req, res){
+router.get('/home', checkUser, passUser, function(req, res) {
 
-  res.render('userHome');
+    res.render('userHome');
 
 });
 

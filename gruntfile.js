@@ -7,7 +7,7 @@ var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var bundlesPath = path.resolve(__dirname, 'public', 'bundles');
 
 var entryPoints = {
-    newForm: path.resolve(__dirname, 'frontend', 'js', 'createForm.es6.js'),
+    newForm: path.resolve(__dirname, 'frontend', 'js', 'newForm.es6.js'),
 };
 
 module.exports = function(grunt) {
