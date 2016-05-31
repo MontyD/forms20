@@ -639,6 +639,10 @@ ul[dnd-list] li {
   background: #303F9F;
   color: #FFFFFF; }
 
+.blue {
+  background: #3F51B5;
+  color: #FFFFFF; }
+
 .light {
   background: #FFFFFF;
   color: #212121; }
@@ -1569,6 +1573,10 @@ ul[dnd-list] li {
 
 .dark {
   background: #303F9F;
+  color: #FFFFFF; }
+
+.blue {
+  background: #3F51B5;
   color: #FFFFFF; }
 
 .light {

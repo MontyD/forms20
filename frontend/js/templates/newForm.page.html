@@ -1,4 +1,4 @@
-<aside class="dark settings">
+<aside class="blue settings">
     <nav>
         <ul>
             <li ng-class="{active: newForm.settings==='field'}" ng-click="newForm.setSettings('field')">Field</li>
@@ -8,7 +8,7 @@
     </nav>
     <field-settings ng-if="newForm.settings==='field'" field="newForm.settingsField" delete="newForm.removeField()"></field-settings>
     <settings-style ng-if="newForm.settings==='style'" objectstyle="newForm.form.style" themes="newForm.availableThemes"></settings-style>
-    <settings-config ng-if="newForm.settings==='config'" formConfig=""></settings-config>
+    <settings-config ng-if="newForm.settings==='config'" objectconfig="newForm.form.configuration"></settings-config>
 </aside>
 <main class="createForm">
 

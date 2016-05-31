@@ -4,7 +4,7 @@ function fieldSettings() {
     return {
         restrict: 'E',
         scope: {
-
+          config: '=objectconfig'
         },
 
         template: require('./templates/settingsConfig.template.html'),

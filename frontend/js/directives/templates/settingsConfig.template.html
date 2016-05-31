@@ -1,3 +1,6 @@
 <section class="settingsConfig">
-    <h1>Config</h1>
+    <label>Email for form responses:</label>
+    <input type="email" ng-model="config.email" id="email" class="outline white" placeholder="email@example.com"/>
+
+    <button ng-if="config.email.length > 3" ng-click="verifyEmail()" class="white">Verify Email</button>
 </section>

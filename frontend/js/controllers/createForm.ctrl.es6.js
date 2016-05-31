@@ -15,6 +15,12 @@ class NewFormCtrl {
               font: 'sans-serif',
               class: 'basic'
             },
+            configuration: {
+              email: 'ThisISAnEmail@hello.com',
+              submissions: 20,
+              notify: 1,
+              format: 'pdf',
+            }
         };
 
         this.newQuestion = {
