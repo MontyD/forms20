@@ -1,6 +1,6 @@
 <section class="settingsConfig">
     <label>Email for form responses:</label>
-    <input type="email" ng-model="config.email" id="email" class="outline white" placeholder="email@example.com"/>
+    <input type="email" ng-model="config.email" id="email" class="outline white" placeholder="email@example.com" ng-disabled="beingVerified || verified"/>
 
-    <button ng-if="config.email.length > 3" ng-click="verifyEmail()" class="white">Verify Email</button>
+    <button ng-if="config.email.length > 3 && !verified" ng-click="verifyEmail()" class="white" ng-disabled="beingVerified">Verify Email</button>
 </section>

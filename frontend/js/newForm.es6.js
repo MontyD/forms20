@@ -17,6 +17,7 @@ import dndLists from 'angular-drag-and-drop-lists';
 //Services
 import TemporaryFormsService from './services/tempForms.es6.js';
 import GlobalConfigService from './services/globalConfig.es6.js';
+import PseudoUsersService from './services/pseudoUsers.es6.js';
 
 //Config
 import appConfig from './config/newFormConfig.es6.js';
@@ -30,5 +31,6 @@ angular.module('app', [uiRouter, 'dndLists'])
   .directive('customSelect', customSelect)
   .service('tempFormsService', TemporaryFormsService)
   .service('globalConfigService', GlobalConfigService)
+  .service('pseudoUsersService', PseudoUsersService)
   .controller('NewFormCtrl', NewFormCtrl)
   .config(appConfig);

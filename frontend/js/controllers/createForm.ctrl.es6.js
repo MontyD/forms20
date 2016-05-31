@@ -2,24 +2,25 @@
 
 class NewFormCtrl {
 
-    constructor(tempFormsService, globalConfigService) {
+    constructor(tempFormsService, globalConfigService, pseudoUsersService) {
 
         this.tempFormsService = tempFormsService;
         this.globalConfigService = globalConfigService;
+        this.pseudoUsersService = pseudoUsersService;
 
         this.form = {
             name: 'New Form',
             fields: [],
             description: '',
             style: {
-              font: 'sans-serif',
-              class: 'basic'
+                font: 'sans-serif',
+                class: 'basic'
             },
             configuration: {
-              email: 'ThisISAnEmail@hello.com',
-              submissions: 20,
-              notify: 1,
-              format: 'pdf',
+                email: 'ThisISAnEmail@hello.com',
+                submissions: 20,
+                notify: 1,
+                format: 'pdf',
             }
         };
 
@@ -45,13 +46,13 @@ class NewFormCtrl {
 
         this.availableThemes = [];
 
-        if(this.availableThemes.length === 0) {
-          this.globalConfigService.getThemes()
-            .then(
-              result => this.availableThemes = result.data,
-              // TODO error handling
-              result => console.error(result)
-            );
+        if (this.availableThemes.length === 0) {
+            this.globalConfigService.getThemes()
+                .then(
+                    result => this.availableThemes = result.data,
+                    // TODO error handling
+                    result => console.error(result)
+                );
 
         }
 
@@ -90,11 +91,11 @@ class NewFormCtrl {
     }
 
     removeField() {
-      var index = this.form.fields.indexOf(this.settingsField);
-      if (index > -1) {
-        this.form.fields.splice(index, 1);
-      }
-      this.settingsField = undefined;
+        var index = this.form.fields.indexOf(this.settingsField);
+        if (index > -1) {
+            this.form.fields.splice(index, 1);
+        }
+        this.settingsField = undefined;
     }
 
     registerForm() {
@@ -107,6 +108,23 @@ class NewFormCtrl {
                 //TODO error trap;
                 result => console.error(result)
             );
+    }
+
+    sendVerificationEmail() {
+      console.log('here');
+        this.pseudoUsersService.sendVerification()
+            .then(
+                result => {
+                    //TODO confirmation message;
+                    console.log('yes!');
+                },
+                // TODO error trap;
+                error => {
+                    console.error(error);
+                }
+            );
+
+
     }
 
     startAddingField() {
@@ -123,13 +141,13 @@ class NewFormCtrl {
     }
 
     setSettings(section) {
-      if (section) {
-        this.settings = section;
-      }
+        if (section) {
+            this.settings = section;
+        }
     }
 
 }
 
-NewFormCtrl.$inject = ['tempFormsService', 'globalConfigService'];
+NewFormCtrl.$inject = ['tempFormsService', 'globalConfigService', 'pseudoUsersService'];
 
 export default NewFormCtrl;
