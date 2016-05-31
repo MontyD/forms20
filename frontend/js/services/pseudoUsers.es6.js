@@ -9,8 +9,8 @@ class PseudoUsersService {
         };
     }
 
-    sendVerification() {
-        return this.$http.post(this.urlBase + 'emailVerification', {
+    sendVerification(email) {
+        return this.$http.post(this.urlBase + 'emailVerification', {email: email}, {
             headers: this.headers
         });
     }

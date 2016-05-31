@@ -8,7 +8,7 @@
     </nav>
     <field-settings ng-if="newForm.settings==='field'" field="newForm.settingsField" delete="newForm.removeField()"></field-settings>
     <settings-style ng-if="newForm.settings==='style'" objectstyle="newForm.form.style" themes="newForm.availableThemes"></settings-style>
-    <settings-config ng-if="newForm.settings==='config'" objectconfig="newForm.form.configuration" sendverification="newForm.sendVerificationEmail()"></settings-config>
+    <settings-config ng-if="newForm.settings==='config'" objectconfig="newForm.form.config" sendverification="newForm.sendVerificationEmail()"></settings-config>
 </aside>
 <main class="createForm">
 

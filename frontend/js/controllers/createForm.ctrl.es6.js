@@ -16,7 +16,7 @@ class NewFormCtrl {
                 font: 'sans-serif',
                 class: 'basic'
             },
-            configuration: {
+            config: {
                 email: 'ThisISAnEmail@hello.com',
                 submissions: 20,
                 notify: 1,
@@ -111,8 +111,7 @@ class NewFormCtrl {
     }
 
     sendVerificationEmail() {
-      console.log('here');
-        this.pseudoUsersService.sendVerification()
+        this.pseudoUsersService.sendVerification(this.form.config.email)
             .then(
                 result => {
                     //TODO confirmation message;
