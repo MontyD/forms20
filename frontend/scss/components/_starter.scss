@@ -131,12 +131,20 @@ p.slight {
     font-weight   : normal;
     padding-bottom: 1em;
 }
-.lnr.feature {
-    display      : block;
-    margin       : 0.4em auto;
+.inlineTitle {
+  display: inline-block;
+  vertical-align: center;
+  font-size: 2em;
+  padding: 0 0.2em;
+}
+.padded {
+  padding: 1em;
+}
+.feature {
+    margin       : 0.2em;
     font-size    : 5em;
-    width        : 1.5em;
-    height       : 1.5em;
+    width        : 1em;
+    height       : 1em;
     line-height  : 1.1em;
     border-radius: 50%;
     color        : $colorGrey;
@@ -160,8 +168,14 @@ p.slight {
     width     : 100%;
     max-width : $containerWidth;
 }
+.leftAligned {
+  text-align: left;
+}
 .center {
     text-align: center;
+}
+.vCenter{
+  vertical-align: middle;
 }
 .fakeButton,
 button,

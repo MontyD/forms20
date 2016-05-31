@@ -2,8 +2,9 @@ extends layouts/utilities
 block content
   .container
     .modal.light.main
-      .lnr.lnr-user.feature
-      h2.slight Register
+      .padded.leftAligned
+        img(src="/img/Add User-80.png", alt="User").feature.vCenter
+        p.inlineTitle.vCenter Register
       form(name="register", method="post")
         input(type="text", name="fullName", id="fullName", placeholder="Full Name", required="required", autofocus="autofocus")
         input(type="text", name="username", id="username", placeholder="Username", required="required")

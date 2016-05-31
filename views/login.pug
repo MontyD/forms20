@@ -2,8 +2,9 @@ extends layouts/utilities
 block content
   .container
     .modal.light.main
-      .lnr.lnr-user.feature.dark
-      h2.slight Login
+      .padded.leftAligned
+        img(src="/img/User Menu-80.png", alt="User").feature.vCenter
+        p.inlineTitle.vCenter Login
       if (newAccount)
         p Thanks for signing up! Please sign in below:
       form(name="register", method="post")
