@@ -16,7 +16,7 @@ class PseudoUsersService {
     }
 
     checkVerification(id, hash) {
-        return this.$http.post(this.urlBase + 'checkVerification', {userId: id, verificationCode: hash}, {
+        return this.$http.put(this.urlBase + 'emailVerification', {userId: id, verificationCode: hash}, {
             headers: this.headers
         });
     }

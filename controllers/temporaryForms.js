@@ -27,23 +27,25 @@ router.post('/', respondsToJSON, function(req, res, next) {
 // Get -- return json of single temp form, and echo back
 router.get('/:form', respondsToJSON, function(req, res, next) {
 
-  if (!req.params.form || !req.query.hash || isNaN(req.params.form)) {
-      return handleError({
-          message: 'Inconsistent post data',
-          status: 401
-      }, next);
-  }
+    if (!req.params.form || !req.query.hash || isNaN(req.params.form)) {
+        return handleError({
+            message: 'Inconsistent post data',
+            status: 401
+        }, next);
+    }
 
-  models.temporaryForms.findById(req.params.form).then(function(form) {
-      if (form.hash !== req.query.hash) {
-          return handleError({
-              message: 'Inconsistent post data',
-              status: 401
-          }, next);
-      }
+    models.temporaryForms.findById(req.params.form).then(function(form) {
+        if (form.hash !== req.query.hash) {
+            return handleError({
+                message: 'Inconsistent post data',
+                status: 401
+            }, next);
+        }
 
-      res.json(form);
+        res.json(form);
 
+    }, function(error) {
+        handleError(error, next);
     });
 
 });
@@ -76,15 +78,15 @@ router.put('/:form', respondsToJSON, function(req, res, next) {
             data.name = reqData.name;
         }
         if (reqData.description) {
-          data.description = reqData.description;
+            data.description = reqData.description;
         }
         if (reqData.style) {
-          data.style = reqData.style;
+            data.style = reqData.style;
         }
 
         form.update(data).then(function(response) {
-          console.log(response);
-          res.send(response);
+            console.log(response);
+            res.send(response);
         }, function(error) {
             handleError(error, next);
         });

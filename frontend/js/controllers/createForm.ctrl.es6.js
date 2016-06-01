@@ -122,7 +122,6 @@ class NewFormCtrl {
             .then(
                 result => {
                     //TODO confirmation message;
-                    console.log('yes!');
                     this.userId = result.data.pUserId;
                 },
                 // TODO error trap;
@@ -139,8 +138,7 @@ class NewFormCtrl {
             .then(
                 result => {
                     //TODO confirmation message;
-                    this.form.config.verified = true;
-                    console.log(result);
+                    this.form.config.verified = result.data.verified;
                 },
                 // TODO error trap;
                 error => {

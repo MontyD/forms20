@@ -13,7 +13,6 @@ var express = require('express'),
 
 // Post - to send verfication email and setup new Pseudo user
 router.post('/emailVerification', respondsToJSON, function(req, res, next) {
-  console.log(req.body);
     var randomHash = crypto.randomBytes(4).toString('hex');
     models.pseudoUsers.create({
         email: req.body.email,
@@ -23,8 +22,30 @@ router.post('/emailVerification', respondsToJSON, function(req, res, next) {
             if (err) {
                 return handleError(err, next);
             }
-            res.json({pUserId: user.id});
+            return res.json({
+                pUserId: user.id
+            });
         });
+    }, function(err) {
+        return handleError(err, next);
+    });
+});
+
+// Put - to send check verification code and confirm or respond with no
+router.put('/emailVerification', respondsToJSON, function(req, res, next) {
+
+    models.pseudoUsers.findById(req.body.userId).then(function(user) {
+        if (user.emailVerification === req.body.verificationCode) {
+            user.update({
+                emailVerified: true
+            }).then(function(user) {
+              return res.json({verified: true});
+            }, function(err) {
+              return handleError(err, next);
+            })
+        } else {
+          res.json({verified: false});
+        }
     }, function(err) {
         return handleError(err, next);
     });

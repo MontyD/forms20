@@ -35683,7 +35683,6 @@
 
 	            this.pseudoUsersService.sendVerification(this.form.config.email).then(function (result) {
 	                //TODO confirmation message;
-	                console.log('yes!');
 	                _this3.userId = result.data.pUserId;
 	            },
 	            // TODO error trap;
@@ -35694,9 +35693,11 @@
 	    }, {
 	        key: 'checkVerificationCode',
 	        value: function checkVerificationCode() {
+	            var _this4 = this;
+
 	            this.pseudoUsersService.checkVerification(this.userId, this.form.config.verificationCode).then(function (result) {
 	                //TODO confirmation message;
-	                console.log(result);
+	                _this4.form.config.verified = result.data.verified;
 	            },
 	            // TODO error trap;
 	            function (error) {
@@ -36703,7 +36704,7 @@
 	    }, {
 	        key: 'checkVerification',
 	        value: function checkVerification(id, hash) {
-	            return this.$http.post(this.urlBase + 'checkVerification', { userId: id, verificationCode: hash }, {
+	            return this.$http.put(this.urlBase + 'emailVerification', { userId: id, verificationCode: hash }, {
 	                headers: this.headers
 	            });
 	        }
