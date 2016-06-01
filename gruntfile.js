@@ -106,7 +106,7 @@ module.exports = function(grunt) {
             dev: {
                 script: 'app.js',
                 cwd: __dirname,
-                ignore: ['node_modules/**', 'frontend/**', 'public/**', 'stats.json', '.sass-cache/**'],
+                ignore: ['node_modules/', 'frontend/', 'public/', 'stats.json', '.sass-cache/'],
                 ext: 'js',
             }
 

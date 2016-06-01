@@ -33,4 +33,10 @@ Object.keys(db).forEach(function(modelName) {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+
+// Relationships
+db.temporaryForms.belongsTo(db.pseudoUsers);
+db.pseudoUsers.hasMany(db.temporaryForms);
+
+
 module.exports = db;

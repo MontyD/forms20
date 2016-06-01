@@ -17,7 +17,7 @@ class NewFormCtrl {
                 class: 'basic'
             },
             config: {
-                email: 'ThisISAnEmail@hello.com',
+                email: '',
                 submissions: 20,
                 notify: 1,
                 format: 'pdf',

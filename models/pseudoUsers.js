@@ -1,12 +1,12 @@
 'use strict';
 
 module.exports = function(sequelize, DataTypes) {
-  var formTheme = sequelize.define('formThemes', {
-    name: DataTypes.STRING,
-    class: DataTypes.STRING,
+  var pseudoUser = sequelize.define('pseudoUsers', {
+    email: DataTypes.STRING,
+    emailVerification: DataTypes.STRING,
     description: DataTypes.TEXT,
     primaryColor: DataTypes.STRING,
     secondaryColor: DataTypes.STRING
   });
-  return formTheme;
+  return pseudoUser;
 };
