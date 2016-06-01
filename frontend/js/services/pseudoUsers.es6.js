@@ -15,6 +15,12 @@ class PseudoUsersService {
         });
     }
 
+    checkVerification(id, hash) {
+        return this.$http.post(this.urlBase + 'checkVerification', {userId: id, verificationCode: hash}, {
+            headers: this.headers
+        });
+    }
+
 }
 
 PseudoUsersService.$inject = ['$http'];

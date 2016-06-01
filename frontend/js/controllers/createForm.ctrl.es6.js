@@ -18,6 +18,8 @@ class NewFormCtrl {
             },
             config: {
                 email: '',
+                verificationCode: '',
+                verified: false,
                 submissions: 20,
                 notify: 1,
                 format: 'pdf',
@@ -36,6 +38,8 @@ class NewFormCtrl {
             fullWidth: false,
         };
 
+        this.userId = undefined;
+
         this.addingField = false;
 
         this.selected = undefined;
@@ -51,9 +55,10 @@ class NewFormCtrl {
                 .then(
                     result => this.availableThemes = result.data,
                     // TODO error handling
-                    result => console.error(result)
+                    result => {
+                      console.error(result);
+                    }
                 );
-
         }
 
     }
@@ -110,12 +115,15 @@ class NewFormCtrl {
             );
     }
 
+
+    // This also attaches UserId if pUser has been created
     sendVerificationEmail() {
         this.pseudoUsersService.sendVerification(this.form.config.email)
             .then(
                 result => {
                     //TODO confirmation message;
                     console.log('yes!');
+                    this.userId = result.data.pUserId;
                 },
                 // TODO error trap;
                 error => {
@@ -125,6 +133,24 @@ class NewFormCtrl {
 
 
     }
+
+    checkVerificationCode() {
+        this.pseudoUsersService.checkVerification(this.userId, this.form.config.verificationCode)
+            .then(
+                result => {
+                    //TODO confirmation message;
+                    this.form.config.verified = true;
+                    console.log(result);
+                },
+                // TODO error trap;
+                error => {
+                    console.error(error);
+                }
+            );
+
+    }
+
+
 
     startAddingField() {
         this.addingField = true;
