@@ -8,9 +8,7 @@ var express = require('express'),
     models = require(path.join(__dirname, '..', 'models')),
     respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON')),
     checkUser = require(path.join(__dirname, '..', 'middlewares', 'checkUser')),
-    handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError')),
-    passUser = require(path.join(__dirname, '..', 'middlewares', 'passUser'));
-
+    handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError'));
 // Get - login
 router.get('/login', function(req, res, next) {
 
@@ -69,7 +67,7 @@ router.post('/register', function(req, res, next) {
 });
 
 // Get home - render user home admin
-router.get('/home', checkUser, passUser, function(req, res) {
+router.get('/home', checkUser, function(req, res) {
 
     res.render('userHome');
 

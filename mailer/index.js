@@ -22,3 +22,18 @@ module.exports.verificationEmail = function(email, name, link) {
         }
     });
 };
+
+module.exports.verifyEmailNoLink = function(email, reqHash, cb) {
+  console.log(email);
+  console.log(reqHash);
+    app.mailer.send('verifyEmailNoLink', {
+        to: email,
+        subject: 'Verify your email address',
+        hash: reqHash,
+    }, function(err) {
+        if (err) {
+            return cb(err);
+        }
+        cb();
+    });
+};

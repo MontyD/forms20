@@ -9,7 +9,9 @@ router.use('/temporaryForms', require('./temporaryForms'));
 
 router.use('/config', require('./globalConfig'));
 
-router.use('/users', require('./users'));
+router.use('/users', passUser, require('./users'));
+
+router.use('/pseudoUsers', require('./pseudoUsers'));
 
 
 // render index
