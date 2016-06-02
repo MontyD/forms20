@@ -31026,6 +31026,8 @@
 	            config: {
 	                email: '',
 	                verificationCode: '',
+	                beingVerified: false,
+	                requestSent: false,
 	                verified: false,
 	                submissions: 20,
 	                notify: 1,
@@ -31060,10 +31062,8 @@
 	        if (this.availableThemes.length === 0) {
 	            this.globalConfigService.getThemes().then(function (result) {
 	                _this.availableThemes = result.data;
-	            },
-	            // TODO error handling
-	            function (result) {
-	                _this.Notification.error('Error communicating with server, please try again later');
+	            }, function (result) {
+	                _this.Notification.error('Error communicating with server, have another go later');
 	                console.error(result);
 	            });
 	        }
@@ -31133,12 +31133,26 @@
 	        value: function sendVerificationEmail() {
 	            var _this3 = this;
 
+	            this.Notification({
+	                message: 'Sending email...',
+	                title: 'Server thinking!'
+	            });
+	            this.form.config.requestSent = true;
 	            this.pseudoUsersService.sendVerification(this.form.config.email).then(function (result) {
-	                _this3.Notification.success('Email sent! Check your spam for an email from hello@montydawson.co.uk');
 	                _this3.userId = result.data.pUserId;
+	                _this3.form.config.requestSent = false;
+	                if (result.data.verified) {
+	                    _this3.Notification.success('Email already verified!');
+	                    _this3.form.config.verified = true;
+	                } else {
+	                    _this3.Notification('Email sent! Check your spam for an email from hello@montydawson.co.uk');
+	                    _this3.form.config.beingVerified = true;
+	                }
 	            }, function (error) {
 	                console.error(error);
-	                _this3.Notification.error('Email could not be sent, please check the email address. Else there is probably something wrong...');
+	                _this3.form.config.email = '';
+	                _this3.form.config.requestSent = false;
+	                _this3.Notification.error('Email could not be sent, please check the email address is valid');
 	            });
 	        }
 	    }, {
@@ -31147,12 +31161,13 @@
 	            var _this4 = this;
 
 	            this.pseudoUsersService.checkVerification(this.userId, this.form.config.verificationCode).then(function (result) {
-	                //TODO confirmation message;
 	                _this4.form.config.verified = result.data.verified;
-	                _this4.Notification.success('Email verified! Yay!');
-	            },
-	            // TODO error trap;
-	            function (error) {
+	                if (result.data.verified) {
+	                    _this4.Notification.success('Email verified! Yay!');
+	                } else {
+	                    _this4.Notification('Incorrect validation code');
+	                }
+	            }, function (error) {
 	                console.error(error);
 	                _this4.Notification.error('Email could not be verified, please check the code and try again.');
 	            });
@@ -31351,31 +31366,38 @@
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
-	  value: true
+	    value: true
 	});
 	function fieldSettings() {
-	  return {
-	    restrict: 'E',
-	    scope: {
-	      config: '=objectconfig',
-	      sendVerificationEmail: '&sendverification',
-	      checkVerificationCode: '&checkverification'
-	    },
+	    return {
+	        restrict: 'E',
+	        scope: {
+	            config: '=objectconfig',
+	            sendVerificationEmail: '&sendverification',
+	            checkVerificationCode: '&checkverification'
+	        },
 
-	    template: __webpack_require__(12),
+	        template: __webpack_require__(12),
 
-	    link: function link(scope, element, attrs) {
-	      scope.beingVerified = false;
+	        link: function link(scope, element, attrs) {
 
-	      scope.verified = false;
+	            scope.verified = false;
 
-	      scope.verifyEmail = function () {
-	        scope.beingVerified = true;
-	        scope.sendVerificationEmail();
-	      };
-	    }
+	            scope.cancel = function () {
+	                scope.config.beingVerified = false;
+	                scope.config.email = '';
+	                scope.config.verified = false;
+	            };
 
-	  };
+	            scope.sendVerification = function () {
+	                if (scope.config.requestSent || scope.config.email === '') {
+	                    return;
+	                }
+	                scope.sendVerificationEmail();
+	            };
+	        }
+
+	    };
 	}
 
 	exports['default'] = fieldSettings;
@@ -31385,7 +31407,7 @@
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"settingsConfig\">\n  <form ng-submit=\"verifyEmail()\" ng-if=\"!beingVerified && !config.verified\">\n    <label>Email for form responses:</label>\n    <input type=\"email\" ng-model=\"config.email\" id=\"email\" class=\"outline white\" placeholder=\"email@example.com\" autocomplete=\"off\"/>\n    <button  type=\"submit\" ng-disabled=\"config.email.length < 3\" class=\"white\">Verify Email</button>\n  </form>\n  <form ng-submit=\"checkVerificationCode()\" ng-if=\"beingVerified && !config.verified\">\n    <label>Verification code:</label>\n    <input type=\"text\" ng-model=\"config.verificationCode\" id=\"verificationCode\" class=\"outline white\" placeholder=\"Code\" />\n    <button type=\"submit\" class=\"white\">Submit code</button>\n  </form>\n</section>\n";
+	module.exports = "<section class=\"settingsConfig\">\n  <form ng-submit=\"sendVerification()\" ng-if=\"!config.beingVerified && !config.verified\">\n    <label>Email for form responses:</label>\n    <input type=\"email\" ng-model=\"config.email\" id=\"email\" class=\"outline white\" placeholder=\"email@example.com\" autocomplete=\"off\"/>\n    <button  type=\"submit\" ng-disabled=\"config.email.length < 3 || config.requestSent\" class=\"white \">Verify Email</button>\n  </form>\n  <form ng-submit=\"checkVerificationCode()\" ng-if=\"config.beingVerified && !config.verified\">\n    <label>Verification code:</label>\n    <input type=\"text\" ng-model=\"config.verificationCode\" id=\"verificationCode\" class=\"outline white\" placeholder=\"Code\" />\n    <button type=\"submit\" class=\"white primary\">Submit code</button><button type=\"button\" ng-click=\"cancel()\" class=\"white\">Cancel</button>\n  </form>\n  <p ng-if=\"config.email && config.verified\">Completed forms will be sent to: <strong>{{config.email}}</strong></p>\n  <button type=\"button\" ng-if=\"config.email && config.verified\"  ng-click=\"cancel()\" class=\"white\">Change email address</button>\n</section>\n";
 
 /***/ },
 /* 13 */

@@ -4,22 +4,29 @@ function fieldSettings() {
     return {
         restrict: 'E',
         scope: {
-          config: '=objectconfig',
-          sendVerificationEmail: '&sendverification',
-          checkVerificationCode: '&checkverification'
+            config: '=objectconfig',
+            sendVerificationEmail: '&sendverification',
+            checkVerificationCode: '&checkverification'
         },
 
         template: require('./templates/settingsConfig.template.html'),
 
         link: (scope, element, attrs) => {
-          scope.beingVerified = false;
 
-          scope.verified = false;
+            scope.verified = false;
 
-          scope.verifyEmail = () => {
-            scope.beingVerified = true;
-            scope.sendVerificationEmail();
-          };
+            scope.cancel = () => {
+                scope.config.beingVerified = false;
+                scope.config.email = '';
+                scope.config.verified = false;
+            };
+
+            scope.sendVerification = () => {
+                if (scope.config.requestSent || scope.config.email === '') {
+                    return;
+                }
+                scope.sendVerificationEmail();
+            };
 
         },
 

@@ -21,6 +21,8 @@ class NewFormCtrl {
             config: {
                 email: '',
                 verificationCode: '',
+                beingVerified: false,
+                requestSent: false,
                 verified: false,
                 submissions: 20,
                 notify: 1,
@@ -57,11 +59,9 @@ class NewFormCtrl {
                 .then(
                     result => {
                         this.availableThemes = result.data;
-
                     },
-                    // TODO error handling
                     result => {
-                        this.Notification.error('Error communicating with server, please try again later');
+                        this.Notification.error('Error communicating with server, have another go later');
                         console.error(result);
                     }
                 );
@@ -126,15 +126,30 @@ class NewFormCtrl {
 
     // This also attaches UserId if pUser has been created
     sendVerificationEmail() {
+        this.Notification({
+            message: 'Sending email...',
+            title: 'Server thinking!'
+        });
+        this.form.config.requestSent = true;
         this.pseudoUsersService.sendVerification(this.form.config.email)
             .then(
                 result => {
-                    this.Notification.success('Email sent! Check your spam for an email from hello@montydawson.co.uk');
                     this.userId = result.data.pUserId;
+                    this.form.config.requestSent = false;
+                    if (result.data.verified) {
+                      this.Notification.success('Email already verified!');
+                      this.form.config.verified = true;
+                    } else {
+                        this.Notification('Email sent! Check your spam for an email from hello@montydawson.co.uk');
+                        this.form.config.beingVerified = true;
+                    }
+
                 },
                 error => {
                     console.error(error);
-                    this.Notification.error('Email could not be sent, please check the email address. Else there is probably something wrong...');
+                    this.form.config.email = '';
+                    this.form.config.requestSent = false;
+                    this.Notification.error('Email could not be sent, please check the email address is valid');
                 }
             );
 
@@ -145,20 +160,20 @@ class NewFormCtrl {
         this.pseudoUsersService.checkVerification(this.userId, this.form.config.verificationCode)
             .then(
                 result => {
-                    //TODO confirmation message;
                     this.form.config.verified = result.data.verified;
-                    this.Notification.success('Email verified! Yay!');
+                    if (result.data.verified) {
+                        this.Notification.success('Email verified! Yay!');
+                    } else {
+                        this.Notification('Incorrect validation code');
+                    }
                 },
-                // TODO error trap;
                 error => {
-                  console.error(error);
-                  this.Notification.error('Email could not be verified, please check the code and try again.');
+                    console.error(error);
+                    this.Notification.error('Email could not be verified, please check the code and try again.');
                 }
             );
 
     }
-
-
 
     startAddingField() {
         this.addingField = true;
