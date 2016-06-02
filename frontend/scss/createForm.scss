@@ -61,6 +61,40 @@ aside.settings {
             color: $colorWhite;
         }
     }
+    label {
+        display: inline-block;
+    }
+    .options {
+        max-height: 200px;
+        overflow-y: auto;
+        input[type="text"] {
+            width  : 85%;
+            display: inline-block;
+        }
+        a {
+            font-size     : 1.6em;
+            vertical-align: middle;
+        }
+    }
+    .customSelect {
+        button {
+            background: $colorDark;
+            &.active {
+                color: $colorWhite;
+            }
+        }
+        ul.customSelect {
+            color     : $colorWhite;
+            background: $colorDark;
+            li.customSelect {
+                color     : $colorWhite;
+                background: $colorDark;
+                &:hover {
+                    background: $colorBlack;
+                }
+            }
+        }
+    }
 }
 main.createForm {
     display    : block;
@@ -103,42 +137,6 @@ main.createForm {
         }
     }
 }
-.fieldSettings {
-    label {
-        display: inline-block;
-    }
-    .options {
-        max-height: 200px;
-        overflow-y: auto;
-        input[type="text"] {
-            width  : 85%;
-            display: inline-block;
-        }
-        a {
-            font-size     : 1.6em;
-            vertical-align: middle;
-        }
-    }
-    .customSelect {
-        button {
-            background: $colorDark;
-            &.active {
-                color: $colorWhite;
-            }
-        }
-        ul.customSelect {
-            color     : $colorWhite;
-            background: $colorDark;
-            li.customSelect {
-                color     : $colorWhite;
-                background: $colorDark;
-                &.hover {
-                    background: $colorMain;
-                }
-            }
-        }
-    }
-}
 /**
  * angular-ui-notification - Angular.js service providing simple notifications using Bootstrap 3 styles with css transitions for animating
  * @author Alex_Crack
@@ -147,13 +145,13 @@ main.createForm {
  * @license MIT
  */
 .ui-notification {
-    position          : fixed;
-    z-index           : 9999;
-    width             : 300px;
-    transition        : all ease 0.5s;
-    color             : #fff;
-    border-radius     : 0;
-    background        : #337ab7;
+    position     : fixed;
+    z-index      : 9999;
+    width        : 300px;
+    transition   : all ease 0.5s;
+    color        : #fff;
+    border-radius: 0;
+    background   : #337ab7;
     @include shadow(1);
 }
 .ui-notification.clickable {

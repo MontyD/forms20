@@ -11,4 +11,10 @@
   </form>
   <p ng-if="config.email && config.verified">Completed forms will be sent to: <strong>{{config.email}}</strong></p>
   <button type="button" ng-if="config.email && config.verified"  ng-click="cancel()" class="white">Change email address</button>
+
+  <label>Format of completed forms:</label>
+  <custom-select target="config.format" options="[{value: 'pdf', text:'PDF document'}, {value: 'csv', text:'CSV file'}, {value:'txt', text: 'Plain text in email'}]"></custom-select>
+
+  <label>Number of submissions (max 20):</label>
+  <input class="outline white" type="number" max="20" min="1" ng-model="config.submissions"/>
 </section>

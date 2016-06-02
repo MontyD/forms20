@@ -1786,6 +1786,29 @@ aside.settings {
   aside.settings input[type="checkbox"]:checked + label,
   aside.settings input[type="radio"]:checked + label {
     color: #FFFFFF; }
+  aside.settings label {
+    display: inline-block; }
+  aside.settings .options {
+    max-height: 200px;
+    overflow-y: auto; }
+    aside.settings .options input[type="text"] {
+      width: 85%;
+      display: inline-block; }
+    aside.settings .options a {
+      font-size: 1.6em;
+      vertical-align: middle; }
+  aside.settings .customSelect button {
+    background: #303F9F; }
+    aside.settings .customSelect button.active {
+      color: #FFFFFF; }
+  aside.settings .customSelect ul.customSelect {
+    color: #FFFFFF;
+    background: #303F9F; }
+    aside.settings .customSelect ul.customSelect li.customSelect {
+      color: #FFFFFF;
+      background: #303F9F; }
+      aside.settings .customSelect ul.customSelect li.customSelect:hover {
+        background: #212121; }
 
 main.createForm {
   display: block;
@@ -1816,30 +1839,6 @@ main.createForm {
         padding-top: 1em; }
       main.createForm .form article textarea {
         margin-top: 2em; }
-
-.fieldSettings label {
-  display: inline-block; }
-.fieldSettings .options {
-  max-height: 200px;
-  overflow-y: auto; }
-  .fieldSettings .options input[type="text"] {
-    width: 85%;
-    display: inline-block; }
-  .fieldSettings .options a {
-    font-size: 1.6em;
-    vertical-align: middle; }
-.fieldSettings .customSelect button {
-  background: #303F9F; }
-  .fieldSettings .customSelect button.active {
-    color: #FFFFFF; }
-.fieldSettings .customSelect ul.customSelect {
-  color: #FFFFFF;
-  background: #303F9F; }
-  .fieldSettings .customSelect ul.customSelect li.customSelect {
-    color: #FFFFFF;
-    background: #303F9F; }
-    .fieldSettings .customSelect ul.customSelect li.customSelect.hover {
-      background: #3F51B5; }
 
 /**
  * angular-ui-notification - Angular.js service providing simple notifications using Bootstrap 3 styles with css transitions for animating
