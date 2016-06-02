@@ -2,7 +2,9 @@
 
 class NewFormCtrl {
 
-    constructor(tempFormsService, globalConfigService, pseudoUsersService) {
+    constructor(Notification, tempFormsService, globalConfigService, pseudoUsersService) {
+
+        this.Notification = Notification;
 
         this.tempFormsService = tempFormsService;
         this.globalConfigService = globalConfigService;
@@ -53,10 +55,14 @@ class NewFormCtrl {
         if (this.availableThemes.length === 0) {
             this.globalConfigService.getThemes()
                 .then(
-                    result => this.availableThemes = result.data,
+                    result => {
+                        this.availableThemes = result.data;
+
+                    },
                     // TODO error handling
                     result => {
-                      console.error(result);
+                        this.Notification.error('Error communicating with server, please try again later');
+                        console.error(result);
                     }
                 );
         }
@@ -110,8 +116,10 @@ class NewFormCtrl {
                     this.hash = result.data.hash;
                     this.id = result.data.id;
                 },
-                //TODO error trap;
-                result => console.error(result)
+                error => {
+                    console.error(error);
+                    this.Notification.error('Error communicating with the server... Hopefully everything will sort itself out');
+                }
             );
     }
 
@@ -124,9 +132,9 @@ class NewFormCtrl {
                     //TODO confirmation message;
                     this.userId = result.data.pUserId;
                 },
-                // TODO error trap;
                 error => {
                     console.error(error);
+                    this.Notification.error('Email could not be sent, please check the email address. Else there is probably something wrong...');
                 }
             );
 
@@ -139,10 +147,12 @@ class NewFormCtrl {
                 result => {
                     //TODO confirmation message;
                     this.form.config.verified = result.data.verified;
+                    this.Notification.success('Email verified! Yay!');
                 },
                 // TODO error trap;
                 error => {
-                    console.error(error);
+                  console.error(error);
+                  this.Notification.error('Email could not be verified, please check the code and try again.');
                 }
             );
 
@@ -171,6 +181,6 @@ class NewFormCtrl {
 
 }
 
-NewFormCtrl.$inject = ['tempFormsService', 'globalConfigService', 'pseudoUsersService'];
+NewFormCtrl.$inject = ['Notification', 'tempFormsService', 'globalConfigService', 'pseudoUsersService'];
 
 export default NewFormCtrl;
