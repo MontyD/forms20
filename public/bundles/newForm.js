@@ -31134,7 +31134,7 @@
 	            var _this3 = this;
 
 	            this.pseudoUsersService.sendVerification(this.form.config.email).then(function (result) {
-	                //TODO confirmation message;
+	                _this3.Notification.success('Email sent! Check your spam for an email from hello@montydawson.co.uk');
 	                _this3.userId = result.data.pUserId;
 	            }, function (error) {
 	                console.error(error);
@@ -31149,6 +31149,7 @@
 	            this.pseudoUsersService.checkVerification(this.userId, this.form.config.verificationCode).then(function (result) {
 	                //TODO confirmation message;
 	                _this4.form.config.verified = result.data.verified;
+	                _this4.Notification.success('Email verified! Yay!');
 	            },
 	            // TODO error trap;
 	            function (error) {
@@ -31384,7 +31385,7 @@
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"settingsConfig\">\n    <label ng-if=\"!beingVerified && !config.verified\">Email for form responses:</label>\n    <input type=\"email\" ng-model=\"config.email\" id=\"email\" class=\"outline white\" placeholder=\"email@example.com\" ng-if=\"!beingVerified && !config.verified\"/>\n    <button  ng-if=\"!beingVerified && !config.verified\" ng-disabled=\"config.email.length < 3\" ng-click=\"verifyEmail()\" class=\"white\">Verify Email</button>\n\n    <label ng-if=\"beingVerified && !config.verified\">Verification code:</label>\n    <input type=\"text\" ng-model=\"config.verificationCode\" id=\"verificationCode\" class=\"outline white\" placeholder=\"Code\" ng-if=\"beingVerified && !config.verified\"/>\n    <button ng-click=\"checkVerificationCode()\" class=\"white\" ng-if=\"beingVerified && !config.verified\">Submit code</button>\n</section>\n";
+	module.exports = "<section class=\"settingsConfig\">\n  <form ng-submit=\"verifyEmail()\" ng-if=\"!beingVerified && !config.verified\">\n    <label>Email for form responses:</label>\n    <input type=\"email\" ng-model=\"config.email\" id=\"email\" class=\"outline white\" placeholder=\"email@example.com\" autocomplete=\"off\"/>\n    <button  type=\"submit\" ng-disabled=\"config.email.length < 3\" class=\"white\">Verify Email</button>\n  </form>\n  <form ng-submit=\"checkVerificationCode()\" ng-if=\"beingVerified && !config.verified\">\n    <label>Verification code:</label>\n    <input type=\"text\" ng-model=\"config.verificationCode\" id=\"verificationCode\" class=\"outline white\" placeholder=\"Code\" />\n    <button type=\"submit\" class=\"white\">Submit code</button>\n  </form>\n</section>\n";
 
 /***/ },
 /* 13 */

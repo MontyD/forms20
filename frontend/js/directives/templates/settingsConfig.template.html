@@ -1,9 +1,12 @@
 <section class="settingsConfig">
-    <label ng-if="!beingVerified && !config.verified">Email for form responses:</label>
-    <input type="email" ng-model="config.email" id="email" class="outline white" placeholder="email@example.com" ng-if="!beingVerified && !config.verified"/>
-    <button  ng-if="!beingVerified && !config.verified" ng-disabled="config.email.length < 3" ng-click="verifyEmail()" class="white">Verify Email</button>
-
-    <label ng-if="beingVerified && !config.verified">Verification code:</label>
-    <input type="text" ng-model="config.verificationCode" id="verificationCode" class="outline white" placeholder="Code" ng-if="beingVerified && !config.verified"/>
-    <button ng-click="checkVerificationCode()" class="white" ng-if="beingVerified && !config.verified">Submit code</button>
+  <form ng-submit="verifyEmail()" ng-if="!beingVerified && !config.verified">
+    <label>Email for form responses:</label>
+    <input type="email" ng-model="config.email" id="email" class="outline white" placeholder="email@example.com" autocomplete="off"/>
+    <button  type="submit" ng-disabled="config.email.length < 3" class="white">Verify Email</button>
+  </form>
+  <form ng-submit="checkVerificationCode()" ng-if="beingVerified && !config.verified">
+    <label>Verification code:</label>
+    <input type="text" ng-model="config.verificationCode" id="verificationCode" class="outline white" placeholder="Code" />
+    <button type="submit" class="white">Submit code</button>
+  </form>
 </section>

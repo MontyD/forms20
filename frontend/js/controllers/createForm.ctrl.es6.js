@@ -129,7 +129,7 @@ class NewFormCtrl {
         this.pseudoUsersService.sendVerification(this.form.config.email)
             .then(
                 result => {
-                    //TODO confirmation message;
+                    this.Notification.success('Email sent! Check your spam for an email from hello@montydawson.co.uk');
                     this.userId = result.data.pUserId;
                 },
                 error => {
