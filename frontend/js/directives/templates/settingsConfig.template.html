@@ -1,13 +1,13 @@
 <section class="settingsConfig">
   <form ng-submit="sendVerification()" ng-if="!config.beingVerified && !config.verified">
     <label>Email for form responses:</label>
-    <input type="email" ng-model="config.email" id="email" class="outline white" placeholder="email@example.com" autocomplete="off"/>
+    <input type="email" ng-model="config.email" id="email" class="outline white" placeholder="email@example.com" autocomplete="off" required="required"/>
     <button  type="submit" ng-disabled="config.email.length < 3 || config.requestSent" class="white ">Verify Email</button>
   </form>
   <form ng-submit="checkVerificationCode()" ng-if="config.beingVerified && !config.verified">
     <label>Verification code:</label>
-    <input type="text" ng-model="config.verificationCode" id="verificationCode" class="outline white" placeholder="Code" />
-    <button type="submit" class="white primary">Submit code</button><button type="button" ng-click="cancel()" class="white">Cancel</button>
+    <input type="text" ng-model="config.verificationCode" id="verificationCode" class="outline white" maxlength="8" minlength="8" placeholder="Code" required="required"/>
+    <button type="submit" class="white primary" ng-disabled="!config.verificationCode">Submit code</button><button type="button" ng-click="cancel()" class="white">Cancel</button>
   </form>
   <p ng-if="config.email && config.verified">Completed forms will be sent to: <strong>{{config.email}}</strong></p>
   <button type="button" ng-if="config.email && config.verified"  ng-click="cancel()" class="white">Change email address</button>

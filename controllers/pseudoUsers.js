@@ -15,6 +15,13 @@ var express = require('express'),
 router.post('/emailVerification', respondsToJSON, function(req, res, next) {
     var randomHash = crypto.randomBytes(4).toString('hex');
 
+    if (!req.body.email || req.body.email.length < 3) {
+      return handleError({
+          message: 'Not a valid email address!',
+          status: 400
+      }, next);
+    }
+
     models.pseudoUsers.findOrCreate({
             where: {
                 email: req.body.email
@@ -30,6 +37,7 @@ router.post('/emailVerification', respondsToJSON, function(req, res, next) {
                 }).then(function(user) {
                     mailer.verifyEmailNoLink(req.body.email, randomHash, function(err) {
                         if (err) {
+                            user.destroy({ force: true });
                             return handleError(err, next);
                         }
                         return res.json({
@@ -45,6 +53,8 @@ router.post('/emailVerification', respondsToJSON, function(req, res, next) {
               //User already verified
               res.json({verified: true, pUserId: pUser.id});
             }
+        }).catch(function (err) {
+          return handleError(err, next);
         });
 });
 

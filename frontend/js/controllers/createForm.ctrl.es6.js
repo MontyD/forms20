@@ -126,14 +126,12 @@ class NewFormCtrl {
 
     // This also attaches UserId if pUser has been created
     sendVerificationEmail() {
-        this.Notification({
-            message: 'Sending email...',
-            title: 'Server thinking!'
-        });
+        this.Notification('Processing request...');
         this.form.config.requestSent = true;
         this.pseudoUsersService.sendVerification(this.form.config.email)
             .then(
                 result => {
+                    this.Notification.clearAll();
                     this.userId = result.data.pUserId;
                     this.form.config.requestSent = false;
                     if (result.data.verified) {
@@ -147,6 +145,7 @@ class NewFormCtrl {
                 },
                 error => {
                     console.error(error);
+                    this.Notification.clearAll();
                     this.form.config.email = '';
                     this.form.config.requestSent = false;
                     this.Notification.error('Email could not be sent, please check the email address is valid');
@@ -164,7 +163,7 @@ class NewFormCtrl {
                     if (result.data.verified) {
                         this.Notification.success('Email verified! Yay!');
                     } else {
-                        this.Notification('Incorrect validation code');
+                        this.Notification.error('Incorrect validation code');
                     }
                 },
                 error => {
