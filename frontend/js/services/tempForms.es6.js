@@ -9,8 +9,8 @@ class TemporaryFormsService {
         };
     }
 
-    create() {
-        return this.$http.post(this.urlBase, {}, {
+    save(reqForm, reqUserId) {
+        return this.$http.post(this.urlBase, {form: reqForm, userId: reqUserId}, {
             headers: this.headers
         });
     }

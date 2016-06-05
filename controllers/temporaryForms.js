@@ -11,13 +11,25 @@ var express = require('express'),
 // Get -- create new record (with random hash, and user agent), and echo back
 router.post('/', respondsToJSON, function(req, res, next) {
 
-    var randomHash = crypto.randomBytes(20).toString('hex');
+  console.log(req.body);
+
+    var randomHash = crypto.randomBytes(3).toString('hex');
 
     var temporaryForm = models.temporaryForms.create({
-        user_agent: req.headers['user-agent'],
-        hash: randomHash
+      name: req.body.form.name || '',
+      description: req.body.form.description || '',
+      email: req.body.form.config.email || '',
+      fields: req.body.form.fields || {},
+      config: req.body.form.config || {},
+      pseudoUserId: req.body.userId,
+      style: req.body.form.style
     }).then(function(newForm) {
+      var saveRef = newForm.id + randomHash;
+      newForm.update({saveReference: saveRef}).then(function(){
         res.json(newForm);
+      }, function(err){
+        handleError(err, next);
+      });
     }).catch(function(error) {
         handleError(error, next);
     });

@@ -31017,7 +31017,7 @@
 	        this.window = $window;
 
 	        this.form = {
-	            name: 'New Form',
+	            name: '',
 	            fields: [],
 	            description: '',
 	            style: {
@@ -31120,7 +31120,10 @@
 	        value: function saveForm() {
 	            var _this2 = this;
 
-	            this.tempFormsService.save(this.form).then(function (result) {
+	            if (!this.userId || !this.form) {
+	                return this.Notification.error('Please verify your email address.');
+	            }
+	            this.tempFormsService.save(this.form, this.userId).then(function (result) {
 	                _this2.hash = result.data.hash;
 	                _this2.id = result.data.id;
 	            }, function (error) {
@@ -31325,7 +31328,7 @@
 /* 8 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"fieldSettings\">\n    <p ng-if=\"!field\">Click on a field to edit its settings</p>\n    <div ng-if=\"field\">\n        <label for=\"question\">Question:</label>\n        <input type=\"text\" name=\"question\" ng-model=\"field.text\" class=\"outline white\" />\n        <label for=\"type\">Answer type:</label>\n        <custom-select target=\"field.type\" options=\"[{value: 'smallText', text:'Small text'}, {value: 'largeText', text:'Large text'}, {value:'number', text: 'Number'}, {value:'currency', text: 'Currency'},{value: 'date', text:'Date'},{value: 'boolean', text:'Yes / No'},{value: 'select', text: 'Multiple choice'}, {value: 'dropdown', text: 'Dropdown'},{value:'email', text: 'Email Address'}]\"></custom-select>\n        <div ng-if=\"field.type === 'select' || field.type === 'dropdown'\">\n            <label>Options:</label>\n            <div class=\"options\">\n                <span ng-repeat=\"option in field.options track by $index\">\n                      <input type=\"text\" placeholder=\"Answer...\" ng-model=\"field.options[$index]\" class=\"outline white\" class=\"outline white\" />\n                      <a href=\"#\" ng-click=\"removeOption($index)\" class=\"lnr lnr-cross white\" title=\"Remove option\"></a>\n                    </span>\n                <button class=\"secondary block\" ng-click=\"continueArray()\">Add option</button>\n            </div>\n            <input id=\"settingsMulti\" name=\"settingsMulti\" type=\"checkbox\" ng-if=\"field.type !== 'dropdown'\" ng-model=\"field.allowMultiple\" class=\"light\">\n            <label for=\"settingsMulti\" class=\"checkbox\" for=\"settingsMulti\" ng-if=\"field.type !== 'dropdown'\">Allow the user to select multiple</label>\n        </div>\n        <label for=\"helpText\">Instructions:</label>\n        <textarea ng-model=\"field.help\" name=\"helpText\" class=\"outline white\"></textarea>\n        <div>\n            <input type=\"checkbox\" id=\"settingsFullWidth\" name=\"settingsFullWidth\" ng-model=\"field.fullWidth\" class=\"light\" />\n            <label for=\"settingsFullWidth\">Full width?</label>\n        </div>\n        <div>\n            <input type=\"checkbox\" id=\"settingsRequired\" name=\"settingsRequired\" ng-model=\"field.required\" class=\"light\" />\n            <label for=\"settingsRequired\">Required?</label>\n        </div>\n        <button class=\"white delete\" ng-click=\"delete()\">Delete this field</button>\n    </div>\n</section>\n";
+	module.exports = "<section class=\"fieldSettings\">\n    <p ng-if=\"!field\">Click on a field to edit its settings</p>\n    <div ng-if=\"field\">\n        <label for=\"question\">Question:</label>\n        <input type=\"text\" name=\"question\" ng-model=\"field.text\" class=\"outline white\" />\n        <label for=\"type\">Answer type:</label>\n        <custom-select target=\"field.type\" options=\"[{value: 'smallText', text:'Small text'}, {value: 'largeText', text:'Large text'}, {value:'number', text: 'Number'}, {value:'currency', text: 'Currency'},{value: 'date', text:'Date'},{value: 'boolean', text:'Yes / No'},{value: 'select', text: 'Multiple choice'}, {value: 'dropdown', text: 'Dropdown'},{value:'email', text: 'Email Address'}]\"></custom-select>\n        <div ng-if=\"field.type === 'select' || field.type === 'dropdown'\">\n            <label>Options:</label>\n            <div class=\"options\">\n                <span ng-repeat=\"option in field.options track by $index\">\n                      <input type=\"text\" placeholder=\"Answer...\" ng-model=\"field.options[$index]\" class=\"outline white\" class=\"outline white\" />\n                      <span ng-click=\"removeOption($index)\" class=\"lnr lnr-cross white\"></span>\n                    </span>\n                <button class=\"secondary block\" ng-click=\"continueArray()\">Add option</button>\n            </div>\n            <input id=\"settingsMulti\" name=\"settingsMulti\" type=\"checkbox\" ng-if=\"field.type !== 'dropdown'\" ng-model=\"field.allowMultiple\" class=\"light\">\n            <label for=\"settingsMulti\" class=\"checkbox\" for=\"settingsMulti\" ng-if=\"field.type !== 'dropdown'\">Allow the user to select multiple</label>\n        </div>\n        <label for=\"helpText\">Instructions:</label>\n        <textarea ng-model=\"field.help\" name=\"helpText\" class=\"outline white\"></textarea>\n        <div>\n            <input type=\"checkbox\" id=\"settingsFullWidth\" name=\"settingsFullWidth\" ng-model=\"field.fullWidth\" class=\"light\" />\n            <label for=\"settingsFullWidth\">Full width?</label>\n        </div>\n        <div>\n            <input type=\"checkbox\" id=\"settingsRequired\" name=\"settingsRequired\" ng-model=\"field.required\" class=\"light\" />\n            <label for=\"settingsRequired\">Required?</label>\n        </div>\n        <button class=\"white delete\" ng-click=\"delete()\">Delete this field</button>\n    </div>\n</section>\n";
 
 /***/ },
 /* 9 */
@@ -32332,9 +32335,9 @@
 	    }
 
 	    _createClass(TemporaryFormsService, [{
-	        key: 'create',
-	        value: function create() {
-	            return this.$http.post(this.urlBase, {}, {
+	        key: 'save',
+	        value: function save(reqForm, reqUserId) {
+	            return this.$http.post(this.urlBase, { form: reqForm, userId: reqUserId }, {
 	                headers: this.headers
 	            });
 	        }

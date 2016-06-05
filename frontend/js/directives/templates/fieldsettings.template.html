@@ -10,7 +10,7 @@
             <div class="options">
                 <span ng-repeat="option in field.options track by $index">
                       <input type="text" placeholder="Answer..." ng-model="field.options[$index]" class="outline white" class="outline white" />
-                      <a href="#" ng-click="removeOption($index)" class="lnr lnr-cross white" title="Remove option"></a>
+                      <span ng-click="removeOption($index)" class="lnr lnr-cross white"></span>
                     </span>
                 <button class="secondary block" ng-click="continueArray()">Add option</button>
             </div>

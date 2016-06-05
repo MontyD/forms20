@@ -15,8 +15,8 @@ block content
       main.createForm
         section.form(ng-class="newForm.form.style.font + ' ' + newForm.form.style.class")
           header.add
-            h2(field-editable='', value='newForm.form.title', initial='New Form')
-            p.slight(field-editable='', value='form.description', initial='Form description, click here to edit')
+            h2(field-editable='', value='newForm.form.name', initial='New Form')
+            p.slight(field-editable='', value='newForm.form.description', initial='Form description, click here to edit')
           ul(dnd-list='newForm.form.fields')
             li(ng-repeat='field in newForm.form.fields', dnd-draggable='field', dnd-moved='newForm.form.fields.splice($index, 1)', dnd-effect-allowed='move', dnd-selected='newForm.selected = item', ng-class="{'fullWidth': field.fullWidth, 'halfWidth': !field.fullWidth}")
               field(options='field', settings='newForm.feildSettings(field)')

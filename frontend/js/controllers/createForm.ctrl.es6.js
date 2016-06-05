@@ -12,7 +12,7 @@ class NewFormCtrl {
         this.window = $window;
 
         this.form = {
-            name: 'New Form',
+            name: '',
             fields: [],
             description: '',
             style: {
@@ -112,7 +112,10 @@ class NewFormCtrl {
     }
 
     saveForm() {
-        this.tempFormsService.save(this.form)
+      if (!this.userId || !this.form) {
+        return this.Notification.error('Please verify your email address.');
+      }
+        this.tempFormsService.save(this.form, this.userId)
             .then(
                 result => {
                     this.hash = result.data.hash;
