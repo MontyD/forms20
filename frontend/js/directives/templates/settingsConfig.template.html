@@ -17,7 +17,7 @@
     <custom-select target="config.format" options="[{value: 'pdf', text:'PDF document'}, {value: 'csv', text:'CSV file'}, {value:'txt', text: 'Plain text in email'}]"></custom-select>
   </div>
     <div class="padded">
-        <label>Number of submissions (max 20):</label>
+        <label>Number of submissions <br />(max 20):</label>
         <input class="outline white" type="number" max="20" min="1" ng-model="config.submissions" />
     </div>
     <div class="padded" ng-if="config.email && config.verified">

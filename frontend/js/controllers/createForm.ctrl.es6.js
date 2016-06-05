@@ -2,13 +2,14 @@
 
 class NewFormCtrl {
 
-    constructor(Notification, tempFormsService, globalConfigService, pseudoUsersService) {
+    constructor(Notification, tempFormsService, globalConfigService, pseudoUsersService, $window) {
 
         this.Notification = Notification;
 
         this.tempFormsService = tempFormsService;
         this.globalConfigService = globalConfigService;
         this.pseudoUsersService = pseudoUsersService;
+        this.window = $window;
 
         this.form = {
             name: 'New Form',
@@ -67,6 +68,10 @@ class NewFormCtrl {
                 );
         }
 
+        this.window.onbeforeunload = function(e) {
+          return 'You will lose any saved data if you close this window.';
+        };
+
     }
 
     continueArray() {
@@ -107,7 +112,7 @@ class NewFormCtrl {
     }
 
     saveForm() {
-        this.tempFormsService.create()
+        this.tempFormsService.save(this.form)
             .then(
                 result => {
                     this.hash = result.data.hash;
@@ -199,6 +204,6 @@ class NewFormCtrl {
 
 }
 
-NewFormCtrl.$inject = ['Notification', 'tempFormsService', 'globalConfigService', 'pseudoUsersService'];
+NewFormCtrl.$inject = ['Notification', 'tempFormsService', 'globalConfigService', 'pseudoUsersService', '$window'];
 
 export default NewFormCtrl;
