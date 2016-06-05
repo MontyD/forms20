@@ -51,6 +51,8 @@ class NewFormCtrl {
 
         this.settings = 'field';
 
+        this.saveReference = undefined;
+
         this.settingsField = undefined;
 
         this.availableThemes = [];
@@ -118,8 +120,7 @@ class NewFormCtrl {
         this.tempFormsService.save(this.form, this.userId)
             .then(
                 result => {
-                    this.hash = result.data.hash;
-                    this.id = result.data.id;
+                    this.saveRefence = result.data.saveReference;
                 },
                 error => {
                     console.error(error);

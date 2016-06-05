@@ -6,14 +6,14 @@
     <input ng-switch-when="currency" type="currency" ng-required="options.required" disabled="disabled" value="£12.50" />
     <input ng-switch-when="date" type="date" ng-required="options.required" disabled="disabled" value="12-02-2016" />
     <input ng-switch-when="email" type="email" ng-required="options.required" disabled="disabled" value="hello@montydawson.co.uk" />
-    <input type="radio" ng-switch-when="boolean" name="{{options.text}}" id="{{options.text}}Yes" />
-    <label ng-switch-when="boolean" class="checkbox" for="{{options.text}}Yes">{{options.yes}}</label>
-    <input type="radio" ng-switch-when="boolean" name="{{options.text}}" id="{{options.text}}No" />
-    <label ng-switch-when="boolean" class="checkbox" for="{{options.text}}No">{{options.no}}</label>
+    <input type="radio" ng-switch-when="boolean" name="{{options.id}}" id="{{options.id}}Yes" />
+    <label ng-switch-when="boolean" class="checkbox" for="{{options.id}}Yes">{{options.yes}}</label>
+    <input type="radio" ng-switch-when="boolean" name="{{options.id}}" id="{{options.id}}No" />
+    <label ng-switch-when="boolean" class="checkbox" for="{{options.id}}No">{{options.no}}</label>
     <div ng-switch-when="select" ng-repeat="option in options.options track by $index">
-        <input ng-if="options.allowMultiple && option !=='' && String(option)!='undefined'" type="checkbox" id="{{option + $index}}" />
-        <input ng-if="!options.allowMultiple && option !=='' && String(option)!='undefined'" type="radio" id="{{option + $index}}" name="{{options.text}}" />
-        <label class="checkbox" for="{{option + $index}}">{{ option }}</label>
+        <input ng-if="options.allowMultiple && option !=='' && String(option)!='undefined'" type="checkbox" id="{{options.id + $index}}" />
+        <input ng-if="!options.allowMultiple && option !=='' && String(option)!='undefined'" type="radio" id="{{options.id + $index}}" name="{{options.text}}" />
+        <label class="checkbox" for="{{options.id + $index}}">{{ option }}</label>
     </div>
     <div ng-switch-when="dropdown" ng-click="settings(options)">
         <custom-select target="" options="options.options"></custom-select>

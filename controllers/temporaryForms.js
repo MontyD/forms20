@@ -11,7 +11,9 @@ var express = require('express'),
 // Get -- create new record (with random hash, and user agent), and echo back
 router.post('/', respondsToJSON, function(req, res, next) {
 
-  console.log(req.body);
+  if(!req.body.form || !req.body.userId) {
+    return handleError({message: 'You done messed up!', status: 400});
+  }
 
     var randomHash = crypto.randomBytes(3).toString('hex');
 
@@ -26,12 +28,12 @@ router.post('/', respondsToJSON, function(req, res, next) {
     }).then(function(newForm) {
       var saveRef = newForm.id + randomHash;
       newForm.update({saveReference: saveRef}).then(function(){
-        res.json(newForm);
+        return res.json(saveReference);
       }, function(err){
-        handleError(err, next);
+        return handleError(err, next);
       });
     }).catch(function(error) {
-        handleError(error, next);
+        return handleError(error, next);
     });
 });
 

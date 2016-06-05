@@ -31056,6 +31056,8 @@
 
 	        this.settings = 'field';
 
+	        this.saveReference = undefined;
+
 	        this.settingsField = undefined;
 
 	        this.availableThemes = [];
@@ -31124,8 +31126,7 @@
 	                return this.Notification.error('Please verify your email address.');
 	            }
 	            this.tempFormsService.save(this.form, this.userId).then(function (result) {
-	                _this2.hash = result.data.hash;
-	                _this2.id = result.data.id;
+	                _this2.saveRefence = result.data.saveReference;
 	            }, function (error) {
 	                console.error(error);
 	                _this2.Notification.error('Error communicating with the server... Hopefully everything will sort itself out');
@@ -31287,7 +31288,7 @@
 /* 6 */
 /***/ function(module, exports) {
 
-	module.exports = "<div ng-switch=\"options.type\" ng-click=\"settings(options)\" class=\"field\">\n\n    <label ng-class=\"{required: options.required}\">{{options.text}}</label>\n    <textarea ng-switch-when=\"largeText\" ng-required=\"options.required\" disabled=\"disabled\">Big Text Field</textarea>\n    <input ng-switch-when=\"number\" type=\"number\" ng-required=\"options.required\" disabled=\"disabled\" value=\"986\" />\n    <input ng-switch-when=\"currency\" type=\"currency\" ng-required=\"options.required\" disabled=\"disabled\" value=\"£12.50\" />\n    <input ng-switch-when=\"date\" type=\"date\" ng-required=\"options.required\" disabled=\"disabled\" value=\"12-02-2016\" />\n    <input ng-switch-when=\"email\" type=\"email\" ng-required=\"options.required\" disabled=\"disabled\" value=\"hello@montydawson.co.uk\" />\n    <input type=\"radio\" ng-switch-when=\"boolean\" name=\"{{options.text}}\" id=\"{{options.text}}Yes\" />\n    <label ng-switch-when=\"boolean\" class=\"checkbox\" for=\"{{options.text}}Yes\">{{options.yes}}</label>\n    <input type=\"radio\" ng-switch-when=\"boolean\" name=\"{{options.text}}\" id=\"{{options.text}}No\" />\n    <label ng-switch-when=\"boolean\" class=\"checkbox\" for=\"{{options.text}}No\">{{options.no}}</label>\n    <div ng-switch-when=\"select\" ng-repeat=\"option in options.options track by $index\">\n        <input ng-if=\"options.allowMultiple && option !=='' && String(option)!='undefined'\" type=\"checkbox\" id=\"{{option + $index}}\" />\n        <input ng-if=\"!options.allowMultiple && option !=='' && String(option)!='undefined'\" type=\"radio\" id=\"{{option + $index}}\" name=\"{{options.text}}\" />\n        <label class=\"checkbox\" for=\"{{option + $index}}\">{{ option }}</label>\n    </div>\n    <div ng-switch-when=\"dropdown\" ng-click=\"settings(options)\">\n        <custom-select target=\"\" options=\"options.options\"></custom-select>\n    </div>\n    <input ng-switch-default type=\"text\" ng-required=\"options.required\" disabled=\"disabled\" value=\"Small Text Field\" />\n    <p class=\"slight\">{{options.help}}</p>\n</div>\n";
+	module.exports = "<div ng-switch=\"options.type\" ng-click=\"settings(options)\" class=\"field\">\n\n    <label ng-class=\"{required: options.required}\">{{options.text}}</label>\n    <textarea ng-switch-when=\"largeText\" ng-required=\"options.required\" disabled=\"disabled\">Big Text Field</textarea>\n    <input ng-switch-when=\"number\" type=\"number\" ng-required=\"options.required\" disabled=\"disabled\" value=\"986\" />\n    <input ng-switch-when=\"currency\" type=\"currency\" ng-required=\"options.required\" disabled=\"disabled\" value=\"£12.50\" />\n    <input ng-switch-when=\"date\" type=\"date\" ng-required=\"options.required\" disabled=\"disabled\" value=\"12-02-2016\" />\n    <input ng-switch-when=\"email\" type=\"email\" ng-required=\"options.required\" disabled=\"disabled\" value=\"hello@montydawson.co.uk\" />\n    <input type=\"radio\" ng-switch-when=\"boolean\" name=\"{{options.id}}\" id=\"{{options.id}}Yes\" />\n    <label ng-switch-when=\"boolean\" class=\"checkbox\" for=\"{{options.id}}Yes\">{{options.yes}}</label>\n    <input type=\"radio\" ng-switch-when=\"boolean\" name=\"{{options.id}}\" id=\"{{options.id}}No\" />\n    <label ng-switch-when=\"boolean\" class=\"checkbox\" for=\"{{options.id}}No\">{{options.no}}</label>\n    <div ng-switch-when=\"select\" ng-repeat=\"option in options.options track by $index\">\n        <input ng-if=\"options.allowMultiple && option !=='' && String(option)!='undefined'\" type=\"checkbox\" id=\"{{options.id + $index}}\" />\n        <input ng-if=\"!options.allowMultiple && option !=='' && String(option)!='undefined'\" type=\"radio\" id=\"{{options.id + $index}}\" name=\"{{options.text}}\" />\n        <label class=\"checkbox\" for=\"{{options.id + $index}}\">{{ option }}</label>\n    </div>\n    <div ng-switch-when=\"dropdown\" ng-click=\"settings(options)\">\n        <custom-select target=\"\" options=\"options.options\"></custom-select>\n    </div>\n    <input ng-switch-default type=\"text\" ng-required=\"options.required\" disabled=\"disabled\" value=\"Small Text Field\" />\n    <p class=\"slight\">{{options.help}}</p>\n</div>\n";
 
 /***/ },
 /* 7 */
