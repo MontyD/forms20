@@ -94,9 +94,6 @@ class NewFormCtrl {
         if (question.text) {
             question.id = this.form.fields.length + 1;
             this.form.fields.push(question);
-            if (this.form.fields.length > 0 && !this.id) {
-                this.registerForm();
-            }
             this.resetNewField();
         }
     }
@@ -109,7 +106,7 @@ class NewFormCtrl {
         this.settingsField = undefined;
     }
 
-    registerForm() {
+    saveForm() {
         this.tempFormsService.create()
             .then(
                 result => {
@@ -121,6 +118,13 @@ class NewFormCtrl {
                     this.Notification.error('Error communicating with the server... Hopefully everything will sort itself out');
                 }
             );
+    }
+
+    submitForm() {
+      if (this.form.fields === []) {
+        return this.Notification.error('Please add few fields before submitting!');
+      }
+      console.log('submit Form!');
     }
 
 

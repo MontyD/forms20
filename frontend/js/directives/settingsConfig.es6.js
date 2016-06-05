@@ -6,7 +6,9 @@ function fieldSettings() {
         scope: {
             config: '=objectconfig',
             sendVerificationEmail: '&sendverification',
-            checkVerificationCode: '&checkverification'
+            checkVerificationCode: '&checkverification',
+            submitForm: '&submit',
+            saveForm: '&save'
         },
 
         template: require('./templates/settingsConfig.template.html'),

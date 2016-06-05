@@ -11,7 +11,7 @@ block content
             li(ng-class="{active: newForm.settings==='config'}", ng-click="newForm.setSettings('config')") Config
         field-settings(ng-if="newForm.settings==='field'", field='newForm.settingsField', delete='newForm.removeField()')
         settings-style(ng-if="newForm.settings==='style'", objectstyle='newForm.form.style', themes='newForm.availableThemes')
-        settings-config(ng-if="newForm.settings==='config'", objectconfig='newForm.form.config', sendverification='newForm.sendVerificationEmail()', checkverification='newForm.checkVerificationCode()')
+        settings-config(ng-if="newForm.settings==='config'", objectconfig='newForm.form.config', sendverification='newForm.sendVerificationEmail()', checkverification='newForm.checkVerificationCode()', save="newForm.saveForm()", submit="newForm.submitForm()")
       main.createForm
         section.form(ng-class="newForm.form.style.font + ' ' + newForm.form.style.class")
           header.add
