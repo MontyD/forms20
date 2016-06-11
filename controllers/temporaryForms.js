@@ -51,8 +51,13 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
         }, next);
     }
 
-    var formId = req.session.formId || req.params.form;
-    var saveReference = req.session.formSaveRef || req.query.saveReference;
+    var formId = req.params.form;
+    var saveReference = req.query.saveReference;
+
+    if (req.params.form === 'sessionForm') {
+      formId = req.session.formId;
+      saveReference = req.session.formSaveRef;
+    }
 
     models.temporaryForms.findById(formId).then(function(form) {
         if (form.saveReference !== saveReference) {
