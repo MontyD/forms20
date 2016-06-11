@@ -31125,9 +31125,9 @@
 	            if (!this.userId || !this.form) {
 	                return this.Notification.error('Please verify your email address.');
 	            }
-	            this.tempFormsService.save(this.form, this.userId, this.form.id, this.form.saveReference).then(function (result) {
-	                _this2.form.saveReference = result.data.saveReference;
-	                _this2.form.id = result.data.formId;
+	            this.tempFormsService.save(this.form, this.userId, this.form.saveReference).then(function (result) {
+	                _this2.form.config.saveReference = result.data.saveReference;
+	                _this2.form.config.id = result.data.formId;
 	                _this2.Notification('Form saved!');
 	            }, function (error) {
 	                console.error(error);
@@ -31424,7 +31424,7 @@
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"settingsConfig\">\n    <form ng-submit=\"sendVerification()\" ng-if=\"!config.beingVerified && !config.verified\">\n        <label>Email for form responses:</label>\n        <input type=\"email\" ng-model=\"config.email\" id=\"email\" class=\"outline white\" placeholder=\"email@example.com\" autocomplete=\"off\" required=\"required\" />\n        <button type=\"submit\" ng-disabled=\"config.email.length < 3 || config.requestSent\" class=\"white \">Verify Email</button>\n    </form>\n    <form ng-submit=\"checkVerificationCode()\" ng-if=\"config.beingVerified && !config.verified\">\n        <label>Verification code:</label>\n        <input type=\"text\" ng-model=\"config.verificationCode\" id=\"verificationCode\" class=\"outline white\" maxlength=\"8\" minlength=\"8\" placeholder=\"Code\" required=\"required\" />\n        <button type=\"submit\" class=\"white primary\" ng-disabled=\"!config.verificationCode\">Submit code</button>\n        <button type=\"button\" ng-click=\"cancel()\" class=\"white\">Cancel</button>\n    </form>\n    <p ng-if=\"config.email && config.verified\">Completed forms will be sent to: <strong>{{config.email}}</strong></p>\n    <button type=\"button\" ng-if=\"config.email && config.verified\" ng-click=\"cancel()\" class=\"white\">Change email address</button>\n<div class=\"padded\">\n    <label>Format of completed forms:</label>\n    <custom-select target=\"config.format\" options=\"[{value: 'pdf', text:'PDF document'}, {value: 'csv', text:'CSV file'}, {value:'txt', text: 'Plain text in email'}]\"></custom-select>\n  </div>\n    <div class=\"padded\">\n        <label>Number of submissions <br />(max 20):</label>\n        <input class=\"outline white\" type=\"number\" max=\"20\" min=\"1\" ng-model=\"config.submissions\" />\n    </div>\n    <div class=\"padded\" ng-if=\"config.email && config.verified\">\n        <button ng-click=\"saveForm()\" class=\"white\">Save form to edit later</button>\n        <button ng-click=\"submitForm()\" class=\"primary white\">Create your form!</button>\n    </div>\n\n</section>\n";
+	module.exports = "<section class=\"settingsConfig\">\n    <form ng-submit=\"sendVerification()\" ng-if=\"!config.beingVerified && !config.verified\">\n        <label>Email for form responses:</label>\n        <input type=\"email\" ng-model=\"config.email\" id=\"email\" class=\"outline white\" placeholder=\"email@example.com\" autocomplete=\"off\" required=\"required\" />\n        <button type=\"submit\" ng-disabled=\"config.email.length < 3 || config.requestSent\" class=\"white \">Verify Email</button>\n    </form>\n    <form ng-submit=\"checkVerificationCode()\" ng-if=\"config.beingVerified && !config.verified\">\n        <label>Verification code:</label>\n        <input type=\"text\" ng-model=\"config.verificationCode\" id=\"verificationCode\" class=\"outline white\" maxlength=\"8\" minlength=\"8\" placeholder=\"Code\" required=\"required\" />\n        <button type=\"submit\" class=\"white primary\" ng-disabled=\"!config.verificationCode\">Submit code</button>\n        <button type=\"button\" ng-click=\"cancel()\" class=\"white\">Cancel</button>\n    </form>\n    <p ng-if=\"config.email && config.verified\">Completed forms will be sent to: <strong>{{config.email}}</strong></p>\n    <button type=\"button\" ng-if=\"config.email && config.verified\" ng-click=\"cancel()\" class=\"white\">Change email address</button>\n<div class=\"padded\">\n    <label>Format of completed forms:</label>\n    <custom-select target=\"config.format\" options=\"[{value: 'pdf', text:'PDF document'}, {value: 'csv', text:'CSV file'}, {value:'txt', text: 'Plain text in email'}]\"></custom-select>\n  </div>\n    <div class=\"padded\">\n        <label>Number of submissions <br />(max 20):</label>\n        <input class=\"outline white\" type=\"number\" max=\"20\" min=\"1\" ng-model=\"config.submissions\" />\n    </div>\n    <div class=\"padded\" ng-if=\"config.email && config.verified\">\n        <button ng-click=\"saveForm()\" class=\"white\">Save form to edit later</button>\n        <p ng-if=\"config.saveReference\">Form save reference: <strong class=\"userSelect\">{{config.saveReference}}</strong></p>\n        <button ng-click=\"submitForm()\" class=\"primary white\">Create your form!</button>\n    </div>\n\n</section>\n";
 
 /***/ },
 /* 13 */
@@ -32339,7 +32339,11 @@
 
 	    _createClass(TemporaryFormsService, [{
 	        key: 'save',
-	        value: function save(reqForm, reqUserId) {
+	        value: function save(reqForm, reqUserId, reqRef) {
+	            if (reqRef) {
+	                var formId = reqRef.split('A')[0];
+	                return this.$http.put(this.urlBase);
+	            }
 	            return this.$http.post(this.urlBase, { form: reqForm, userId: reqUserId }, {
 	                headers: this.headers
 	            });

@@ -9,7 +9,11 @@ class TemporaryFormsService {
         };
     }
 
-    save(reqForm, reqUserId) {
+    save(reqForm, reqUserId, reqRef) {
+      if (reqRef) {
+        let formId = reqRef.split('A')[0];
+        return this.$http.put(this.urlBase);
+      }
         return this.$http.post(this.urlBase, {form: reqForm, userId: reqUserId}, {
             headers: this.headers
         });

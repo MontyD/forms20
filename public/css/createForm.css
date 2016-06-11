@@ -667,6 +667,12 @@ ul[dnd-list] li {
   background: -webkit-radial-gradient(#394bbd, #25317b);
   background: radial-gradient(#394bbd, #25317b); }
 
+.userSelect {
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text; }
+
 *[field-editable] {
   cursor: pointer; }
   *[field-editable] input {
@@ -1639,6 +1645,12 @@ ul[dnd-list] li {
 .slightGradient {
   background: -webkit-radial-gradient(#394bbd, #25317b);
   background: radial-gradient(#394bbd, #25317b); }
+
+.userSelect {
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text; }
 
 *[field-editable] {
   cursor: pointer; }

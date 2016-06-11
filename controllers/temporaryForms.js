@@ -29,19 +29,10 @@ router.post('/', respondsToJSON, function(req, res, next) {
         pseudoUserId: req.body.userId,
         style: req.body.form.style
 
-    // have to update the model to store the save reference
-    // save reference created from primary key id + random hash, must be unique
-    }).then(function(newForm) {
-        var saveRef = newForm.id + randomHash;
-        newForm.update({
-            saveReference: saveRef
-        }).then(function(form) {
-            return res.json({
-              saveReference: form.saveReference,
-              formId: form.id
-            });
-        }).catch(function(err) {
-            return handleError(err, next);
+    }).then(function(form) {
+        return res.json({
+            saveReference: form.saveReference,
+            formId: form.id
         });
     }).catch(function(error) {
         return handleError(error, next);

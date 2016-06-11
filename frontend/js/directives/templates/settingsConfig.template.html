@@ -22,6 +22,7 @@
     </div>
     <div class="padded" ng-if="config.email && config.verified">
         <button ng-click="saveForm()" class="white">Save form to edit later</button>
+        <p ng-if="config.saveReference">Form save reference: <strong class="userSelect">{{config.saveReference}}</strong></p>
         <button ng-click="submitForm()" class="primary white">Create your form!</button>
     </div>
 

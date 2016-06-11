@@ -117,11 +117,11 @@ class NewFormCtrl {
       if (!this.userId || !this.form) {
         return this.Notification.error('Please verify your email address.');
       }
-        this.tempFormsService.save(this.form, this.userId, this.form.id, this.form.saveReference)
+        this.tempFormsService.save(this.form, this.userId, this.form.saveReference)
             .then(
                 result => {
-                    this.form.saveReference = result.data.saveReference;
-                    this.form.id = result.data.formId;
+                    this.form.config.saveReference = result.data.saveReference;
+                    this.form.config.id = result.data.formId;
                     this.Notification('Form saved!');
                 },
                 error => {
