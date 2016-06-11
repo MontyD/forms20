@@ -9,35 +9,49 @@ var express = require('express'),
     handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError'));
 
 router.get('/', respondsToJSON, function(req, res, next) {
-    var temporaryForm = models.temporaryForms.create({
-        originIP: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-        originUserAgent: req.get('User-Agent')
 
-    }).then(function(form) {
-      req.session.formId = form.id;
-      req.session.formSaveRef = form.saveReference;
-        return res.render('createForm', {
-            id: form.id,
-            saveReference: form.saveReference
+    if (req.session.formId && req.session.formSaveRef) {
+
+        models.temporaryForms.findById(req.session.formId).then(function(form) {
+            if (form.saveReference !== req.session.formSaveRef) {
+                req.session.formId = null;
+                req.session.formSaveRef = undefined;
+                return res.redirect('/');
+            } else {
+                return res.render('createForm');
+            }
         });
-    }).catch(function(error) {
-        return handleError(error, next);
-    });
+
+    } else {
+        var temporaryForm = models.temporaryForms.create({
+            originIP: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+            originUserAgent: req.get('User-Agent')
+        }).then(function(form) {
+            req.session.formId = form.id;
+            req.session.formSaveRef = form.saveReference;
+            return res.render('createForm');
+        }).catch(function(error) {
+            return handleError(error, next);
+        });
+    }
 });
 
 
 // Get -- return json of single temp form, and echo back
 router.get('/:form', respondsToJSON, function(req, res, next) {
 
-    if (!req.params.form || !req.query.hash || isNaN(req.params.form)) {
+    if (!(req.params.form === 'sessionForm' && req.session.formId && req.session.formSaveRef) && (!req.params.form || !req.query.saveReference || isNaN(req.params.form))) {
         return handleError({
             message: 'Inconsistent post data',
             status: 400
         }, next);
     }
 
-    models.temporaryForms.findById(req.params.form).then(function(form) {
-        if (form.hash !== req.query.hash) {
+    var formId = req.session.formId || req.params.form;
+    var saveReference = req.session.formSaveRef || req.query.saveReference;
+
+    models.temporaryForms.findById(formId).then(function(form) {
+        if (form.saveReference !== saveReference) {
             return handleError({
                 message: 'Inconsistent post data',
                 status: 400
@@ -49,16 +63,13 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
     }, function(error) {
         handleError(error, next);
     });
-
 });
 
 
 // Put - to update form
 router.put('/', respondsToJSON, function(req, res, next) {
 
-  console.log(req.session);
-
-    if ( !req.body.form || (!req.body.saveReference && (!req.session.formId || !req.session.formSaveRef))) {
+    if (!req.body.form || (!req.body.saveReference && (!req.session.formId || !req.session.formSaveRef))) {
         return handleError({
             message: 'Inconsistent post data',
             status: 400

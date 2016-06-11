@@ -18,6 +18,11 @@ class TemporaryFormsService {
             headers: this.headers
         });
     }
+    loadFormFromSession() {
+      return this.$http.get(this.urlBase + 'sessionForm', {
+        headers: this.headers
+      });
+    }
 }
 
 TemporaryFormsService.$inject = ['$http'];

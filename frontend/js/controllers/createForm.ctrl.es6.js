@@ -72,6 +72,21 @@ class NewFormCtrl {
             return 'You will lose any saved data if you close this window.';
         };
 
+        this.tempFormsService.loadFormFromSession().then(
+            result => {
+                if (result.data.config) {this.form.config = result.data.config; }
+                this.form.name = result.data.name || '';
+                this.form.description = result.data.description || '';
+                this.form.fields = result.data.fields || [];
+                if (result.data.style) { this.form.style = result.data.style; }
+                console.log(result);
+            },
+            error => {
+                console.log(error);
+                this.Notification.error('Error communicating with server, try reloading the page');
+            }
+        );
+
     }
 
     continueArray() {

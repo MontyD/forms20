@@ -21,7 +21,7 @@ router.get('/', passUser, function(req, res) {
 
 // render new create form page
 router.get('/create', passUser, function(req, res) {
-    res.render('createForm');
+    res.redirect('/temporaryForms');
 });
 
 module.exports = router;

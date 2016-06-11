@@ -12,7 +12,6 @@ block content
         settings-style(ng-if="newForm.settings==='style'", objectstyle='newForm.form.style', themes='newForm.availableThemes')
         settings-config(ng-if="newForm.settings==='config'", objectconfig='newForm.form.config', sendverification='newForm.sendVerificationEmail()', checkverification='newForm.checkVerificationCode()', save="newForm.saveForm(true)", submit="newForm.submitForm()")
       main.createForm
-        pre(style="text-align:left; font-size: 0.8em") {{ newForm.form | json }}
         section.form(ng-class="newForm.form.style.font + ' ' + newForm.form.style.class")
           header.add
             h2(field-editable='', value='newForm.form.name', initial='New Form')

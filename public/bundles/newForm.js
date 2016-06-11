@@ -31072,6 +31072,22 @@
 	        this.window.onbeforeunload = function (e) {
 	            return 'You will lose any saved data if you close this window.';
 	        };
+
+	        this.tempFormsService.loadFormFromSession().then(function (result) {
+	            if (result.data.config) {
+	                _this.form.config = result.data.config;
+	            }
+	            _this.form.name = result.data.name || '';
+	            _this.form.description = result.data.description || '';
+	            _this.form.fields = result.data.fields || [];
+	            if (result.data.style) {
+	                _this.form.style = result.data.style;
+	            }
+	            console.log(result);
+	        }, function (error) {
+	            console.log(error);
+	            _this.Notification.error('Error communicating with server, try reloading the page');
+	        });
 	    }
 
 	    _createClass(NewFormCtrl, [{
@@ -32342,6 +32358,13 @@
 	                saveReference: reqForm.config.saveReference,
 	                form: reqForm
 	            }, {
+	                headers: this.headers
+	            });
+	        }
+	    }, {
+	        key: 'loadFormFromSession',
+	        value: function loadFormFromSession() {
+	            return this.$http.get(this.urlBase + 'sessionForm', {
 	                headers: this.headers
 	            });
 	        }
