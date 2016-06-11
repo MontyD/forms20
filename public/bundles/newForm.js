@@ -31032,9 +31032,7 @@
 	                verified: false,
 	                submissions: 20,
 	                notify: 1,
-	                format: 'pdf',
-	                id: null,
-	                saveReference: undefined
+	                format: 'pdf'
 	            }
 	        };
 
@@ -31106,6 +31104,7 @@
 	                question.id = this.form.fields.length + 1;
 	                this.form.fields.push(question);
 	                this.resetNewField();
+	                this.saveForm();
 	            }
 	        }
 	    }, {
@@ -31119,16 +31118,13 @@
 	        }
 	    }, {
 	        key: 'saveForm',
-	        value: function saveForm() {
+	        value: function saveForm(userInitiated) {
 	            var _this2 = this;
 
-	            if (!this.userId || !this.form) {
-	                return this.Notification.error('Please verify your email address.');
-	            }
 	            this.tempFormsService.save(this.form, this.userId).then(function (result) {
-	                _this2.form.config.saveReference = result.data.saveReference;
-	                _this2.form.config.id = result.data.formId;
-	                _this2.Notification('Form saved!');
+	                if (userInitiated) {
+	                    _this2.Notification('Form saved!');
+	                }
 	            }, function (error) {
 	                console.error(error);
 	                _this2.Notification.error('Error communicating with the server... Hopefully everything will sort itself out');
@@ -31179,6 +31175,7 @@
 	                _this4.form.config.verified = result.data.verified;
 	                if (result.data.verified) {
 	                    _this4.Notification.success('Email verified! Yay!');
+	                    _this4.saveForm();
 	                } else {
 	                    _this4.Notification.error('Incorrect validation code');
 	                }
@@ -32340,18 +32337,10 @@
 	    _createClass(TemporaryFormsService, [{
 	        key: 'save',
 	        value: function save(reqForm, reqUserId) {
-	            if (reqForm.config.saveReference) {
-	                var formId = reqForm.config.id;
-	                return this.$http.put(this.urlBase + formId, {
-	                    saveReference: reqForm.config.saveReference,
-	                    form: reqForm
-	                }, {
-	                    headers: this.headers
-	                });
-	            }
-	            return this.$http.post(this.urlBase, {
-	                form: reqForm,
-	                userId: reqUserId
+	            var formId = reqForm.config.id;
+	            return this.$http.put(this.urlBase, {
+	                saveReference: reqForm.config.saveReference,
+	                form: reqForm
 	            }, {
 	                headers: this.headers
 	            });

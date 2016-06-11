@@ -1,7 +1,6 @@
 extends layouts/form
 block content
   body(ng-app="app")
-
     div(ng-controller="NewFormCtrl as newForm")
       aside.blue.settings
         nav
@@ -11,13 +10,14 @@ block content
             li(ng-class="{active: newForm.settings==='config'}", ng-click="newForm.setSettings('config')") Config
         field-settings(ng-if="newForm.settings==='field'", field='newForm.settingsField', delete='newForm.removeField()')
         settings-style(ng-if="newForm.settings==='style'", objectstyle='newForm.form.style', themes='newForm.availableThemes')
-        settings-config(ng-if="newForm.settings==='config'", objectconfig='newForm.form.config', sendverification='newForm.sendVerificationEmail()', checkverification='newForm.checkVerificationCode()', save="newForm.saveForm()", submit="newForm.submitForm()")
+        settings-config(ng-if="newForm.settings==='config'", objectconfig='newForm.form.config', sendverification='newForm.sendVerificationEmail()', checkverification='newForm.checkVerificationCode()', save="newForm.saveForm(true)", submit="newForm.submitForm()")
       main.createForm
+        pre(style="text-align:left; font-size: 0.8em") {{ newForm.form | json }}
         section.form(ng-class="newForm.form.style.font + ' ' + newForm.form.style.class")
           header.add
             h2(field-editable='', value='newForm.form.name', initial='New Form')
             p.slight(field-editable='', value='newForm.form.description', initial='Form description, click here to edit')
-          ul(dnd-list='newForm.form.fields')
+          ul(dnd-list='newForm.form.fields')/f
             li(ng-repeat='field in newForm.form.fields', dnd-draggable='field', dnd-moved='newForm.form.fields.splice($index, 1)', dnd-effect-allowed='move', dnd-selected='newForm.selected = item', ng-class="{'fullWidth': field.fullWidth, 'halfWidth': !field.fullWidth}")
               field(options='field', settings='newForm.feildSettings(field)')
           article.modalOpen(ng-class='{active: newForm.addingField}')

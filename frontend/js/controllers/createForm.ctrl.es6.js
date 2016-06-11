@@ -27,9 +27,7 @@ class NewFormCtrl {
                 verified: false,
                 submissions: 20,
                 notify: 1,
-                format: 'pdf',
-                id: null,
-                saveReference: undefined
+                format: 'pdf'
             },
         };
 
@@ -71,7 +69,7 @@ class NewFormCtrl {
         }
 
         this.window.onbeforeunload = function(e) {
-          return 'You will lose any saved data if you close this window.';
+            return 'You will lose any saved data if you close this window.';
         };
 
     }
@@ -102,6 +100,7 @@ class NewFormCtrl {
             question.id = this.form.fields.length + 1;
             this.form.fields.push(question);
             this.resetNewField();
+            this.saveForm();
         }
     }
 
@@ -113,16 +112,13 @@ class NewFormCtrl {
         this.settingsField = undefined;
     }
 
-    saveForm() {
-      if (!this.userId || !this.form) {
-        return this.Notification.error('Please verify your email address.');
-      }
+    saveForm(userInitiated) {
         this.tempFormsService.save(this.form, this.userId)
             .then(
                 result => {
-                    this.form.config.saveReference = result.data.saveReference;
-                    this.form.config.id = result.data.formId;
-                    this.Notification('Form saved!');
+                    if (userInitiated) {
+                        this.Notification('Form saved!');
+                    }
                 },
                 error => {
                     console.error(error);
@@ -132,10 +128,10 @@ class NewFormCtrl {
     }
 
     submitForm() {
-      if (this.form.fields === []) {
-        return this.Notification.error('Please add few fields before submitting!');
-      }
-      console.log('submit Form!');
+        if (this.form.fields === []) {
+            return this.Notification.error('Please add few fields before submitting!');
+        }
+        console.log('submit Form!');
     }
 
 
@@ -150,8 +146,8 @@ class NewFormCtrl {
                     this.userId = result.data.pUserId;
                     this.form.config.requestSent = false;
                     if (result.data.verified) {
-                      this.Notification.success('Email already verified!');
-                      this.form.config.verified = true;
+                        this.Notification.success('Email already verified!');
+                        this.form.config.verified = true;
                     } else {
                         this.Notification('Email sent! Check your spam for an email from hello@montydawson.co.uk');
                         this.form.config.beingVerified = true;
@@ -177,6 +173,7 @@ class NewFormCtrl {
                     this.form.config.verified = result.data.verified;
                     if (result.data.verified) {
                         this.Notification.success('Email verified! Yay!');
+                        this.saveForm();
                     } else {
                         this.Notification.error('Incorrect validation code');
                     }

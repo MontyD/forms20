@@ -8,31 +8,17 @@ var express = require('express'),
     respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON')),
     handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError'));
 
-// Get -- create new record (with random hash, and user agent), and echo back
-router.post('/', respondsToJSON, function(req, res, next) {
-
-    if (!req.body.form || !req.body.userId) {
-        return handleError({
-            message: 'You done messed up!',
-            status: 400
-        });
-    }
-
-    var randomHash = crypto.randomBytes(3).toString('hex');
-
+router.get('/', respondsToJSON, function(req, res, next) {
     var temporaryForm = models.temporaryForms.create({
-        name: req.body.form.name || '',
-        description: req.body.form.description || '',
-        email: req.body.form.config.email || '',
-        fields: req.body.form.fields || {},
-        config: req.body.form.config || {},
-        pseudoUserId: req.body.userId,
-        style: req.body.form.style
+        originIP: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+        originUserAgent: req.get('User-Agent')
 
     }).then(function(form) {
-        return res.json({
-            saveReference: form.saveReference,
-            formId: form.id
+      req.session.formId = form.id;
+      req.session.formSaveRef = form.saveReference;
+        return res.render('createForm', {
+            id: form.id,
+            saveReference: form.saveReference
         });
     }).catch(function(error) {
         return handleError(error, next);
@@ -46,7 +32,7 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
     if (!req.params.form || !req.query.hash || isNaN(req.params.form)) {
         return handleError({
             message: 'Inconsistent post data',
-            status: 401
+            status: 400
         }, next);
     }
 
@@ -54,7 +40,7 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
         if (form.hash !== req.query.hash) {
             return handleError({
                 message: 'Inconsistent post data',
-                status: 401
+                status: 400
             }, next);
         }
 
@@ -68,34 +54,35 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
 
 
 // Put - to update form
-router.put('/:form', respondsToJSON, function(req, res, next) {
+router.put('/', respondsToJSON, function(req, res, next) {
 
-    if (!req.params.form || !req.body.saveReference || isNaN(req.params.form) || !req.body.form) {
+  console.log(req.session);
+
+    if ( !req.body.form || (!req.body.saveReference && (!req.session.formId || !req.session.formSaveRef))) {
         return handleError({
             message: 'Inconsistent post data',
-            status: 401
+            status: 400
         }, next);
     }
+    var formId = req.session.formId || req.body.saveReference.split('A')[0];
+    var saveRef = req.session.formSaveRef || req.body.saveReference;
 
-    models.temporaryForms.findById(req.params.form).then(function(form) {
-        if (form.saveReference !== req.body.saveReference) {
+    models.temporaryForms.findById(formId).then(function(form) {
+        if (form.saveReference !== saveRef) {
             return handleError({
                 message: 'Inconsistent post data',
-                status: 401
+                status: 400
             }, next);
         }
 
         form.update(req.body.form).then(function(form) {
-            res.json({
-                formId: form.id,
-                saveReference: form.config.saveReference
-            });
+            res.sendStatus(200);
         }).catch(function(error) {
             return handleError(error, next);
         });
 
     }, function(error) {
-        returnhandleError(error, next);
+        return handleError(error, next);
     });
 });
 
