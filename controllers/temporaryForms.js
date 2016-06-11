@@ -11,27 +11,35 @@ var express = require('express'),
 // Get -- create new record (with random hash, and user agent), and echo back
 router.post('/', respondsToJSON, function(req, res, next) {
 
-  if(!req.body.form || !req.body.userId) {
-    return handleError({message: 'You done messed up!', status: 400});
-  }
+    if (!req.body.form || !req.body.userId) {
+        return handleError({
+            message: 'You done messed up!',
+            status: 400
+        });
+    }
 
     var randomHash = crypto.randomBytes(3).toString('hex');
 
     var temporaryForm = models.temporaryForms.create({
-      name: req.body.form.name || '',
-      description: req.body.form.description || '',
-      email: req.body.form.config.email || '',
-      fields: req.body.form.fields || {},
-      config: req.body.form.config || {},
-      pseudoUserId: req.body.userId,
-      style: req.body.form.style
+        name: req.body.form.name || '',
+        description: req.body.form.description || '',
+        email: req.body.form.config.email || '',
+        fields: req.body.form.fields || {},
+        config: req.body.form.config || {},
+        pseudoUserId: req.body.userId,
+        style: req.body.form.style
+
+    // have to update the model to store the save reference
+    // save reference created from primary key id + random hash, must be unique
     }).then(function(newForm) {
-      var saveRef = newForm.id + randomHash;
-      newForm.update({saveReference: saveRef}).then(function(){
-        return res.json(saveReference);
-      }, function(err){
-        return handleError(err, next);
-      });
+        var saveRef = newForm.id + randomHash;
+        newForm.update({
+            saveReference: saveRef
+        }).then(function(form) {
+            return res.json(form.saveReference);
+        }).catch(function(err) {
+            return handleError(err, next);
+        });
     }).catch(function(error) {
         return handleError(error, next);
     });
