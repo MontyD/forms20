@@ -28,7 +28,9 @@ class NewFormCtrl {
                 submissions: 20,
                 notify: 1,
                 format: 'pdf',
-            }
+                id: null,
+                saveReference: undefined
+            },
         };
 
         this.newQuestion = {
@@ -50,8 +52,6 @@ class NewFormCtrl {
         this.selected = undefined;
 
         this.settings = 'field';
-
-        this.saveReference = undefined;
 
         this.settingsField = undefined;
 
@@ -117,10 +117,12 @@ class NewFormCtrl {
       if (!this.userId || !this.form) {
         return this.Notification.error('Please verify your email address.');
       }
-        this.tempFormsService.save(this.form, this.userId)
+        this.tempFormsService.save(this.form, this.userId, this.form.id, this.form.saveReference)
             .then(
                 result => {
-                    this.saveRefence = result.data.saveReference;
+                    this.form.saveReference = result.data.saveReference;
+                    this.form.id = result.data.formId;
+                    this.Notification('Form saved!');
                 },
                 error => {
                     console.error(error);

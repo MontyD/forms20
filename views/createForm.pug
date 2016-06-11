@@ -14,6 +14,9 @@ block content
         settings-config(ng-if="newForm.settings==='config'", objectconfig='newForm.form.config', sendverification='newForm.sendVerificationEmail()', checkverification='newForm.checkVerificationCode()', save="newForm.saveForm()", submit="newForm.submitForm()")
       main.createForm
         section.form(ng-class="newForm.form.style.font + ' ' + newForm.form.style.class")
+          pre(style="font-size: 0.8em; text-align: left") {{newForm.form | json}}
+          pre(style="font-size: 0.8em; text-align: left; color: red") {{newForm.userId}}
+          pre(style="font-size: 0.8em; left-align: left; color: blue") {{newForm.saveReference}}
           header.add
             h2(field-editable='', value='newForm.form.name', initial='New Form')
             p.slight(field-editable='', value='newForm.form.description', initial='Form description, click here to edit')

@@ -31032,7 +31032,9 @@
 	                verified: false,
 	                submissions: 20,
 	                notify: 1,
-	                format: 'pdf'
+	                format: 'pdf',
+	                id: null,
+	                saveReference: undefined
 	            }
 	        };
 
@@ -31055,8 +31057,6 @@
 	        this.selected = undefined;
 
 	        this.settings = 'field';
-
-	        this.saveReference = undefined;
 
 	        this.settingsField = undefined;
 
@@ -31125,8 +31125,10 @@
 	            if (!this.userId || !this.form) {
 	                return this.Notification.error('Please verify your email address.');
 	            }
-	            this.tempFormsService.save(this.form, this.userId).then(function (result) {
-	                _this2.saveRefence = result.data.saveReference;
+	            this.tempFormsService.save(this.form, this.userId, this.form.id, this.form.saveReference).then(function (result) {
+	                _this2.form.saveReference = result.data.saveReference;
+	                _this2.form.id = result.data.formId;
+	                _this2.Notification('Form saved!');
 	            }, function (error) {
 	                console.error(error);
 	                _this2.Notification.error('Error communicating with the server... Hopefully everything will sort itself out');

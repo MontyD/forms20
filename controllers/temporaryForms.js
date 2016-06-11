@@ -36,7 +36,10 @@ router.post('/', respondsToJSON, function(req, res, next) {
         newForm.update({
             saveReference: saveRef
         }).then(function(form) {
-            return res.json(form.saveReference);
+            return res.json({
+              saveReference: form.saveReference,
+              formId: form.id
+            });
         }).catch(function(err) {
             return handleError(err, next);
         });
@@ -73,7 +76,7 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
 });
 
 
-// Post - to update form
+// Put - to update form
 router.put('/:form', respondsToJSON, function(req, res, next) {
 
     if (!req.params.form || !req.body.hash || isNaN(req.params.form)) {
@@ -107,7 +110,6 @@ router.put('/:form', respondsToJSON, function(req, res, next) {
         }
 
         form.update(data).then(function(response) {
-            console.log(response);
             res.send(response);
         }, function(error) {
             handleError(error, next);
