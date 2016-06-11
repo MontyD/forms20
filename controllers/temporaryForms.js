@@ -70,7 +70,7 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
 // Put - to update form
 router.put('/:form', respondsToJSON, function(req, res, next) {
 
-    if (!req.params.form || !req.body.hash || isNaN(req.params.form)) {
+    if (!req.params.form || !req.body.saveReference || isNaN(req.params.form) || !req.body.form) {
         return handleError({
             message: 'Inconsistent post data',
             status: 401
@@ -78,36 +78,24 @@ router.put('/:form', respondsToJSON, function(req, res, next) {
     }
 
     models.temporaryForms.findById(req.params.form).then(function(form) {
-        if (form.hash !== req.body.hash) {
+        if (form.saveReference !== req.body.saveReference) {
             return handleError({
                 message: 'Inconsistent post data',
                 status: 401
             }, next);
         }
 
-        var data = {};
-        var reqData = req.body.payload;
-        if (reqData.fields) {
-            data.fields = reqData.fields;
-        }
-        if (reqData.name) {
-            data.name = reqData.name;
-        }
-        if (reqData.description) {
-            data.description = reqData.description;
-        }
-        if (reqData.style) {
-            data.style = reqData.style;
-        }
-
-        form.update(data).then(function(response) {
-            res.send(response);
-        }, function(error) {
-            handleError(error, next);
+        form.update(req.body.form).then(function(form) {
+            res.json({
+                formId: form.id,
+                saveReference: form.config.saveReference
+            });
+        }).catch(function(error) {
+            return handleError(error, next);
         });
 
     }, function(error) {
-        handleError(error, next);
+        returnhandleError(error, next);
     });
 });
 

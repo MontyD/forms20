@@ -13,13 +13,19 @@ module.exports = function(sequelize, DataTypes) {
         config: DataTypes.JSON,
     }, {
         hooks: {
-          // create saveRefeence - id + 'A' + 6 character random hash
+            // create saveRefeence - id + 'A' + 6 character random hash
             afterCreate: function(form, options, cb) {
                 if (form.saveReference) {
-                  return cb(null, options);
+                    return cb(null, options);
                 }
-                form.saveReference = form.id + 'A' + crypto.randomBytes(3).toString('hex');
-                return cb(null, options);
+                var saveRef = form.id + 'A' + crypto.randomBytes(3).toString('hex');
+                form.update({
+                    saveReference: saveRef
+                }).then(function(form) {
+                    return cb(null, options);
+                }).catch(function(err) {
+                    return (err, options);
+                });
             }
         }
     });

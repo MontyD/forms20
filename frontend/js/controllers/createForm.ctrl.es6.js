@@ -117,7 +117,7 @@ class NewFormCtrl {
       if (!this.userId || !this.form) {
         return this.Notification.error('Please verify your email address.');
       }
-        this.tempFormsService.save(this.form, this.userId, this.form.saveReference)
+        this.tempFormsService.save(this.form, this.userId)
             .then(
                 result => {
                     this.form.config.saveReference = result.data.saveReference;

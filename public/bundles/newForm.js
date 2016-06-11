@@ -31125,7 +31125,7 @@
 	            if (!this.userId || !this.form) {
 	                return this.Notification.error('Please verify your email address.');
 	            }
-	            this.tempFormsService.save(this.form, this.userId, this.form.saveReference).then(function (result) {
+	            this.tempFormsService.save(this.form, this.userId).then(function (result) {
 	                _this2.form.config.saveReference = result.data.saveReference;
 	                _this2.form.config.id = result.data.formId;
 	                _this2.Notification('Form saved!');
@@ -32339,28 +32339,19 @@
 
 	    _createClass(TemporaryFormsService, [{
 	        key: 'save',
-	        value: function save(reqForm, reqUserId, reqRef) {
-	            if (reqRef) {
-	                var formId = reqRef.split('A')[0];
-	                return this.$http.put(this.urlBase);
+	        value: function save(reqForm, reqUserId) {
+	            if (reqForm.config.saveReference) {
+	                var formId = reqForm.config.id;
+	                return this.$http.put(this.urlBase + formId, {
+	                    saveReference: reqForm.config.saveReference,
+	                    form: reqForm
+	                }, {
+	                    headers: this.headers
+	                });
 	            }
-	            return this.$http.post(this.urlBase, { form: reqForm, userId: reqUserId }, {
-	                headers: this.headers
-	            });
-	        }
-	    }, {
-	        key: 'findPartial',
-	        value: function findPartial(id, reqhash) {
-	            return this.$http.get(this.urlBase + id + '?hash=' + reqhash, {
-	                headers: this.headers
-	            });
-	        }
-	    }, {
-	        key: 'update',
-	        value: function update(id, reqhash, data) {
-	            return this.$http.put(this.urlBase + id, {
-	                hash: reqhash,
-	                payload: data
+	            return this.$http.post(this.urlBase, {
+	                form: reqForm,
+	                userId: reqUserId
 	            }, {
 	                headers: this.headers
 	            });
