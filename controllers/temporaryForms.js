@@ -8,15 +8,19 @@ var express = require('express'),
     respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON')),
     handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError'));
 
-router.get('/', respondsToJSON, function(req, res, next) {
+router.get('/', function(req, res, next) {
 
-    if (req.session.formId && req.session.formSaveRef) {
+    if (req.query.clearsession) {
+        req.session.formId = null;
+        req.session.formSaveRef = undefined;
+        return res.redirect('/temporaryForms');
+    } else if (req.session.formId && req.session.formSaveRef) {
 
         models.temporaryForms.findById(req.session.formId).then(function(form) {
             if (form.saveReference !== req.session.formSaveRef) {
                 req.session.formId = null;
                 req.session.formSaveRef = undefined;
-                return res.redirect('/');
+                return res.redirect('/temporaryForms');
             } else {
                 return res.render('createForm');
             }
@@ -42,7 +46,7 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
 
     if (!(req.params.form === 'sessionForm' && req.session.formId && req.session.formSaveRef) && (!req.params.form || !req.query.saveReference || isNaN(req.params.form))) {
         return handleError({
-            message: 'Inconsistent post data',
+            message: 'Bad get request',
             status: 400
         }, next);
     }
@@ -79,14 +83,17 @@ router.put('/', respondsToJSON, function(req, res, next) {
     var saveRef = req.session.formSaveRef || req.body.saveReference;
 
     models.temporaryForms.findById(formId).then(function(form) {
-        if (form.saveReference !== saveRef) {
+        if (form.saveReference !== saveRef || !(form.email !== undefined || form.email === req.body.form.config.email)) {
             return handleError({
                 message: 'Inconsistent post data',
                 status: 400
             }, next);
         }
-
-        form.update(req.body.form).then(function(form) {
+        var formData = req.body.form;
+        if (req.body.form.config.verified) {
+          formData.email = req.body.form.config.email;
+        }
+        form.update(formData).then(function(form) {
             res.sendStatus(200);
         }).catch(function(error) {
             return handleError(error, next);

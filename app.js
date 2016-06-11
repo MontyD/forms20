@@ -86,13 +86,13 @@ passport.use(new LocalStrategy(
 
 
 // Rate limit setup
-var limiter = new RateLimit({
-    windowMs: 10 * 60 * 1000,
-    max: 20,
-    delayMs: 0
-});
-
-app.use('/temporaryForms', limiter);
+// var limiter = new RateLimit({
+//     windowMs: 10 * 60 * 1000,
+//     max: 20,
+//     delayMs: 0
+// });
+//
+// app.use('/temporaryForms', limiter);
 
 
 // Logging

@@ -6,4 +6,8 @@ block content
         include ./includes/_headerLinks.pug
     header.slightGradient
       h1.shadow Forms Twenty
-      a(href="create", title="Create Form").fakeButton.accent Create Form
+      if (sessionForm)
+        a(href="/temporaryForms?clearsession=true", title="Create New Form").fakeButton.accent Create New Form
+        a(href="/temporaryForms", title="Continue form").fakeButton Continue Form
+      else
+        a(href="/temporaryForms", title="Create New Form").fakeButton.accent Create Form

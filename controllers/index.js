@@ -16,7 +16,8 @@ router.use('/pseudoUsers', require('./pseudoUsers'));
 
 // render index
 router.get('/', passUser, function(req, res) {
-    res.render('index');
+  var session = !!(req.session.formId && req.session.formSaveRef);
+    res.render('index', {sessionForm: session});
 });
 
 // render new create form page
