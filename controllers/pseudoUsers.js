@@ -16,10 +16,10 @@ router.post('/emailVerification', respondsToJSON, function(req, res, next) {
     var randomHash = crypto.randomBytes(4).toString('hex');
 
     if (!req.body.email || req.body.email.length < 3) {
-      return handleError({
-          message: 'Not a valid email address!',
-          status: 400
-      }, next);
+        return handleError({
+            message: 'Not a valid email address!',
+            status: 400
+        }, next);
     }
 
     models.pseudoUsers.findOrCreate({
@@ -37,7 +37,9 @@ router.post('/emailVerification', respondsToJSON, function(req, res, next) {
                 }).then(function(user) {
                     mailer.verifyEmailNoLink(req.body.email, randomHash, function(err) {
                         if (err) {
-                            user.destroy({ force: true });
+                            user.destroy({
+                                force: true
+                            });
                             return handleError(err, next);
                         }
                         return res.json({
@@ -49,12 +51,20 @@ router.post('/emailVerification', respondsToJSON, function(req, res, next) {
                 });
 
             } else {
+              models.temporaryForms.findById(req.session.formId).then(function(form) {
+                  form.update({pseudoUserId: pUser.id}).catch(function(err) {
+                      console.error(err);
+                  });
+              });
 
-              //User already verified
-              res.json({verified: true, pUserId: pUser.id});
+                //User already verified
+                res.json({
+                    verified: true,
+                    pUserId: pUser.id
+                });
             }
-        }).catch(function (err) {
-          return handleError(err, next);
+        }).catch(function(err) {
+            return handleError(err, next);
         });
 });
 
@@ -66,6 +76,11 @@ router.put('/emailVerification', respondsToJSON, function(req, res, next) {
             user.update({
                 emailVerified: true
             }).then(function(user) {
+                models.temporaryForms.findById(req.session.formId).then(function(form) {
+                    form.update({pseudoUserId: user.id}).catch(function(err) {
+                        console.error(err);
+                    });
+                });
                 return res.json({
                     verified: true
                 });
