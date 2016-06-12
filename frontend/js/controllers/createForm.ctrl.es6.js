@@ -27,7 +27,8 @@ class NewFormCtrl {
                 verified: false,
                 submissions: 20,
                 notify: 1,
-                format: 'pdf'
+                format: 'pdf',
+                saveReference: undefined,
             },
         };
 
@@ -79,7 +80,6 @@ class NewFormCtrl {
                 this.form.description = result.data.description || '';
                 this.form.fields = result.data.fields || [];
                 if (result.data.style) { this.form.style = result.data.style; }
-                console.log(result);
             },
             error => {
                 console.log(error);
@@ -132,6 +132,7 @@ class NewFormCtrl {
             .then(
                 result => {
                     if (userInitiated) {
+                        this.form.config.saveReference = result.data.saveReference;
                         this.Notification('Form saved!');
                     }
                 },

@@ -99,7 +99,7 @@ router.put('/', respondsToJSON, function(req, res, next) {
           formData.email = req.body.form.config.email;
         }
         form.update(formData).then(function(form) {
-            res.sendStatus(200);
+            res.json({saveReference: form.saveReference});
         }).catch(function(error) {
             return handleError(error, next);
         });

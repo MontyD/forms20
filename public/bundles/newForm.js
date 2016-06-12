@@ -31032,7 +31032,8 @@
 	                verified: false,
 	                submissions: 20,
 	                notify: 1,
-	                format: 'pdf'
+	                format: 'pdf',
+	                saveReference: undefined
 	            }
 	        };
 
@@ -31139,6 +31140,7 @@
 
 	            this.tempFormsService.save(this.form, this.userId).then(function (result) {
 	                if (userInitiated) {
+	                    _this2.form.config.saveReference = result.data.saveReference;
 	                    _this2.Notification('Form saved!');
 	                }
 	            }, function (error) {
