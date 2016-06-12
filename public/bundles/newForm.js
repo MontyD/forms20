@@ -31084,7 +31084,6 @@
 	            if (result.data.style) {
 	                _this.form.style = result.data.style;
 	            }
-	            console.log(result);
 	        }, function (error) {
 	            console.log(error);
 	            _this.Notification.error('Error communicating with server, try reloading the page');
