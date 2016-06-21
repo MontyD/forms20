@@ -5,6 +5,7 @@ var express = require('express'),
     path = require('path'),
     crypto = require('crypto'),
     models = require(path.join(__dirname, '..', 'models')),
+    mailer = require(path.join(__dirname, '..', 'mailer')),
     respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON')),
     handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError'));
 
@@ -27,10 +28,7 @@ router.get('/', function(req, res, next) {
         });
 
     } else {
-        var temporaryForm = models.temporaryForms.create({
-            originIP: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-            originUserAgent: req.get('User-Agent')
-        }).then(function(form) {
+        var temporaryForm = models.temporaryForms.create({}).then(function(form) {
             req.session.formId = form.id;
             req.session.formSaveRef = form.saveReference;
             return res.render('createForm');
@@ -55,8 +53,8 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
     var saveReference = req.query.saveReference;
 
     if (req.params.form === 'sessionForm') {
-      formId = req.session.formId;
-      saveReference = req.session.formSaveRef;
+        formId = req.session.formId;
+        saveReference = req.session.formSaveRef;
     }
 
     models.temporaryForms.findById(formId).then(function(form) {
@@ -67,10 +65,10 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
             }, next);
         }
 
-        res.json(form);
+        return res.json(form);
 
     }, function(error) {
-        handleError(error, next);
+        return handleError(error, next);
     });
 });
 
@@ -95,11 +93,21 @@ router.put('/', respondsToJSON, function(req, res, next) {
             }, next);
         }
         var formData = req.body.form;
+        var needToSendSaveRef = false;
         if (req.body.form.config.verified) {
-          formData.email = req.body.form.config.email;
+            formData.email = req.body.form.config.email;
+        }
+        if (!form.saveReferenceSent) {
+            formData.saveReferenceSent = true;
+            needToSendSaveRef = true;
         }
         form.update(formData).then(function(form) {
-            res.json({saveReference: form.saveReference});
+            res.json({
+                saveReference: form.saveReference
+            });
+            if (needToSendSaveRef) {
+                mailer.sendSaveReference(req.body.form.config.email, form.saveReference);
+            }
         }).catch(function(error) {
             return handleError(error, next);
         });

@@ -17,13 +17,12 @@
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;background-color: #F4F4F4;border-top: 1px solid #FFFFFF;border-bottom: 1px solid #CCCCCC;border-collapse: collapse !important;">
                                         <tr>
                                             <td valign="top" class="bodyContent" mc:edit="body_content" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;padding-top: 20px;padding-right: 20px;padding-bottom: 20px;padding-left: 20px;text-align: left;">
-                                                <h1 style="display: block;font-family: Helvetica;font-size: 26px;font-style: normal;font-weight: bold;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: center;color: #202020 !important;">Hi <%= firstName %></h1>
-                                                <h3 style="display: block;font-family: Helvetica;font-size: 16px;font-style: italic;font-weight: normal;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: center;color: #606060 !important;">Thanks for signing up for FormsTwenty!</h3>
+                                                <h1 style="display: block;font-family: Helvetica;font-size: 26px;font-style: normal;font-weight: bold;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: center;color: #202020 !important;">Your form has been saved!</h1>
                                                 <br>
-                                                This email is just to make sure that your email exists, click on the link below to verify your email address:
+                                                Just in case you forgot your save reference, we thought we'd send it to you!
                                                 <br>
                                                 <br>
-                                                <strong><a href="http://localhost:3000/users/<%= verificationLink %>" title="Verify Email Address" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #303F9F;font-weight: normal;text-decoration: underline;">Verify Email Address</a></strong>
+                                                <strong><%=saveReference%></strong>
                                             </td>
                                         </tr>
                                     </table>

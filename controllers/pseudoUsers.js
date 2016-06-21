@@ -53,7 +53,7 @@ router.post('/emailVerification', respondsToJSON, function(req, res, next) {
             } else {
               models.temporaryForms.findById(req.session.formId).then(function(form) {
                   form.update({pseudoUserId: pUser.id}).catch(function(err) {
-                      console.error(err);
+                      return handleError(err, next);
                   });
               });
 

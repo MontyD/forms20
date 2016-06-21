@@ -11,8 +11,7 @@ module.exports = function(sequelize, DataTypes) {
         fields: DataTypes.JSON,
         style: DataTypes.JSON,
         config: DataTypes.JSON,
-        originIP: DataTypes.STRING,
-        originUserAgent: DataTypes.STRING,
+        saveReferenceSent: DataTypes.BOOLEAN
     }, {
         hooks: {
             // create saveRefeence - id + 'A' + 6 character random hash

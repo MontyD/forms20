@@ -35,3 +35,15 @@ module.exports.verifyEmailNoLink = function(email, reqHash, cb) {
         cb();
     });
 };
+
+module.exports.sendSaveReference = function(email, reqSaveReference) {
+  app.mailer.send('formSaveReference', {
+    to: email,
+    subject: 'Form saved!',
+    saveReference: reqSaveReference,
+  }, function(err){
+    if (err) {
+      console.error(err);
+    }
+  });
+};
