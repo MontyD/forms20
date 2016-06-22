@@ -9,11 +9,12 @@ class TemporaryFormsService {
         };
     }
 
-    save(reqForm, reqUserId) {
+    save(reqForm, reqUserId, reqUserInitiated) {
         let formId = reqForm.config.id;
         return this.$http.put(this.urlBase, {
             saveReference: reqForm.config.saveReference,
-            form: reqForm
+            form: reqForm,
+            userInitiated: reqUserInitiated
         }, {
             headers: this.headers
         });

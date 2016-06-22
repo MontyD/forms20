@@ -128,7 +128,7 @@ class NewFormCtrl {
     }
 
     saveForm(userInitiated) {
-        this.tempFormsService.save(this.form, this.userId)
+        this.tempFormsService.save(this.form, this.userId, userInitiated)
             .then(
                 result => {
                     if (userInitiated) {

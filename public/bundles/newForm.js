@@ -31137,7 +31137,7 @@
 	        value: function saveForm(userInitiated) {
 	            var _this2 = this;
 
-	            this.tempFormsService.save(this.form, this.userId).then(function (result) {
+	            this.tempFormsService.save(this.form, this.userId, userInitiated).then(function (result) {
 	                if (userInitiated) {
 	                    _this2.form.config.saveReference = result.data.saveReference;
 	                    _this2.Notification('Form saved!');
@@ -32353,11 +32353,12 @@
 
 	    _createClass(TemporaryFormsService, [{
 	        key: 'save',
-	        value: function save(reqForm, reqUserId) {
+	        value: function save(reqForm, reqUserId, reqUserInitiated) {
 	            var formId = reqForm.config.id;
 	            return this.$http.put(this.urlBase, {
 	                saveReference: reqForm.config.saveReference,
-	                form: reqForm
+	                form: reqForm,
+	                userInitiated: reqUserInitiated
 	            }, {
 	                headers: this.headers
 	            });

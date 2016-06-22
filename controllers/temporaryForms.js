@@ -93,11 +93,12 @@ router.put('/', respondsToJSON, function(req, res, next) {
             }, next);
         }
         var formData = req.body.form;
+        var userInitiated = req.body.userInitiated;
         var needToSendSaveRef = false;
-        if (req.body.form.config.verified) {
+        if (form.config && form.config.verified) {
             formData.email = req.body.form.config.email;
         }
-        if (!form.saveReferenceSent) {
+        if (!form.saveReferenceSent && userInitiated) {
             formData.saveReferenceSent = true;
             needToSendSaveRef = true;
         }

@@ -51,13 +51,18 @@ router.post('/emailVerification', respondsToJSON, function(req, res, next) {
                 });
 
             } else {
-              models.temporaryForms.findById(req.session.formId).then(function(form) {
-                  form.update({pseudoUserId: pUser.id}).catch(function(err) {
-                      return handleError(err, next);
-                  });
-              });
 
-                //User already verified
+              // User already verified - update form with the userID and email
+                models.temporaryForms.findById(req.session.formId).then(function(form) {
+                    form.update({
+                        pseudoUserId: pUser.id,
+                        email: pUser.email
+                    }).catch(function(err) {
+                        return handleError(err, next);
+                    });
+                });
+
+                // res json that user verified
                 res.json({
                     verified: true,
                     pUserId: pUser.id
@@ -68,7 +73,7 @@ router.post('/emailVerification', respondsToJSON, function(req, res, next) {
         });
 });
 
-// Put - to send check verification code and confirm or respond with no
+// Put - to check verification code and confirm or respond with false
 router.put('/emailVerification', respondsToJSON, function(req, res, next) {
 
     models.pseudoUsers.findById(req.body.userId).then(function(user) {
@@ -76,11 +81,17 @@ router.put('/emailVerification', respondsToJSON, function(req, res, next) {
             user.update({
                 emailVerified: true
             }).then(function(user) {
-                models.temporaryForms.findById(req.session.formId).then(function(form) {
-                    form.update({pseudoUserId: user.id}).catch(function(err) {
-                        console.error(err);
+                if (req.session.fomdId) {
+                  console.log(user);
+                    models.temporaryForms.findById(req.session.formId).then(function(form) {
+                        form.update({
+                            pseudoUserId: user.id,
+                            email: user.email
+                        }).catch(function(err) {
+                            console.error(err);
+                        });
                     });
-                });
+                }
                 return res.json({
                     verified: true
                 });
