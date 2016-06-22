@@ -9,12 +9,18 @@ var express = require('express'),
     respondsToJSON = require(path.join(__dirname, '..', 'middlewares', 'respondsJSON')),
     handleError = require(path.join(__dirname, '..', 'middlewares', 'handleError'));
 
+
+// Get -- form create page.
 router.get('/', function(req, res, next) {
 
+    // Clear Session, user wants a new form.
+    // Redirect to same page to set session of new form.
     if (req.query.clearsession) {
         req.session.formId = null;
         req.session.formSaveRef = undefined;
         return res.redirect('/temporaryForms');
+
+    // Find form from sessionID and load into form
     } else if (req.session.formId && req.session.formSaveRef) {
 
         models.temporaryForms.findById(req.session.formId).then(function(form) {
@@ -27,7 +33,10 @@ router.get('/', function(req, res, next) {
             }
         });
 
+
+    // Create new form and set id and save ref to session.
     } else {
+
         var temporaryForm = models.temporaryForms.create({}).then(function(form) {
             req.session.formId = form.id;
             req.session.formSaveRef = form.saveReference;
@@ -35,6 +44,7 @@ router.get('/', function(req, res, next) {
         }).catch(function(error) {
             return handleError(error, next);
         });
+
     }
 });
 
@@ -42,25 +52,21 @@ router.get('/', function(req, res, next) {
 // Get -- return json of single temp form, and echo back
 router.get('/:form', respondsToJSON, function(req, res, next) {
 
-    if (!(req.params.form === 'sessionForm' && req.session.formId && req.session.formSaveRef) && (!req.params.form || !req.query.saveReference || isNaN(req.params.form))) {
+    // Ensure that formID and save ref are in session or params and query.
+    if (!(req.params.form === 'sessionForm' && req.session.formId && req.session.formSaveRef) && (!req.query.saveReference || isNaN(req.params.form))) {
         return handleError({
             message: 'Bad get request',
             status: 400
         }, next);
     }
 
-    var formId = req.params.form;
-    var saveReference = req.query.saveReference;
-
-    if (req.params.form === 'sessionForm') {
-        formId = req.session.formId;
-        saveReference = req.session.formSaveRef;
-    }
+    var formId = isNaN(req.params.form) ? req.session.formId : req.params.form;
+    var saveReference = isNaN(req.params.form) ? req.session.formSaveref : req.query.saveReference;
 
     models.temporaryForms.findById(formId).then(function(form) {
         if (form.saveReference !== saveReference) {
             return handleError({
-                message: 'Inconsistent post data',
+                message: 'Bad get request',
                 status: 400
             }, next);
         }
