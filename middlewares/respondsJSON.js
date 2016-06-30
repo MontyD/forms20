@@ -1,7 +1,6 @@
 'use strict';
 
-var path = require('path'),
-    config = require(path.join('..', 'config.js'));
+var path = require('path');
 
 function respondsToJSON(req, res, next) {
 
