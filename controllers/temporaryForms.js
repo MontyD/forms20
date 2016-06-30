@@ -61,7 +61,7 @@ router.get('/:form', respondsToJSON, function(req, res, next) {
     }
 
     var formId = isNaN(req.params.form) ? req.session.formId : req.params.form;
-    var saveReference = isNaN(req.params.form) ? req.session.formSaveref : req.query.saveReference;
+    var saveReference = isNaN(req.params.form) ? req.session.formSaveRef : req.query.saveReference;
 
     models.temporaryForms.findById(formId).then(function(form) {
         if (form.saveReference !== saveReference) {
